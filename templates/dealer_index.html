@@ -1,0 +1,16 @@
+{% if top_dealer_list %}
+    {% for dealer in top_dealer_list %}
+        <div class="panel panel-default">
+            <div class="panel-heading">{{ dealer.first_name }}</div>
+            <div class="panel-body">
+                {{ dealer.description }}
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item">{{ dealer.pop }}</li>
+                <li class="list-group-item">{{ dealer.pop }}</li>
+            </ul>
+        </div>
+    {% endfor %}
+{% else %}
+    <h1>No Dealer are available.</h1>
+{% endif %}

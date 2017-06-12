@@ -1,0 +1,636 @@
+body {
+    background-color: #f7f7f7
+}
+
+#strategy-cnt {
+    overflow: visible;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1200px
+}
+
+#strategy-cnt .banner {
+    margin-bottom: 30px;
+    width: 100%
+}
+
+#strategy-cnt ul.nav-tabs {
+    border-bottom: 0
+}
+
+#strategy-cnt ul.nav-tabs li.single {
+    margin-left: 474px
+}
+
+#strategy-cnt ul.nav-tabs li {
+    margin-bottom: 0;
+    margin-right: 6px
+}
+
+#strategy-cnt ul.nav-tabs li a {
+    font-size: 18px;
+    background-color: #fff;
+    color: #626262;
+    padding: 8px 40px;
+    border: 1px solid #e5e5e5;
+    border-bottom: 0;
+    border-radius: 3px 3px 0 0
+}
+
+#strategy-cnt ul.nav-tabs li.active a {
+    background-color: #fff;
+    color: #4890c8;
+    border-top: 3px solid #4890c8
+}
+
+#strategy-cnt #mall-asset .chart-cnt {
+    margin-right: 2%
+}
+
+#strategy-cnt #mall-asset .chart-cnt .button.right {
+    background-color: #ff4848;
+    margin-top: 2px
+}
+
+#strategy-cnt #mall-asset .chart-cnt span.asset-tag {
+    display: inline-block;
+    width: 20%;
+    border: 1px solid #f55253;
+    color: #f55253;
+    border-radius: 3px;
+    text-align: center;
+    margin-top: -3px;
+    float: right
+}
+
+#strategy-cnt #mall-asset .chart-cnt div.capacity span {
+    margin-right: 10px
+}
+
+#strategy-cnt #mall-asset .chart-cnt .old-price {
+    width: 32%;
+    color: #626262;
+    margin-top: 3px
+}
+
+#strategy-cnt #mall-asset .chart-cnt .old-price .origin_price {
+    margin: 0;
+    color: #626262;
+    text-decoration: line-through;
+    font-size: 14px
+}
+
+#strategy-cnt #mall-asset .chart-cnt .golden-chart {
+    background-image: url(/static/images/mall_asset_stamp.png)
+}
+
+#strategy-cnt #mall-elite {
+    margin-bottom: 10px;
+    float: left;
+    width: 100%
+}
+
+#strategy-cnt #mall-elite .elite-img {
+    width: 15%;
+    background-color: #df303f;
+    position: relative;
+    display: inline-block;
+    background-size: cover;
+    height: 336px
+}
+
+#strategy-cnt #mall-elite .elite-img img {
+    position: relative;
+    top: 30%;
+    width: 90%
+}
+
+#strategy-cnt #mall-elite .elite-cnt {
+    float: right;
+    width: 100%;
+    position: relative
+}
+
+#strategy-cnt #mall-elite .elite-cnt .chart-cnt {
+    margin-right: 2%
+}
+
+#strategy-cnt #mall-elite .elite-cnt .chart-cnt .button.right {
+    background-color: #ff4848
+}
+
+#strategy-cnt #mall-elite .elite-cnt .chart-cnt .old-price {
+    width: 32%;
+    float: left;
+    display: none
+}
+
+#strategy-cnt #mall-elite .elite-cnt .chart-cnt .old-price span {
+    text-decoration: line-through
+}
+
+#strategy-cnt #mall-elite .elite-cnt .chart-cnt .new-price {
+    margin-top: -4px;
+    width: 32%;
+    float: left;
+    color: #ff4848
+}
+
+#strategy-cnt #mall-elite .elite-cnt .chart-cnt .new-price .num {
+    font-size: 18px
+}
+
+#strategy-cnt #filter-cnt {
+    width: 100%;
+    padding: 20px 20px 12px;
+    background-color: #fff;
+    font-size: 14px
+}
+
+#strategy-cnt #filter-cnt .title {
+    color: #474747;
+    margin-right: 10px
+}
+
+#strategy-cnt #filter-cnt .content {
+    display: inline-block
+}
+
+#strategy-cnt #filter-cnt .content span {
+    cursor: pointer;
+    padding: 3px 10px;
+    border-radius: 3px;
+    margin-right: 5px
+}
+
+#strategy-cnt #filter-cnt .content span:hover {
+    color: #4890c8
+}
+
+#strategy-cnt #filter-cnt .content span.selected {
+    background-color: #4890c8;
+    color: #FFF
+}
+
+#strategy-cnt #filter-cnt #tag-cnt {
+    padding-top: 12px
+}
+
+#strategy-cnt #sort-cnt {
+    padding: 12px 20px;
+    margin-top: 12px;
+    margin-bottom: 15px;
+    color: #626262;
+    width: 100%;
+    background-color: #fff;
+    font-size: 14px
+}
+
+#strategy-cnt #sort-cnt .title {
+    color: #474747;
+    margin-right: 10px
+}
+
+#strategy-cnt #sort-cnt .sort-btn {
+    font-size: 14px;
+    color: #626262;
+    margin-right: 10px;
+    display: inline-block;
+    cursor: pointer;
+    padding: 2px 5px
+}
+
+#strategy-cnt #sort-cnt .sort-btn:hover {
+    color: #4890c8
+}
+
+#strategy-cnt #sort-cnt .sort-btn.selected {
+    background-color: #4890c8;
+    color: #FFF;
+    border-radius: 3px
+}
+
+#strategy-cnt #sort-cnt span.mode {
+    float: right;
+    cursor: pointer;
+    margin-top: -3px;
+    width: 33px;
+    height: 30px;
+    background: url(/static/images/switch-pic-list.png) no-repeat
+}
+
+#strategy-cnt #sort-cnt span.mode.list.selected {
+    background: url(/static/images/switch-pic-list.png) -91px 0 no-repeat
+}
+
+#strategy-cnt #sort-cnt span.mode.pic {
+    background: url(/static/images/switch-pic-list.png) -124px 0 no-repeat
+}
+
+#strategy-cnt #sort-cnt span.mode.pic.selected {
+    background: url(/static/images/switch-pic-list.png) -33px 0 no-repeat
+}
+
+#strategy-cnt .content-chart {
+    float: left;
+    width: 100%;
+    margin-bottom: 30px
+}
+
+#strategy-cnt .content-chart .chart {
+    width: 100%
+}
+
+#strategy-cnt .content-chart .list {
+    width: 100%;
+    display: none;
+    background-color: #fff;
+    padding: 12px 20px;
+    margin-bottom: 12px
+}
+
+#strategy-cnt .content-chart .list table {
+    width: 100%
+}
+
+#strategy-cnt .content-chart .list table thead tr {
+    border-bottom: 2px solid #e5e5e5
+}
+
+#strategy-cnt .content-chart .list table thead th {
+    font-size: 18px;
+    padding: 8px 0;
+    color: #626262;
+    font-weight: 400
+}
+
+#strategy-cnt .content-chart .list table thead .selected {
+    color: #4890c8
+}
+
+#strategy-cnt .content-chart .list table tbody {
+    color: #9b9b9b
+}
+
+#strategy-cnt .content-chart .list table tbody tr {
+    cursor: pointer;
+    border-top: 1px solid #e5e5e5
+}
+
+#strategy-cnt .content-chart .list table tbody td {
+    padding: 20px 0
+}
+
+#strategy-cnt .content-chart .list table tbody td a.strategy.name {
+    width: 150px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    color: #626262
+}
+
+#strategy-cnt .content-chart .list table tbody td.author_name img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    float: left
+}
+
+#strategy-cnt .content-chart .list table tbody td.author_name a.author.name {
+    width: 70px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    float: left;
+    color: #9b9b9b;
+    margin-left: 2px
+}
+
+#strategy-cnt .content-chart .chart-bottom {
+    padding: 10px 20px 5px;
+    float: left;
+    background-color: #fff;
+    width: 100%
+}
+
+#strategy-cnt .content-chart .chart-bottom .wrap-bar {
+    float: left
+}
+
+#strategy-cnt .content-chart .chart-bottom .wrap-bar .pagination {
+    margin: 0
+}
+
+#strategy-cnt .content-chart .chart-bottom .more-info {
+    float: left;
+    color: #9e9e9e;
+    margin-top: 10px
+}
+
+#strategy-cnt .chart-cnt {
+    background-color: #fff;
+    display: block;
+    float: left;
+    width: 32%;
+    margin-right: 2%;
+    margin-bottom: 15px;
+    color: #626262;
+    cursor: pointer;
+    font-size: 14px;
+    transition: margin-bottom .6s ease;
+    -webkit-transition: margin-bottom .6s ease;
+    -moz-transition: margin-bottom .6s ease
+}
+
+#strategy-cnt .chart-cnt circle {
+    r: 3
+}
+
+#strategy-cnt .chart-cnt .top {
+    position: relative;
+    padding: 20px 20px 0;
+    overflow: hidden
+}
+
+#strategy-cnt .chart-cnt .top .name, #strategy-cnt .chart-cnt .top .strategy {
+    display: inline-block
+}
+
+#strategy-cnt .chart-cnt .top a {
+    cursor: pointer
+}
+
+#strategy-cnt .chart-cnt .top .name {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden
+}
+
+#strategy-cnt .chart-cnt .top .author.name {
+    color: #626262;
+    text-align: center;
+    width: 33%
+}
+
+#strategy-cnt .chart-cnt .top .strategy.name {
+    float: left;
+    color: #4890c8;
+    font-size: 18px;
+    display: inline-block;
+    margin-top: -3px;
+    width: 67%
+}
+
+#strategy-cnt .chart-cnt .top .strategy.status {
+    text-align: center;
+    display: none
+}
+
+#strategy-cnt .chart-cnt .top .mytag {
+    text-align: center;
+    float: right;
+    width: 100px;
+    margin-right: -40px;
+    margin-top: -45px;
+    transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    background-color: #fff;
+    color: #fff;
+    font-size: 12px
+}
+
+#strategy-cnt .chart-cnt .top .mytag span {
+    padding-left: 40px
+}
+
+#strategy-cnt .chart-cnt .top .mytag.txt {
+    background-color: #4890c8;
+    color: #fff
+}
+
+#strategy-cnt .chart-cnt .clear {
+    border-bottom: 1px solid #e5e5e5;
+    margin: 0 20px
+}
+
+#strategy-cnt .chart-cnt .golden-chart {
+    height: 160px;
+    position: relative;
+    margin: 20px 20px 10px;
+    font-size: 12px
+}
+
+#strategy-cnt .chart-cnt .middle {
+    position: relative;
+    margin: 20px 20px 10px;
+    font-size: 12px
+}
+
+#strategy-cnt .chart-cnt .middle .small-title, #strategy-cnt .chart-cnt .middle span.quarter, #strategy-cnt .chart-cnt .middle span.annual {
+    width: 32%;
+    display: inline-block
+}
+
+#strategy-cnt .chart-cnt .middle .right {
+    width: 34%
+}
+
+#strategy-cnt .chart-cnt .bottom {
+    position: relative;
+    margin: 10px 20px 0;
+    height: 50px;
+    overflow: hidden
+}
+
+#strategy-cnt .chart-cnt .bottom .price {
+    width: 32%;
+    float: left;
+    margin-top: -4px;
+    color: #ff4848
+}
+
+#strategy-cnt .chart-cnt .bottom .price .num {
+    font-size: 18px
+}
+
+#strategy-cnt .chart-cnt .bottom .capacity {
+    width: 46%;
+    display: inline-block
+}
+
+#strategy-cnt .chart-cnt .bottom .button.right {
+    background-color: #4890c8;
+    color: #fff;
+    width: 22%;
+    text-align: center;
+    border-radius: 3px;
+    cursor: pointer
+}
+
+#strategy-cnt .chart-cnt .bottom .button.right:hover {
+    box-shadow: 0 3px 3px #ccc
+}
+
+#strategy-cnt .chart-cnt .bottom .left {
+    float: left
+}
+
+#strategy-cnt .chart-cnt .bottom .num.left {
+    width: 32%;
+    color: #ff4848
+}
+
+#strategy-cnt .chart-cnt .bottom .num.left span {
+    font-size: 18px
+}
+
+#strategy-cnt .chart-cnt .bottom p.remain.left {
+    width: 46%;
+    margin: 4px 0 0
+}
+
+#strategy-cnt .chart-cnt .bottom .activity {
+    display: none
+}
+
+#strategy-cnt .chart-cnt .right {
+    text-align: right;
+    float: right
+}
+
+#strategy-cnt .elite-cnt .mytag.txt {
+    background-color: #ff4848 !important
+}
+
+#strategy-cnt .chart-cnt:hover {
+    box-shadow: 0 3px 3px #ccc;
+    margin-top: -10px
+}
+
+#strategy-cnt .left-cnt {
+    float: left;
+    width: 80%
+}
+
+#strategy-cnt .right-cnt {
+    float: right;
+    width: 18.5%
+}
+
+#strategy-cnt .right-cnt img {
+    height: 18px
+}
+
+#strategy-cnt .right-cnt img.title {
+    height: 24px;
+    margin-bottom: 5px
+}
+
+#strategy-cnt .right-cnt .main-cnt {
+    font-size: 18px
+}
+
+#strategy-cnt .right-cnt .sub-cnt {
+    font-size: 14px;
+    color: #9e9e9e
+}
+
+#strategy-cnt .right-cnt .content {
+    margin-bottom: 15px
+}
+
+#strategy-cnt .right-cnt .statistic .content {
+    padding: 10px 0 5px 10px;
+    background-color: #fff;
+    color: #626262
+}
+
+#strategy-cnt .right-cnt .statistic .content a {
+    max-width: 140px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+    float: left
+}
+
+#strategy-cnt .right-cnt .statistic .content a:hover {
+    color: #626262
+}
+
+#strategy-cnt .right-cnt .statistic .content .num {
+    color: #ff4848 !important
+}
+
+#strategy-cnt .right-cnt .purchase .content {
+    padding: 10px 5px;
+    background-color: #fff;
+    text-align: center
+}
+
+#strategy-cnt .right-cnt .purchase .content .flow img {
+    margin-bottom: 5px
+}
+
+#strategy-cnt .right-cnt .purchase .content span {
+    display: block
+}
+
+#strategy-cnt .right-cnt .purchase .content .gap-arrow {
+    margin-top: 15px;
+    margin-bottom: 30px
+}
+
+#strategy-cnt .right-cnt .purchase .content .clickToWechat {
+    cursor: pointer
+}
+
+#strategy-cnt .right-cnt .usage {
+    overflow: hidden
+}
+
+#strategy-cnt .right-cnt .usage .title {
+    overflow: hidden
+}
+
+#strategy-cnt .right-cnt .usage .title img {
+    float: left
+}
+
+#strategy-cnt .right-cnt .usage .title .more {
+    float: right
+}
+
+#strategy-cnt .right-cnt .usage .title .more a {
+    color: #4890c8
+}
+
+#strategy-cnt .right-cnt .usage ul {
+    background-color: #fff;
+    padding: 13px 0 13px 25px
+}
+
+#strategy-cnt .right-cnt .usage ul a {
+    margin-left: -5px
+}
+
+#bind-wechat-dialog {
+    margin-top: 150px
+}
+
+#bind-wechat-dialog .modal-content {
+    width: 500px
+}
+
+#bind-wechat-dialog .modal-content .modal-body {
+    text-align: center
+}
+
+#btmCnt {
+    margin-top: 30px
+}

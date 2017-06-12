@@ -1,0 +1,483 @@
+﻿//'use strict';
+
+wquant = window.wquant || window.top.wquant;
+wquant.namespace("wquant.page.strategy");
+wquant.namespace("wquant.page.master");
+
+var pageSetting = wquant.page.common.pageSetting;
+var showFlashMessage = wquant.page.common.showFlashMessage;
+
+//显示策略价格信息
+wquant.page.strategy.loadPrice = function (fn) {
+    $(".common_price").each(function (i, item) {
+        var sid = $(item).attr("sid");
+        var jqXHR = $.ajax({
+            url: pageSetting.prefixPath + "./Handler/Strategy/GetStrategyPrice.ashx",
+            type: "POST",
+            dataType: "xml",
+            data: { sid: sid },
+            beforeSend: function () {
+
+            }
+        });
+        jqXHR.done(function (response, status, xhr) {
+            var price = $(response).find("price");
+            if (price.length == 1) {
+                $(".common_price[sid=" + sid + "]").text($(price).attr("common"));
+                $(".member_price[sid=" + sid + "]").text($(price).attr("member"));
+            }
+            fn && fn();
+        });
+    });
+}
+
+//添加到购物车/收藏夹/立即购买：0/1/2
+wquant.page.strategy.addWithUser = function (sid, type, path, fn) {
+    var jqXHR = $.ajax({
+        url: pageSetting.prefixPath + "./Handler/" + path + ".ashx",
+        data: { sid: sid, type: type },
+        type: "POST",
+        dataType: "xml"
+    });
+    jqXHR.done(function (response, status) {
+        var flag = $(response).find("flag").text();
+        var msg = $(response).find("message").text();
+        var msgType = $(response).find("flag").attr("type");
+        fn && flag == "true" && fn();
+        if (msgType == 1) {
+            msg && wquant.page.master.showLoginDialog();
+        } else {
+            msg && showFlashMessage(msg);
+        }
+        if (type == 0) {
+
+        }
+    }).fail(function (response, status, error) {
+
+    });
+}
+
+//================= 收藏 Start ============================
+wquant.page.strategy.myClass = {};
+wquant.config.strategyMsgs = {
+    cart: {
+        undo: "点击添加到购物车",
+        done: "您的购物车中已经有此策略"
+    },
+    favorite: {
+        undo: "未收藏此策略，点击添加收藏",
+        done: "您已经收藏此策略，点击取消收藏"
+    }
+};
+
+wquant.page.strategy.myFavorite = function (fav, favBtn) {
+    var strategy = wquant.page.strategy;
+    var addWithUser = strategy.addWithUser;
+    var myClass = strategy.myClass;
+    myClass.favorite = fav;
+
+    var favBtn = favBtn ? favBtn : ".favorite";
+
+    //策略收藏悬浮
+    $(favBtn).hover(function () {
+        //$('.favorite').hover(function () {
+        var isHave = $(this).attr("favorite");
+        if (isHave == "true") {
+            return false;
+        }
+        $(this).addClass(myClass.favorite);
+        return false;
+    }, function () {
+        var isHave = $(this).attr("favorite");
+        if (isHave == "true") {
+            return false;
+        }
+        $(this).removeClass(myClass.favorite);
+        return false;
+    });
+    //添加到收藏夹
+    $(favBtn).click(function () {
+
+        var item = this;
+        var isHave = $(this).attr("favorite");
+        var sid = $(this).attr("sid");
+        if (isHave == "true") {
+            removeWithUser(sid, 1, favBtn);
+            return false;
+        }
+        sid && addWithUser(sid, 1, "Strategy/AddWithUser", function () {
+            strategy.showFavoriteStyle(sid, favBtn);
+            $(item).attr("favorite", "true");
+            //if ($.trim($(item).html())) {
+            //    $(item).html("已收藏");
+            //}
+            $(item).find("span").addClass("active");
+        });
+        loginCallBack = function () {
+            return sid && addWithUser(sid, 1, "Strategy/AddWithUser", function () {
+                strategy.showFavoriteStyle(sid, favBtn);
+                $(item).attr("favorite", "true");
+            });
+        }
+        return false;
+    });
+
+    //移除收藏信息
+    function removeWithUser(sid, type, favBtn) {
+        var jqXHR = $.ajax({
+            url: pageSetting.prefixPath + wquant.config.url.removePath,
+            data: { sid: sid, type: type },
+            type: "POST",
+            dataType: "xml"
+        });
+        jqXHR.done(function (response, status, xhr) {
+            var flag = $(response).find("message").first().attr("flag");
+            var msg = $(response).find("message").text();
+            var type = $(response).find("flag").attr("type");
+            if (type == 1) {
+                msg && wquant.page.master.showLoginDialog();
+            } else if (msg) {
+                showFlashMessage(msg);
+                $(favBtn).filter("[sid = " + sid + "]").removeClass(myClass.favorite).attr("favorite", "false").
+                    attr("title", wquant.config.strategyMsgs.favorite.undo);
+                //if ($.trim($(favBtn).html())) {
+                //    $(favBtn).html("收藏策略");
+                //}
+                $(favBtn).find("span").removeClass("active");
+            }
+        }).fail(function () {
+
+        });
+    }
+
+    //高亮显示用户已经收藏的策略
+    strategy.showFavorite(favBtn);
+}
+
+//显示收藏信息
+wquant.page.strategy.showFavorite = function (favBtn) {
+    var jqXHR = $.ajax({
+        url: pageSetting.prefixPath + "./Handler/Strategy/UsersFavorite.ashx",
+        type: "POST",
+        dataType: "xml",
+        data: { type: 0 }
+    });
+    jqXHR.done(function (data, status) {
+        var strategys = $(data).find("strategy");
+        if (strategys && strategys.length > 0) {
+            $(strategys).each(function (i, item) {
+                var sid = $(item).attr("sid");
+                wquant.page.strategy.showFavoriteStyle(sid, favBtn);
+            });
+        }
+    });
+}
+
+//改变收藏图片样式
+wquant.page.strategy.showFavoriteStyle = function (sid, favBtn) {
+    $(favBtn).filter("[sid = " + sid + "]").addClass(wquant.page.strategy.myClass.favorite).attr("favorite", "true").
+            attr("title", wquant.config.strategyMsgs.favorite.done);
+}
+//================= 收藏 End ==============================
+
+//================= 购物车 Start ==========================
+
+// 未加入购物车时的样式、sid、加入购物车按钮
+wquant.page.strategy.myCart = function (cart, sid, cartsBtn) {
+
+    var strategy = wquant.page.strategy;
+    var myClass = strategy.myClass;
+    var strategyMsgs = wquant.config.strategyMsgs;
+    var addWithUser = strategy.addWithUser;
+    myClass.cart = cart;
+    cartsBtn = cartsBtn ? cartsBtn : ".addCart";
+
+    $(cartsBtn).attr("title", strategyMsgs.cart.undo);
+
+    //添加到购物车
+    $(cartsBtn).bind("click", function () {
+
+        var sid = $(this).attr("sid");
+        var item = this;
+        sid && addWithUser(sid, 0, "Strategy/AddWithUser", function () {
+            $(item).removeClass(myClass.cart).attr("title", strategyMsgs.cart.done);
+        });
+        loginCallBack = function () {
+            return sid && addWithUser(sid, 0, "Strategy/AddWithUser", function () {
+                $(item).removeClass(myClass.cart).attr("title", strategyMsgs.cart.done);
+            });
+        }
+        return false;
+    });
+    strategy.showCart(sid, cartsBtn);
+}
+
+//显示购物车信息
+wquant.page.strategy.showCart = function (sid, cartsBtn) {
+
+    var jqXHR = $.ajax({
+        url: pageSetting.prefixPath + "./Handler/Strategy/UsersFavorite.ashx",
+        type: "POST",
+        dataType: "xml",
+        data: { type: 1, sid: sid }
+    });
+    jqXHR.done(function (data, status) {
+        //sid不为空，策略详细页面调用
+        if (sid) {
+            var flag = $(data).find("flag").text();
+            if (flag == "true") {
+                $(".addCart[sid=" + sid + "]").addClass("gwc").attr("title", info[1]);
+            }
+            return;
+        }
+
+        var strategys = $(data).find("strategy");
+        if (strategys && strategys.length > 0) {
+            $(strategys).each(function (i, item) {
+                var sid = $(item).attr("sid");
+                $(cartsBtn).filter("[sid=" + sid + "]").removeClass(wquant.page.strategy.myClass.cart).attr("title", wquant.config.strategyMsgs.cart.done);
+            });
+        }
+    });
+}
+//================= 购物车 End ===========================
+
+//策略评级 -- 保留一位小数 3.2->3.0, 3.4->3.0, 3.6->3.5
+wquant.page.strategy.setFloor = function (num) {
+    var n = num * 10 % 10; //小数点后第一位
+    var num_floor = Math.floor(num);
+    if (n >= 5) {
+        num_floor = num_floor + 0.5;
+    }
+    return num_floor;
+}
+
+//策略 开始画图
+wquant.page.strategy.startDraw = function (container, chartContainer, tabVal) {
+    
+    var strategyPathList = null;
+    var strategyPath_timer = null;
+
+    strategyPathList = [];
+    clearInterval(strategyPath_timer);
+
+    if (!container) {
+        container = document;
+    }
+
+    var chartContainer = chartContainer ? chartContainer : $(container).find(".equity_chart");
+
+    $(chartContainer).each(function (i, item) {
+
+        var path = $(this).attr("path");
+        if (path && path.indexOf("http") != -1) {
+            strategyPathList.push({ "path": path, "container": item });
+        }
+    });
+
+    strategyPath_timer = setInterval(function () {
+        draw(tabVal);
+    }, 100);
+
+    var index = 0;
+    function draw(tabVal) {
+
+        if (index >= strategyPathList.length) {
+            return;
+        }
+        var item = strategyPathList[index];
+        wquant.request.loadScript(item.path, function (response) {
+            
+            if (tabVal == "4") {
+                if (typeof (data_lineChart_PortfolioBenchmark) != "undefined" && data_lineChart_PortfolioBenchmark != null) {
+                    lineChart_PortfolioBenchmark(item.container, data_lineChart_PortfolioBenchmark.PortfolioNAV, data_lineChart_PortfolioBenchmark.BenchmarkNAV);
+                    data_lineChart_PortfolioBenchmark = null;                    
+                }
+                else {
+                    drawEquity(item.container, equity);
+                }
+            }
+            else {
+                if (tabVal == "0" || tabVal == "2") {
+                    
+                    if (typeof (data_lineChart_PortfolioBenchmark) != "undefined") {
+                        lineChart_PortfolioBenchmark(item.container, data_lineChart_PortfolioBenchmark.PortfolioNAV, data_lineChart_PortfolioBenchmark.BenchmarkNAV);
+                    }
+                } else if (tabVal == "1" || tabVal == "3") {
+                    if (typeof (equity) != "undefined") {
+                        drawEquity(item.container, equity);
+                    }
+                }
+            }
+        });
+        index++;
+
+        //权益趋势(期货) echarts
+        function drawEquity(obj, equity) {
+            
+            var nday = equity.data.length;
+            var iniCash = equity.data[0][1];
+            var finalCash = equity.data[nday - 1][1];
+            
+            var data = equity.data,
+                len = data.length,
+                timeArr = [],
+                dataArr = [];
+            for (var i = 0; i < len; i++) {
+                //var tmpDate = new Date(data[i][0]).toLocaleString().replace(/:\d{1,2}$/, ' ');
+                timeArr.push((new Date(data[i][0]).toLocaleString().replace(/:\d{1,2}$/, ' ')).substr(0, 7));
+                dataArr.push(data[i][1]);
+            }
+            
+
+            if (!(nreal >= 0 & nreal <= nday)) {
+                nreal = 0;
+            }
+            var realData = equity.data.slice(nday - nreal);
+
+            option = {
+                title: {
+                    text: ''
+                },
+                legend: {                //图例配置
+                    enabled: false
+                },
+                tooltip: {             //提示配置
+                    xDateFormat: '%Y-%m-%d',
+                    shared: false
+                },
+                grid: {               
+                    x: 0,              //x周起点，减少左侧留白
+                    width:260,            //宽度
+                    y: 50,               //y轴起点，减少下面留白
+                    height:166
+                },
+                xAxis: {           //直角坐标系中横轴数组
+                    type: 'category',
+                    data: timeArr,//[2014/08,]
+                    boundaryGap: false,
+                    show: false,        //不显示x轴
+                    splitLine:false     //不显示网格线
+                },
+                yAxis: {
+                    type: 'value',
+                    show: false,           //不显示y轴
+                    splitLine: false        //不显示网格线
+                },
+                series: [
+                    {
+                        name: '权益',                        // 系列名称
+                        type: 'line',                       // 图表类型，折线图line、散点图scatter、柱状图bar、饼图pie、雷达图radar，
+                        symbol:'none',           //去除折线上的小圆点
+                        itemStyle: {                        
+                            normal: {
+                                lineStyle: {
+                                    color: "#EA3E3F", //折线颜色
+                                    width:'1'       //折线粗细
+                                },
+                                areaStyle: {
+                                    type: 'default',
+                                    color:'#FD7373'
+                                }
+                            }
+                        },
+                        data: dataArr
+                    }
+                ]
+                    
+            };
+            echarts.init(obj).setOption(option);
+        }
+
+        //净值走势(股票)
+        function lineChart_PortfolioBenchmark(obj, equity, benchmark) {
+
+            if (!(nreal >= 0 & nreal <= equity.length)) {
+                nreal = 0;
+            }
+            var realData = equity.slice(equity.length - nreal);
+
+            $(obj).highcharts({
+                chart: {
+                    zoomType: 'x',
+                    resetZoomButton: {                  //还原
+                        // 按钮定位
+                        position: {
+                            align: 'right', // by default
+                            verticalAlign: 'top', // by default
+                            x: -220,
+                            y: 0
+                        },
+                    },
+                    spacingTop: 0,
+                    spacingBottom: -2,
+                    spacingLeft: 0,
+                    spacingRight: -1
+                },
+                credits: {
+                    enabled: false
+                },
+                title: {
+                    text: null,
+                    style: {
+                        color: '#817E7E',
+                        fontFamily: 'Microsoft YaHei',
+                        fontSize: '12px'
+                    }
+
+                },
+
+                xAxis: {
+                    type: 'datetime',
+                    title: {
+                        text: null
+                    },
+                    labels: {
+                        enabled: false
+                    },
+                    lineWidth: 0,      //坐标轴
+                    tickWidth: 0
+                },
+                yAxis: {
+                    title: {
+                        text: ''
+                    },
+                    labels: {
+                        enabled: false
+                    },
+                    gridLineWidth: 0
+                },
+                legend: {
+                    enabled: false
+                },
+                colors: [
+                   '#ff6600',
+                   '#8bbc21'
+                ],
+                plotOptions: {
+                },
+                tooltip: {
+                    pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><br/>',
+                    xDateFormat: '%Y-%m-%d',
+                    shared: true
+                },
+                series: [{
+                    type: 'line',
+                    name: '权益',
+                    data: equity,
+                    marker: {
+                        enabled: false
+                    }
+                }, {
+                    type: 'line',
+                    name: '沪深300',
+                    data: benchmark,
+                    color: '#51aded',
+                    marker: {
+                        enabled: false
+                    },
+                }]
+            });
+        };
+    }
+}

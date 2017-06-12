@@ -1,0 +1,175 @@
+﻿//ajax分页控件
+wquant.namespace("wquant.plugin");
+(function () {
+    wquant.plugin.MyPage = function (size, callback) {
+        this.divPage = null;
+        this.aPageFirst = null;
+        this.aPagePrev = null;
+        this.aPageNext = null;
+        this.aPageLast = null;
+        this.spanPageCurrent = null;
+        this.spanPageSum = null;
+        this.spanRecordSum = null;
+        this.txtGo = null;
+        this.btnGo = null;
+        this.callback = callback;
+        this.size = size;
+    };
+
+    wquant.plugin.MyPage.prototype = {
+        constructor: wquant.plugin.MyPage,
+        //初始化
+        setContainer: function (obj, pageNum) {
+            if (!this.divPage) {
+                this.controlInit();
+                this.eventInit();
+            }
+            $(obj).append(this.divPage);
+            pageNum = myPage_checkInt(pageNum) ? pageNum : 1;
+            this.setPage();
+            this.callback(pageNum);
+        },
+        setPage: function (sum, current) {
+            sum = sum ? sum : 0;
+            current = current ? current : 0;
+            var pageSum = Math.ceil(sum / this.size);
+            if (current == 0) {
+                current = pageSum;
+            }
+            this.spanPageCurrent.innerHTML = current;
+            this.spanPageSum.innerHTML = pageSum;
+            this.spanRecordSum.innerHTML = sum;
+        },
+        controlInit: function () {
+            //控件初始化
+            this.divPage = myPage_create("div", "page");
+            this.aPageFirst = myPage_create("a", "page_move border_normal");
+            this.aPageFirst.innerHTML = "首页";
+            this.aPageFirst.href = "javascript:;";
+            this.aPagePrev = myPage_create("a", "page_move border_normal");
+            this.aPagePrev.innerHTML = "上一页";
+            this.aPagePrev.href = "javascript:;";
+            this.aPageNext = myPage_create("a", "page_move border_normal");
+            this.aPageNext.innerHTML = "下一页";
+            this.aPageNext.href = "javascript:;";
+            this.aPageLast = myPage_create("a", "page_move border_normal");
+            this.aPageLast.innerHTML = "尾页";
+            this.aPageLast.href = "javascript:;";
+            this.spanPageCurrent = myPage_create("span", "");
+            this.spanPageSum = myPage_create("span", "");
+            this.spanRecordSum = myPage_create("span", "marginLeft_15");
+            this.txtGo = myPage_create("input", "txt_go", "text");
+            this.btnGo = myPage_create("input", "btn_go", "button");
+
+            this.divPage.appendChild(this.aPageFirst);
+            this.divPage.appendChild(this.aPagePrev);
+            this.divPage.appendChild(this.aPageNext);
+            this.divPage.appendChild(this.aPageLast);
+            $(this.divPage).append('<span style="margin-left:15px;">第</span>');
+            this.divPage.appendChild(this.spanPageCurrent);
+            $(this.divPage).append('<span>页</span>&nbsp;<span>共</span>');
+            this.divPage.appendChild(this.spanPageSum);
+            $(this.divPage).append('<span>页</span>');
+            this.divPage.appendChild(this.spanRecordSum);
+            $(this.divPage).append('<span>条记录</span>&nbsp;');
+            this.divPage.appendChild(this.txtGo);
+            this.divPage.appendChild(this.btnGo);
+        },
+        //事件初始化
+        eventInit: function () {
+            if (!this.divPage) {
+                return;
+            }
+            this.aPageFirst.onclick = myPage_bindPageEvent(this, this.first);
+            this.aPagePrev.onclick = myPage_bindPageEvent(this, this.prev);
+            this.aPageNext.onclick = myPage_bindPageEvent(this, this.next);
+            this.aPageLast.onclick = myPage_bindPageEvent(this, this.last);
+            this.btnGo.onclick = myPage_bindPageEvent(this, this.skip);
+            this.aPageFirst.onmouseover = this.aPagePrev.onmouseover = this.aPageNext.onmouseover =
+            this.aPageLast.onmouseover = function () {
+                $(this).addClass("pageBtn_hover").removeClass("border_normal");
+            };
+            this.aPageFirst.onmouseout = this.aPagePrev.onmouseout = this.aPageNext.onmouseout =
+            this.aPageLast.onmouseout = function () {
+                $(this).addClass("border_normal").removeClass("pageBtn_hover");
+            };
+        },
+        next: function () {
+            var item = this;
+            var current = item.spanPageCurrent.innerHTML - 0;
+            var pageSum = item.spanPageSum.innerHTML - 0;
+            if (current && pageSum && current + 1 <= pageSum) {
+                item.callback(current + 1);
+            }
+        },
+        prev: function () {
+            var item = this;
+            var current = item.spanPageCurrent.innerHTML - 0;
+            if (current && current - 1 > 0) {
+                item.callback(current - 1);
+            }
+        },
+        first: function () {
+            var item = this;
+            var current = item.spanPageCurrent.innerHTML - 0;
+            if (current && current != 1) {
+                item.callback(1);
+            }
+        },
+        last: function () {
+            var item = this;
+            var current = item.spanPageCurrent.innerHTML - 0;
+            var pageSum = item.spanPageSum.innerHTML - 0;
+            if (current && pageSum && current != pageSum) {
+                item.callback(pageSum);
+            }
+        },
+        skip: function () {
+            var item = this;
+            var skipNo = item.txtGo.value - 0;
+            var current = item.spanPageCurrent.innerHTML - 0;
+            var pageSum = item.spanPageSum.innerHTML - 0;
+            if (skipNo && current && skipNo && skipNo - 0 <= pageSum && skipNo - 0 > 0 && skipNo != current) {
+                item.callback(skipNo);
+            }
+        },
+        fresh: function (item, pageNo) { //刷新当前页
+            var current = item.spanPageCurrent.innerHTML - 0;
+            /*var pageSum = item.spanPageSum.innerHTML - 0;
+            if (current && current <= pageSum) {
+            item.callback(current);
+            }*/
+            pageNo = pageNo ? pageNo : current; //页数为0时，最后一页
+            item.callback(pageNo);
+        }
+    };
+
+    //绑定分页事件
+    function myPage_bindPageEvent(item, fn) {
+        return function () {
+            fn.apply(item);
+        }
+    }
+    //验证是否为正整数
+    function myPage_checkInt(num) {
+        var flag = true;
+        var pattern = /\d+/;
+        var matches = pattern.exec(num);
+        if (!matches || matches[0] != num) {
+            flag = false;
+        }
+        return flag;
+    }
+
+    //创建元素
+    function myPage_create(tagName, className, type) {
+        var obj = document.createElement(tagName);
+        if (className) {
+            obj.className = className;
+        }
+        if (type) {
+            obj.type = type;
+        }
+        return obj;
+    }
+})();

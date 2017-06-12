@@ -1,0 +1,656 @@
+﻿#bread {
+    height: 42px;
+    line-height: 42px;
+    border-bottom: 1px inset #f1f1f1;
+    color: #848484;
+    font-size: 14px;
+}
+
+.leftContainer, .rightContainer {
+    display: inline-block;
+    vertical-align: top;
+    min-height: 400px;
+}
+
+.leftContainer {
+    width: 918px;
+}
+/*右侧部分*/
+.rightContainer {
+    width: 270px;
+    margin-left: 6px;
+}
+
+    .rightContainer h2, .leftContainer h2, .recomContainer h2 {
+        height: 46px;
+        line-height: 46px;
+        color: #1a1a1a;
+        font-size: 18px;
+        font-weight: normal;
+        padding-left: 10px;
+    }
+
+.rightItemContainer {
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+}
+
+.ulPublic {
+    margin: 14px 18px;
+    line-height: 30px;
+    font-size: 14px;
+    color: #848484;
+    overflow: hidden;
+}
+
+    .ulPublic a {
+        color: #848484;
+    }
+
+    .ulPublic li {
+        width: 100%;
+        background: url(./../../Images/Strategy/imgPublicLi.png) no-repeat left 6px;
+        padding-left: 20px;
+    }
+
+#imgOpenAccount {
+    margin: 12px 0;
+}
+
+.appDownLoad {
+    height: 180px;
+    background: #fff url(./../../Images/Strategy/imgAppDown.png) no-repeat center center;
+}
+
+.recommendItem {
+    height: 120px;
+    border-bottom: 1px solid #e6e6e6;
+    cursor: pointer;
+}
+
+    .recommendItem:last-of-type {
+        border-bottom: none;
+    }
+
+    .recommendItem h2 {
+        height: 56px;
+        line-height: 56px;
+    }
+
+        .recommendItem h2 .strategyWriter {
+            float: right;
+            color: #848484;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+
+.strategyIntro > div {
+    display: inline-block;
+    vertical-align: top;
+    width: 80px;
+    font-size: 14px;
+    color: #787878;
+    margin-left: 12px;
+}
+
+    .strategyIntro > div p {
+        height: 24px;
+        line-height: 24px;
+    }
+
+.strategyIntro .monthProfit {
+    color: #ff5256;
+    font-size: 14px;
+}
+
+    .strategyIntro .monthProfit > span {
+        font-size: 24px;
+    }
+
+.strategyIntro .btnBuy {
+    width: 62px;
+    height: 26px;
+    line-height: 26px;
+    background-color: #ff5256;
+    color: #fff;
+    font-size: 14px;
+    font-family: 'Microsoft YaHei';
+    text-align: center;
+    border: none;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.rightContainer .futureProcess, .rightContainer .process{
+    height: 440px;
+    width: 268px;
+    color:#333;
+    font-size:16px;
+    text-align:center;
+    padding: 26px 0;
+}
+.rightContainer .process{
+    height: 364px;    
+}
+.process .subInfo, .futureProcess .subInfo { 
+    color:#999;
+    font-size:14px;
+}
+.imgProcess { 
+    display:block;
+    margin:20px auto;
+}
+.processWay { 
+    display: inline-block;
+    width: 134px;
+    height:132px;
+    float: left;
+    font-size:14px;
+}
+
+.rightItemContainer {
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+}
+/*左侧部分*/
+/*轮播图*/
+.banner{
+    width: 1200px;
+    height: 164px;
+    overflow: hidden;
+    margin-top:10px;
+    position:relative;
+}
+.ul_bannerContent {
+    overflow: hidden;
+}
+
+.li_bannerContent {
+    width: 1200px;
+    height: 164px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    z-index: 4;
+}
+
+    .li_bannerContent > a {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+.li_bannerContent1 {
+    z-index: 5;
+}
+
+.ul_switch {
+    position: absolute;
+    top: 136px;
+    right: 14px;
+    z-index: 100;
+    overflow: hidden;
+}
+
+    .ul_switch .dot_switch {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        border: 1px solid #fff;
+        background-color: transparent;
+        cursor: pointer;
+        margin-left: 8px;
+        behavior: url(../../Plugin/PIE.htc);
+    }
+
+li.dot_switch.active {
+    background-color: #fff;
+}
+.li_bannerContent1 {
+    z-index: 5;
+}
+
+.linkCurrentPage {
+    color: #848484;
+}
+
+    .linkCurrentPage:hover {
+        text-decoration: underline;
+    }
+
+.classifyContainer {
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    padding: 6px 20px;
+    font-size: 14px;
+    color: #848484;
+}
+
+    .classifyContainer dl {
+        width: 100%;
+        height: 36px;
+        line-height: 36px;
+        overflow: hidden;
+        border-bottom: 1px dashed #dcdcdc;
+    }
+
+    .classifyContainer dt, .classifyContainer .keyword {
+        /*width: 66px;*/
+        width: 70px;
+        float: left;
+        text-align: right;
+        padding-right: 8px;
+    }
+
+    .classifyContainer dd {
+        float: left;
+        cursor: pointer;
+        margin-right: 12px;
+    }
+
+        .classifyContainer dd span {
+            padding: 2px 6px;
+        }
+
+    .classifyContainer .active, classifyContainer dd span:hover {
+        color: #fff;
+        background-color: #3d9fe1;
+        border-radius: 4px;
+    }
+
+    .classifyContainer > div {
+        height: 46px;
+        line-height: 46px;
+    }
+
+.txtSearch {
+    width: 156px;
+    height: 24px;
+    line-height: 24px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.btnSearch {
+    width: 50px;
+    height: 24px;
+    line-height: 24px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+    color: #000;
+    cursor: pointer;
+}
+
+.rankContainer {
+    height: 46px;
+    line-height: 46px;
+    background-color: #fbfbfb;
+    border: 1px solid #eaeaea;
+    margin: 12px auto;
+    font-size: 14px;
+    text-align: center;
+}
+
+    .rankContainer > ul li {
+        cursor: pointer;
+    }
+
+        .rankContainer > ul li:first-of-type {
+            color: #999;
+            border-right: 1px solid #eaeaea;
+            cursor: default;
+        }
+
+        .rankContainer > ul li.active {
+            color: #ff6600;
+        }
+
+.sortArrow {
+    width: 10px;
+    height: 14px;
+    display: inline-block;
+    background: url(./../../Images/Strategy/orangeArrow.png) no-repeat 0px center;
+    vertical-align: middle;
+    margin-left: 4px;
+}
+
+.rankContainer > ul li .sort_desc {
+    background-position: -78px 1px;
+}
+
+.rankContainer > ul li .sort_asc {
+    background-position: -60px 1px;
+}
+
+.rankContainer > ul li.active .sort_desc {
+    background-position: -29px 0px;
+}
+
+.rankContainer > ul li.active .sort_asc {
+    background-position: -3px 0px;
+}
+.strategyContainer {
+    overflow:hidden;
+}
+.strategyContainer > div {
+    width: 28%;
+    height: 300px;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border: 1px solid #e4e4e4;
+    float:left;
+    font-size: 14px;
+    color: #afafaf;
+    background-color: #fff;
+    position: relative;
+    margin-right:6px;
+}
+
+.strategyContainer .straName {
+    font-size: 16px;
+    color: #000;
+    cursor: pointer;
+}
+
+.strategyContainer .straWriter {
+    font-size: 14px;
+    color: #3db0f0;
+    float: right;
+    cursor: pointer;
+    cursor: pointer;
+}
+
+    .strategyContainer .straName:hover, .strategyContainer .straWriter:hover {
+        text-decoration: underline;
+    }
+
+.strategyContainer .chart {
+    width: 260px;
+    height: 166px;
+    border: 1px solid #eaeaea;
+    margin: 12px auto 0;
+}
+
+.strategyContainer .chartCover {
+    width: 260px;
+    height: 166px;
+    position:absolute;
+    top:44px;
+    left:21px;
+    display:block;
+}
+
+.strategyContainer .imgLabel {
+    position: relative;
+    top: -167px;
+    left: 1px;
+    z-index: 90;
+    height: 0;
+}
+
+.profitContainer > div {
+    width: 80px;
+    display: inline-block;
+    vertical-align: top;
+    margin: 1px 0;
+    color: #757575;
+}
+
+     .profitContainer > div.updateTime {
+        width: 86px;
+    }
+
+.strategyContainer .btnBuy, .strategyContainer .btnTry {
+    width: 62px;
+    height: 28px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+    /*line-height: 26px;*/
+    background-color: #ff5256;
+    color: #fff;
+    font-family: 'Microsoft YaHei';
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 4px;
+    float: right;
+    position: absolute;
+    text-align: center;
+}
+.strategyContainer .stockBuy {
+    background-color: #ff9000;
+    left:20px;
+}
+
+.btnBuy {
+    left: 147px;
+}
+
+.strategyContainer .btnTry {
+    background-color: #317fc7;
+    left: 214px;
+}
+.orderdiv .btnTry {
+    left: 204px;
+}
+.strategyContainer .quantMoney {
+    color: #ff5256;
+    font-size: 24px;
+}
+
+#startagyPage {
+    height: 48px;
+    line-height: 48px;
+    border: 1px solid #f1f1f1;
+}
+
+/*会员评论*/
+.remarkContainer {
+    border: 1px solid #e6e6e6;
+    background-color: #fff;
+    color: #5e5e5e;
+}
+
+    .remarkContainer > div {
+        width: 860px;
+        margin: 0 auto;
+        border-bottom: 1px dashed #ccc;
+    }
+
+    .remarkContainer a {
+        color: #5e5e5e;
+    }
+
+.remarkTitle {
+    font-size: 16px;
+    height: 52px;
+    line-height: 52px;
+}
+
+.remarkContent {
+    padding: 12px;
+    font-size: 14px;
+    color: #a5a5a5;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+}
+
+.remarkWriter {
+    color: #5e5e5e;
+    display: inline-block;
+    margin-right: 6px;
+}
+
+partOne, .partTwo, .partThree {
+    height: 110px;
+}
+
+btnCertainSimulate {
+    margin-left: 74px;
+}
+
+.btnCertainSimulate, .btnCancelSimulate {
+    float: none;
+    margin: 20px 10px;
+    display: inline-block;
+}
+
+.btnBeginSimulate, .btnKonw {
+    float: none;
+    margin: 20px auto;
+    display: block;
+}
+
+.dialog_content {
+    text-align: center;
+}
+.bindStockAccountContent {
+    font-size: 14px;
+    width: 436px;
+    margin: 0 auto;
+}
+
+    .bindStockAccountContent a {
+        color: #037ed4;
+        cursor: pointer;
+    }
+
+    .bindStockAccountContent .QrCode {
+        position: relative;
+    }
+
+        .bindStockAccountContent .QrCode img {
+            position: absolute;
+            top: -150px;
+            left: -80px;
+        }
+
+    .bindStockAccountContent .btnIKonw {
+        width: 164px;
+        float: none;
+        margin: 20px auto;
+        display: block;
+    }
+    /*微量网客户须知*/
+.customInfo { 
+    font-family: microsoft YaHei;
+}
+    .customInfo .logo { 
+            height:110px;
+            border-bottom:1px solid #1973c6;
+            text-align:center;
+            font-size:0;
+            margin-top: -14px;
+        }
+        .customInfo .logo img{ 
+            width:172px;
+            vertical-align:middle;
+        }
+        .customInfo h3 { 
+            font-size:20px;
+            font-weight:normal;
+            height:70px;
+            line-height:70px;
+            text-align:left;
+            padding-left: 40px;
+        }
+        .customInfo .item { 
+            font-size:14px;
+            color:#474747;
+            margin-bottom:30px;
+            line-height:26px;
+            text-align:left;
+            padding:0 40px;
+            
+        }
+        .customInfo .label_btn { 
+            font-size:14px;
+            color:#575757;
+            margin-bottom:48px;
+            display:inline-block;
+            margin-right:8px;
+        }
+        .customInfo .btnContinue { 
+            width:166px;
+            height:42px;
+            line-height:42px;
+            font-size:16px;
+            border-radius:8px;
+            cursor:pointer;
+            border:none;
+            font-family: microsoft YaHei;
+            border:1px solid #317fc7;
+            background-color:#317fc7;
+            color:#fff;
+            margin-right:64px;
+        }
+        .btnHome { 
+            text-align: left;
+        }    
+        #checkNoTip { 
+            margin-left: 40px;
+        }
+        label[for='checkNoTip'] { 
+            font-size: 14px;
+            color: #575757;
+            margin-right: 270px;
+        }
+/*相关推荐*/
+.recommend { 
+    height:160px;
+    line-height:160px;
+    background-color:#fff;
+    border:1px solid #e6e6e6;
+    margin-bottom:30px;
+} 
+.recomLogo { 
+    width:92px;
+    height:90px;
+    display:inline-block;
+    background-image:url(./../../Images/Strategy/imgRecommend.png?ver=20170606);
+    vertical-align: middle;
+    margin: 0 10px 0 20px;
+} 
+.recomLogo1 { 
+    background-position: 0 0; 
+}
+
+.item_set { display: flexbox; -moz-box-flex: 1; -webkit-box-flex: 1; flex: 1; border-top: solid 1px #D2D2D2; border-right: solid 1px #D2D2D2; border-bottom: solid 1px #D2D2D2; height: 50px; line-height: 50px; text-align: center; }
+.recomLogo4 { background-position: -298px 0; }
+
+.recommend > a > span { color: #1a1a1a; font-size: 20px; margin-right: 26px; }
+  
+.appErwei { 
+        display: inline-block;
+    vertical-align: middle;
+    width: 238px;
+    height: 118px;
+    }
+.appErwei>div{ 
+    color: #f65454;
+    font-size: 16px;
+    line-height:36px;
+    float:right;
+    text-align:center;
+    margin-top:18px;
+    }
+    .transrules .sp_rate {
+        display: inline-block;
+        height: 25px;
+        width: 25px;
+        border: solid 1px #E5E5E5;
+        text-align: center;
+        margin: 0 5px;
+    }
+
+.footer_area a{
+	color:#535353;
+	font-size:12px;
+	text-decoration:none;
+}
+.footer_area a:hover{
+	color:#ff6633;
+}

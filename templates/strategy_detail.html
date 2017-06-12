@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}中银策略市场-策略详情{% endblock %}
+
+{% block content %}
+{% comment %}
+    <h1>{{ strategy.name }}</h1>
+    <h2>{{ strategy.description }}</h2>
+    <div>
+        {{ strategy.content }}
+    </div>{% endcomment %}
+
+<div class="panel panel-default">
+    <div class="panel-heading">{{ strategy.name }}</div>
+    <div class="panel-body">
+        {{ strategy.description }}
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item">{{ strategy.content }}</li>
+        <li class="list-group-item">{{ strategy.content }}</li>
+    </ul>
+</div>
+{% endblock %}
+
+
+

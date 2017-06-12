@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}中银策略市场-选购{% endblock %}
+
+{% block head_extra %}
+    <!--market head-->
+    {% load static %}
+    <link type="text/css" rel="stylesheet" href="{% static 'css/kefu.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/commons.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/loginCtl.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/strategyMall.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{% include 'stragety_index.html' %}
+
+{% endblock %}

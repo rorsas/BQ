@@ -1,0 +1,16 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    {% include 'head.html' %}
+    {% block head_extra %}
+        <!--head_extra-->
+    {% endblock %}
+</head>
+<body>
+{% include 'nav.html' %}
+{% block content %}
+    <div>这里是默认内容，所有继承自这个模板的，如果不覆盖就显示这里的默认内容。</div>
+{% endblock %}
+{#{% include 'bottom.html' %}#}
+</body>
+</html>

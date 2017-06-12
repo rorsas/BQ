@@ -1,0 +1,67 @@
+﻿.page
+{
+    height: 40px;
+    line-height: 40px;
+    margin: 10px auto;
+    text-align:center;
+    font-family: 宋体;
+    font-size:0px;
+}
+.page span
+{
+    font-size: 12px;
+}
+.page_move
+{
+    background-color: #f0f0f0;
+    color: #505050;
+    cursor: pointer;
+    margin-left: 15px;
+    font-size: 14px;
+    padding: 3px 7px;
+    border-radius: 3px;
+}
+.span_currentNum
+{
+    margin:0 6px;
+    color:Red;
+}
+.txt_go
+{
+    width: 33px;
+    height: 23px;
+    text-align:center;
+}
+.btn_go
+{
+    width:27px;
+    height:25px;
+    border:none;
+    padding:0;
+    margin-left:15px;
+    background:url(../../../Images/Strategy/btn_go.png) no-repeat;
+    vertical-align:middle;
+    margin-bottom:10px;
+    cursor:pointer;
+}
+.border_down
+{
+    border: 1px solid #999;
+}
+.border_normal
+{
+    border: 1px solid #ccc;
+}
+.marginLeft_15
+{
+    margin-left: 15px;
+}
+.pageBtn_hover
+{
+    border: 1px solid #1F99E6;
+    background-color: #CCE3F1;
+}
+.pageBtn_normal
+{
+    border: 1px solid #ccc;
+}

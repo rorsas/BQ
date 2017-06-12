@@ -1,0 +1,669 @@
+<html>
+{% load static %}
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="keywords" content="中银策略市场">
+    <meta name="description" content="中银策略市场是您身边最专业的策略超市,主要包括策略详细视图、策略图片、策略名称、当月收益率、实盘收益率等期货策略产品信息.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" >
+    <link type="text/css" rel="stylesheet" href="{% static 'css/kefu.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/commons.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/loginCtl.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/strategyMall.css' %}">
+</head>
+
+<body>
+{% if latest_strategy_list %}
+    <ul>
+        {% for strategy in latest_strategy_list %}
+            <li><a href="/strategy/{{ strategy.id }}/">{{ strategy.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No strategy are available.</p>
+{% endif %}
+
+{% if latest_strategy_list %}
+    <ul>
+        <div id="strategy-cnt" style="min-height: 679px;">
+            <div class="chart">
+                {% for strategy in latest_strategy_list %}
+                    <div class="chart-cnt">
+                        <div class="top">
+                            <a class="strategy name" target="_blank"
+                               href="/strategy/{{ strategy.id }}/">{{ strategy.name }}</a><span
+                                class="strategy status">可订阅</span>
+                            <a class="author name right" target="_blank"
+                               href="/user/{{ strategy.author.id }}/">{{ strategy.author.first_name }}</a>
+                            <div class="mytag txt"><span>次新</span></div>
+                        </div>
+                        <div class="clear"></div>
+                        <div id="top-chart0" class="golden-chart">
+                            <svg class="graph">
+                                <g class="nvd3 nv-wrap nv-lineChart" transform="translate(0,50)">
+                                    <g>
+                                        <rect width="261.1377245508982" height="160" style="opacity: 0;"></rect>
+                                        <g class="nv-x nv-axis"></g>
+                                        <g class="nv-y nv-axis"></g>
+                                        <g class="nv-linesWrap" transform="translate(2.9311377245508985,0)">
+                                            <g class="nvd3 nv-wrap nv-line" transform="translate(0,0)">
+                                                <defs>
+                                                    <clipPath id="nv-edge-clip-90068">
+                                                        <rect width="261.1377245508982" height="110"></rect>
+                                                    </clipPath>
+                                                </defs>
+                                                <g clip-path="">
+                                                    <g class="nv-groups">
+                                                        <g class="nv-group nv-series-0"
+                                                           style="stroke-opacity: 1; fill-opacity: 0.5; fill: rgb(255, 0, 0); stroke: rgb(255, 0, 0);">
+                                                            <path class="nv-line"
+                                                                  d="M0,98.07296990704818L5.3293413173652695,99.31064056493852L10.658682634730539,98.97939999381923L15.988023952095809,98.65088936881438L21.317365269461078,97.87578728550339L26.646706586826344,97.15727026691786L31.976047904191617,97.42969969420471L37.30538922155689,97.19651857423884L42.634730538922156,98.07594512175882L47.964071856287426,97.33418357175557L53.29341317365269,96.01000774636411L58.62275449101796,96.4076547899096L63.952095808383234,96.7335287775051L69.2814371257485,96.39896108455885L74.61077844311377,97.29758256569595L79.94011976047904,96.96138330339222L85.26946107784431,97.47170460727017L90.59880239520959,96.83553918582804L95.92814371257485,96.6612705162887L101.25748502994011,96.36544726365597L106.58682634730538,96.15371381604422L111.91616766467065,95.87496605644172L117.24550898203591,95.37349574973167L122.57485029940119,94.80342488304447L127.90419161676647,93.97029278306076L133.23353293413174,95.00650728071352L138.562874251497,96.42289876635718L143.89221556886227,96.47489570875554L149.22155688622755,96.88883445220856L154.55089820359282,96.34391961241178L159.88023952095807,96.64699161844796L165.20958083832335,96.26504976294947L170.53892215568862,96.16018677421398L175.8682634730539,95.62517598697104L181.19760479041918,95.53830824850161L186.52694610778443,94.96600330481841L191.8562874251497,95.4681934215391L197.18562874251495,95.46787883790482L202.51497005988023,95.27226646856843L207.84431137724548,94.7940406932761L213.17365269461075,95.16044531639675L218.50299401197603,94.49125394528117L223.8323353293413,95.08730995335254L229.16167664670658,95.32501787849645L234.49101796407183,95.62909228662153L239.8203592814371,96.45274422216879L245.14970059880238,95.66362717135432L250.47904191616766,95.50855076946907L255.80838323353294,94.82780778066422L261.13772455089816,93.84870620841137"
+                                                                  style="stroke-width: 1.5;"></path>
+                                                        </g>
+                                                        <g class="nv-group nv-series-1"
+                                                           style="stroke-opacity: 1; fill-opacity: 0.5; fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);">
+                                                            <path class="nv-line"
+                                                                  d="M0,98.07296990704818L5.3293413173652695,100.83333333333333L10.658682634730539,95.49418161679141L15.988023952095809,92.882334918534L21.317365269461078,89.85249076348732L26.646706586826344,85.53254534487183L31.976047904191617,86.27587812964528L37.30538922155689,86.8380162936586L42.634730538922156,86.87989252224453L47.964071856287426,86.75426882828891L53.29341317365269,83.65221222811351L58.62275449101796,80.57358425155962L63.952095808383234,80.44082722669272L69.2814371257485,81.34121685918879L74.61077844311377,81.34138816028573L79.94011976047904,81.29447211068808L85.26946107784431,81.29447211068808L90.59880239520959,79.49519822726114L95.92814371257485,76.37441369730371L101.25748502994011,67.74176182114815L106.58682634730538,61.588716105217884L111.91616766467065,49.74179322457783L117.24550898203591,49.63079238368515L122.57485029940119,46.098473314936875L127.90419161676647,50.31207498239315L133.23353293413174,50.765856401612524L138.562874251497,52.7431497776996L143.89221556886227,52.591051992146035L149.22155688622755,51.98265178408077L154.55089820359282,51.374251576015425L159.88023952095807,51.3753927177316L165.20958083832335,51.68072334353922L170.53892215568862,51.60438613724789L175.8682634730539,48.43920971459938L181.19760479041918,44.78336013026981L186.52694610778443,37.99078943842531L191.8562874251497,34.67572620671817L197.18562874251495,28.88422314210743L202.51497005988023,18.521604996887987L207.84431137724548,9.166666666666671L213.17365269461075,16.67042500112096L218.50299401197603,16.893083605666916L223.8323353293413,17.449750024518607L229.16167664670658,18.117725838156446L234.49101796407183,17.33841408641665L239.8203592814371,22.10598755045133L245.14970059880238,21.607296027864535L250.47904191616766,26.26359714358003L255.80838323353294,25.953004324565924L261.13772455089816,23.67534422140146"
+                                                                  style="stroke-width: 1.5;"></path>
+                                                        </g>
+                                                    </g>
+                                                    <g class="nv-scatterWrap" clip-path="">
+                                                        <g class="nvd3 nv-wrap nv-scatter nv-chart-90068"
+                                                           transform="translate(0,0)">
+                                                            <defs>
+                                                                <clipPath id="nv-edge-clip-90068">
+                                                                    <rect width="261.1377245508982" height="110"></rect>
+                                                                </clipPath>
+                                                            </defs>
+                                                            <g clip-path="">
+                                                                <g class="nv-groups">
+                                                                    <g class="nv-group nv-series-0"
+                                                                       style="stroke-opacity: 1; fill-opacity: 0.5; fill: rgb(255, 0, 0); stroke: rgb(255, 0, 0);">
+                                                                        <circle cx="0" cy="98.07296990704818"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-0"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="5.3293413173652695"
+                                                                                cy="99.31064056493852"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-1"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="10.658682634730539"
+                                                                                cy="98.97939999381923"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-2"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="15.988023952095809"
+                                                                                cy="98.65088936881438"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-3"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="21.317365269461078"
+                                                                                cy="97.87578728550339"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-4"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="26.646706586826344"
+                                                                                cy="97.15727026691786"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-5"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="31.976047904191617"
+                                                                                cy="97.42969969420471"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-6"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="37.30538922155689"
+                                                                                cy="97.19651857423884"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-7"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="42.634730538922156"
+                                                                                cy="98.07594512175882"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-8"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="47.964071856287426"
+                                                                                cy="97.33418357175557"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-9"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="53.29341317365269"
+                                                                                cy="96.01000774636411"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-10"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="58.62275449101796"
+                                                                                cy="96.4076547899096"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-11"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="63.952095808383234"
+                                                                                cy="96.7335287775051"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-12"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="69.2814371257485"
+                                                                                cy="96.39896108455885"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-13"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="74.61077844311377"
+                                                                                cy="97.29758256569595"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-14"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="79.94011976047904"
+                                                                                cy="96.96138330339222"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-15"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="85.26946107784431"
+                                                                                cy="97.47170460727017"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-16"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="90.59880239520959"
+                                                                                cy="96.83553918582804"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-17"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="95.92814371257485"
+                                                                                cy="96.6612705162887"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-18"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="101.25748502994011"
+                                                                                cy="96.36544726365597"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-19"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="106.58682634730538"
+                                                                                cy="96.15371381604422"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-20"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="111.91616766467065"
+                                                                                cy="95.87496605644172"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-21"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="117.24550898203591"
+                                                                                cy="95.37349574973167"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-22"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="122.57485029940119"
+                                                                                cy="94.80342488304447"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-23"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="127.90419161676647"
+                                                                                cy="93.97029278306076"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-24"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="133.23353293413174"
+                                                                                cy="95.00650728071352"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-25"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="138.562874251497"
+                                                                                cy="96.42289876635718"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-26"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="143.89221556886227"
+                                                                                cy="96.47489570875554"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-27"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="149.22155688622755"
+                                                                                cy="96.88883445220856"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-28"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="154.55089820359282"
+                                                                                cy="96.34391961241178"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-29"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="159.88023952095807"
+                                                                                cy="96.64699161844796"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-30"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="165.20958083832335"
+                                                                                cy="96.26504976294947"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-31"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="170.53892215568862"
+                                                                                cy="96.16018677421398"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-32"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="175.8682634730539"
+                                                                                cy="95.62517598697104"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-33"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="181.19760479041918"
+                                                                                cy="95.53830824850161"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-34"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="186.52694610778443"
+                                                                                cy="94.96600330481841"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-35"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="191.8562874251497"
+                                                                                cy="95.4681934215391"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-36"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="197.18562874251495"
+                                                                                cy="95.46787883790482"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-37"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="202.51497005988023"
+                                                                                cy="95.27226646856843"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-38"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="207.84431137724548"
+                                                                                cy="94.7940406932761"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-39"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="213.17365269461075"
+                                                                                cy="95.16044531639675"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-40"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="218.50299401197603"
+                                                                                cy="94.49125394528117"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-41"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="223.8323353293413"
+                                                                                cy="95.08730995335254"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-42"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="229.16167664670658"
+                                                                                cy="95.32501787849645"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-43"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="234.49101796407183"
+                                                                                cy="95.62909228662153"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-44"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="239.8203592814371"
+                                                                                cy="96.45274422216879"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-45"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="245.14970059880238"
+                                                                                cy="95.66362717135432"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-46"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="250.47904191616766"
+                                                                                cy="95.50855076946907"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-47"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="255.80838323353294"
+                                                                                cy="94.82780778066422"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-48"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="261.13772455089816"
+                                                                                cy="93.84870620841137"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-49"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                    </g>
+                                                                    <g class="nv-group nv-series-1"
+                                                                       style="stroke-opacity: 1; fill-opacity: 0.5; fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);">
+                                                                        <circle cx="0" cy="98.07296990704818"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-0"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="5.3293413173652695"
+                                                                                cy="100.83333333333333"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-1"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="10.658682634730539"
+                                                                                cy="95.49418161679141"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-2"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="15.988023952095809"
+                                                                                cy="92.882334918534"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-3"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="21.317365269461078"
+                                                                                cy="89.85249076348732"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-4"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="26.646706586826344"
+                                                                                cy="85.53254534487183"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-5"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="31.976047904191617"
+                                                                                cy="86.27587812964528"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-6"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="37.30538922155689"
+                                                                                cy="86.8380162936586"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-7"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="42.634730538922156"
+                                                                                cy="86.87989252224453"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-8"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="47.964071856287426"
+                                                                                cy="86.75426882828891"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-9"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="53.29341317365269"
+                                                                                cy="83.65221222811351"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-10"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="58.62275449101796"
+                                                                                cy="80.57358425155962"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-11"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="63.952095808383234"
+                                                                                cy="80.44082722669272"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-12"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="69.2814371257485"
+                                                                                cy="81.34121685918879"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-13"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="74.61077844311377"
+                                                                                cy="81.34138816028573"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-14"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="79.94011976047904"
+                                                                                cy="81.29447211068808"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-15"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="85.26946107784431"
+                                                                                cy="81.29447211068808"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-16"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="90.59880239520959"
+                                                                                cy="79.49519822726114"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-17"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="95.92814371257485"
+                                                                                cy="76.37441369730371"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-18"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="101.25748502994011"
+                                                                                cy="67.74176182114815"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-19"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="106.58682634730538"
+                                                                                cy="61.588716105217884"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-20"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="111.91616766467065"
+                                                                                cy="49.74179322457783"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-21"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="117.24550898203591"
+                                                                                cy="49.63079238368515"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-22"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="122.57485029940119"
+                                                                                cy="46.098473314936875"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-23"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="127.90419161676647"
+                                                                                cy="50.31207498239315"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-24"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="133.23353293413174"
+                                                                                cy="50.765856401612524"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-25"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="138.562874251497"
+                                                                                cy="52.7431497776996"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-26"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="143.89221556886227"
+                                                                                cy="52.591051992146035"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-27"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="149.22155688622755"
+                                                                                cy="51.98265178408077"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-28"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="154.55089820359282"
+                                                                                cy="51.374251576015425"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-29"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="159.88023952095807"
+                                                                                cy="51.3753927177316"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-30"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="165.20958083832335"
+                                                                                cy="51.68072334353922"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-31"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="170.53892215568862"
+                                                                                cy="51.60438613724789"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-32"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="175.8682634730539"
+                                                                                cy="48.43920971459938"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-33"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="181.19760479041918"
+                                                                                cy="44.78336013026981"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-34"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="186.52694610778443"
+                                                                                cy="37.99078943842531"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-35"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="191.8562874251497"
+                                                                                cy="34.67572620671817"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-36"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="197.18562874251495"
+                                                                                cy="28.88422314210743"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-37"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="202.51497005988023"
+                                                                                cy="18.521604996887987"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-38"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="207.84431137724548"
+                                                                                cy="9.166666666666671"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-39"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="213.17365269461075"
+                                                                                cy="16.67042500112096"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-40"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="218.50299401197603"
+                                                                                cy="16.893083605666916"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-41"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="223.8323353293413"
+                                                                                cy="17.449750024518607"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-42"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="229.16167664670658"
+                                                                                cy="18.117725838156446"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-43"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="234.49101796407183"
+                                                                                cy="17.33841408641665"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-44"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="239.8203592814371"
+                                                                                cy="22.10598755045133"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-45"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="245.14970059880238"
+                                                                                cy="21.607296027864535"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-46"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="250.47904191616766"
+                                                                                cy="26.26359714358003"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-47"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="255.80838323353294"
+                                                                                cy="25.953004324565924"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-48"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                        <circle cx="261.13772455089816"
+                                                                                cy="23.67534422140146"
+                                                                                r="2.256758334191025"
+                                                                                class="nv-point nv-point-49"
+                                                                                style="fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                                    </g>
+                                                                </g>
+                                                                <g class="nv-point-paths"></g>
+                                                            </g>
+                                                        </g>
+                                                    </g>
+                                                </g>
+                                            </g>
+                                        </g>
+                                        <g class="nv-legendWrap" transform="translate(0,-50)">
+                                            <g class="nvd3 nv-legend" transform="translate(0,5)">
+                                                <g transform="translate(5,5)">
+                                                    <g class="nv-series" transform="translate(5,5)">
+                                                        <circle class="nv-legend-symbol" r="5"
+                                                                style="stroke-width: 2; fill: rgb(255, 0, 0); stroke: rgb(255, 0, 0);"></circle>
+                                                        <text text-anchor="start" class="nv-legend-text" dy=".32em"
+                                                              dx="8">
+                                                            基准
+                                                        </text>
+                                                    </g>
+                                                    <g class="nv-series" transform="translate(5,25)">
+                                                        <circle class="nv-legend-symbol" r="5"
+                                                                style="stroke-width: 2; fill: rgb(39, 118, 182); stroke: rgb(39, 118, 182);"></circle>
+                                                        <text text-anchor="start" class="nv-legend-text" dy=".32em"
+                                                              dx="8">
+                                                            策略收益率
+                                                        </text>
+                                                    </g>
+                                                </g>
+                                            </g>
+                                        </g>
+                                        <g class="nv-interactive" transform="translate(2.9311377245508985,0)">
+                                            <g class=" nv-wrap nv-interactiveLineLayer">
+                                                <g class="nv-interactiveGuideLine"></g>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="middle">
+                            <div class="small-title quarter">一季收益率</div>
+                            <div class="small-title">年化收益率</div>
+                            <div class="small-title next_trade_date right">下个调仓日</div>
+                            <div class="small-title max_withdraw right hide">最大回撤</div>
+                            <div class="small-title real_return right hide">实盘收益</div>
+                            <div class="small-title last_day_return right hide">近一日收益</div>
+                            <div class="small-title mall_date right hide">上架日期</div>
+                            <div class="small-title month_return right hide">近一月收益</div>
+                            <span class="quarter">5.01%</span><span class="annual">290.59%</span><span
+                                class="next_trade_date right">2017/06/12</span><span
+                                class="max_withdraw right hide">17.11%</span><span
+                                class="real_return right hide">32.25%</span><span
+                                class="last_day_return right hide">0.29%</span><span
+                                class="mall_date right hide">2017/03/05</span><span
+                                class="month_return right hide">-1.42%</span></div>
+                        <div class="bottom">
+                            <div class="price"><span><span class="num">{{ strategy.price }}</span>元/月</span></div>
+                            <div class="capacity">投资额50万</div>
+                            <a class="button right" href="/strategy/{{ strategy.id }}/">详情</a>
+                            <p class="activity"><span class="num">1000</span>元/月&nbsp;&nbsp;(周年庆限时特价)</p></div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </ul>
+{% else %}
+    <p>No strategy are available.</p>
+{% endif %}
+<!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+<script src="https://code.jquery.com/jquery.js"></script>
+<!-- 包括所有已编译的插件 -->
+
+<script type="text/javascript" charset="utf-8" src="{% static 'js/jquery-1.11.1.js' %}"></script>
+<script type="text/javascript" charset="utf-8" src="{% static 'js/jquery.actual.js' %}"></script>
+<script type="text/javascript" charset="utf-8" src="{% static 'js/titleFooter.js' %}"></script>
+<script type="text/javascript" charset="utf-8" src="{% static 'js/bootstrapLib.js' %}"></script>
+<script type="text/javascript" charset="utf-8" src="{% static 'js/libFile.js' %}"></script>
+<script type="text/javascript" charset="utf-8" src="{% static 'js/document.js' %}"></script>
+<script type="text/javascript" charset="utf-8" src="{% static 'js/stocklib.js' %}"></script>
+<script type="text/javascript" charset="utf-8" src="{% static 'js/commons.js' %}"></script>
+<script type="text/javascript" charset="utf-8" src="{% static 'js/jqPaginator.js' %}"></script>
+<script type="text/javascript" charset="utf-8" src="{% static 'js/loginCtrl.js' %}"></script>
+<script type="text/javascript" charset="utf-8" src="{% static 'js/stockMall.js' %}"></script>
+
+</body>
+</html>

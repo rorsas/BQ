@@ -1,0 +1,435 @@
+﻿/*-------------- 公共样式 ----------*/
+body, ul, li, p, h1, h2, h3, h4, h5, h6, img, br, hr, table, tr, td, th, dl, dt, dd, form, input,div
+{
+    margin: 0;
+    padding: 0;
+}
+
+body
+{
+    background-color: #f6f6f6;
+    font-family: Microsoft YaHei;
+    color: #333;
+}
+
+ul li
+{
+    list-style: none;
+    float: left;
+}
+
+img
+{
+    border: none;
+}
+
+table
+{
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+a
+{
+    text-decoration: none;
+    border: none;
+}
+
+    a:hover
+    {
+        text-decoration: none;
+    }
+/*最外层div*/
+.mainContainer
+{
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.red
+{
+    color: Red;
+}
+
+.redBold
+{
+    color: red;
+    font-weight: bold;
+}
+
+.greenBold
+{
+    color: green;
+    font-weight: bold;
+}
+
+.orangeBold
+{
+    color: #ef8f12;
+    font-weight: bold;
+}
+
+.greenBold
+{
+    color: #49ac17;
+    font-weight: bold;
+}
+
+.blue
+{
+    color: #1F72C0;
+}
+
+.light_blue
+{
+    color: #4897DA;
+}
+
+.green
+{
+    color: Green;
+}
+
+.orange
+{
+    color: #FF5A00;
+}
+.gray {
+    color:#4b4b4b;
+}
+.black
+{
+    color: #000;
+}
+.white { 
+    color:#fff;
+}
+.font_default
+{
+    font-family: 宋体;
+}
+
+.font_MicrosoftYH
+{
+    font-family: Microsoft YaHei;
+}
+
+.font_0
+{
+    font-size: 0px;
+}
+
+.font_12
+{
+    font-size: 12px;
+}
+
+.font_14
+{
+    font-size: 14px;
+}
+
+.font_16
+{
+    font-size: 16px;
+}
+
+.font_18
+{
+    font-size: 18px;
+}
+
+.font_20
+{
+    font-size: 20px;
+}
+
+.font_22
+{
+    font-size: 22px;
+}
+
+.font_30
+{
+    font-size: 30px;
+}
+
+.font_32
+{
+    font-size: 32px;
+}
+
+.font_bold
+{
+    font-weight: bold;
+}
+
+.font_num
+{
+    font-family: Verdana;
+}
+
+.marginRight20
+{
+    margin-right: 20px;
+}
+
+.marginRight50
+{
+    margin-right: 50px;
+}
+
+.noVisible
+{
+    visibility: hidden;
+}
+
+.hide
+{
+    display: none;
+}
+
+.show
+{
+    display: block;
+}
+
+.center
+{
+    text-align: center;
+}
+
+.left
+{
+    text-align: left;
+}
+
+.hand
+{
+    cursor: pointer;
+}
+
+.center
+{
+    text-align: center;
+}
+/* 通用按钮样式 */
+input[type='button'] {
+    outline:none;
+}
+.button, .button_orange, .button_gray
+{
+    width: 146px;
+    height: 38px;
+    line-height: 38px;
+    float: left;
+    margin-top: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: Microsoft YaHei;
+    color: #fff;
+    text-align: center;
+    border: none;
+    outline:none;
+}
+/* 蓝色按钮 */
+.button
+{
+    background-color: #1470c1;
+}
+
+    .button:hover
+    {
+        background-color: #4996da;
+    }
+/* 橙色按钮 */
+.button_orange
+{
+    background-color: #FF7F0D;
+    border-color: #110801;
+}
+
+    .button_orange:hover
+    {
+        background-color: #FE973C;
+        border-color: #D68034;
+    }
+/* 灰色按钮 */
+.button_gray
+{
+    color: #000;
+    background-color: #b5b5b5;
+}
+
+    .button_gray:hover
+    {
+        color: #000;
+        background-color: #c6c6c6;
+    }
+/*蓝色发光文本框*/
+.txt_blueBorder
+{
+    width: 200px;
+    height: 24px;
+    line-height: 24px;
+    border: 1px solid #C7C7C7;
+    padding-left: 5px;
+    -webkit-box-shadow: inset 0 5px 1px rgba(0,0,0,0.075);
+    -moz-box-shadow: inset 0 5px 1px rgba(0,0,0,0.075);
+    -o-box-shadow: inset 0 5px 1px rgba(0,0,0,0.075);
+    box-shadow: inset 0 1px 5px rgba(0,0,0,0.075);
+    -webkit-transition: border linear .2s, box-shadow linear .2s;
+    -moz-transition: border linear .2s, box-shadow linear .2s;
+    -o-transition: border linear .2s, box-shadow linear .2s;
+    transition: border linear .2s, box-shadow linear .2s;
+}
+
+    .txt_blueBorder:focus
+    {
+        border-color: rgba( 82,168,236,0.8);
+        border-color: #0866c6\9;
+        outline: 0;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba( 82,168,236,.6);
+        -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(82,168,236,.6);
+        -o-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba( 82,168,236,.6);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(82,168,236,.6);
+    }
+/* ============  弹出框插件  =======================*/
+.lock, .overHidden
+{
+    overflow: hidden;
+}
+
+.dialog_floor
+{
+    position: fixed;
+    left: 0;
+    top: 0;
+    opacity: 0.7;
+    filter: (alpha = 70); /*IE私有属性*/
+    filter: alpha(opacity=70);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)"; /*IE8*/
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background-color: #000;
+    display: none;
+}
+
+.dialog_box
+{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 101;
+    display: none;
+}
+
+.dialog_container
+{
+    width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+    z-index: 102;
+}
+
+.dialog_model
+{
+    top: 100px;
+    position: relative;
+    z-index: 103;
+    font-family: "arial", "sans-serif";
+    font-size: 12px;
+}
+
+.dialog_main
+{
+    margin: 1px;
+    background-color: #fff;
+    border: 1px solid #aaa;
+    float: left;
+}
+
+.dialog_header
+{
+    width: 100%;
+    height: 30px;
+    background-color: #f2f2f2;
+    vertical-align: middle;
+    line-height: 30px;
+    cursor: move;
+    float: left;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.dialog_title
+{
+    margin-left: 20px;
+}
+
+.header_close
+{
+    float: right;
+    margin-right: 10px;
+    height: 20px;
+    width: 20px;
+    margin-top: 5px;
+    background: url(../img/close.png) no-repeat center;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.dialog_content
+{
+    width: 100%;
+    min-height: 40px;
+    float: left;
+    line-height: 28px;
+    font-size: 12px;
+    padding: 14px 0px;
+}
+
+.dialog_footer
+{
+    margin-top: 0px;
+    float: left;
+    height: 40px;
+    display: none;
+    width: 100%;
+    text-align: center;
+}
+
+.dialog_button
+{
+    width: 76px;
+    height: 32px;
+    line-height: 32px;
+    float: none;
+    margin-top: 0px;
+}
+/* ============  灰色弹出框插件  =======================*/
+.dialog_shadow
+{
+    width: 212px;
+    height: 60px;
+    position: absolute;
+    top: 536px;
+    left: -494px;
+}
+
+.writer
+{
+    color: #2781E1;
+}
+
+.yellow
+{
+    text-decoration: none !important;
+    color: #ff5400 !important;
+    cursor: pointer;
+}

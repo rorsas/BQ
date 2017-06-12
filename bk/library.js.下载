@@ -1,0 +1,1142 @@
+﻿var wquant = {
+
+    // 创建命名空间
+    namespace: function (ns) {
+        var parts = ns.split("."),
+        obj = window,
+        i, len;
+
+        for (i = 0, len = parts.length; i < len; i++) {
+            if (!obj[parts[i]]) {
+                obj[parts[i]] = {};
+            }
+            obj = obj[parts[i]];
+        }
+        return obj;
+    },
+
+    // 为某一命名空间下添加方法，如果没有该命名空间，直接创建
+    // namespace：要添加方法的命名空间 wquant.page.common
+    // json：要添加方法的 key 和 value，{key : value}
+    method: function (namespace, json) {
+
+        if (arguments.length < 2) {
+            throw new Error("wquant.method 方法必须要传两个参数");
+        }
+        this.namespace(namespace);
+        var spaces = namespace.split(/\./);
+        var currentSpace = window;
+
+        for (var i = 0; i < spaces.length; i++) {
+            currentSpace = currentSpace[spaces[i]];
+        }
+
+        for (var key in json) {
+            currentSpace[key] = json[key];
+        }
+    }
+};
+
+wquant.namespace("wquant.common");
+wquant.namespace("wquant.config");
+wquant.namespace("wquant.cookie");
+wquant.namespace("wquant.dom");
+wquant.namespace("wquant.bom");
+wquant.namespace("wquant.request");
+wquant.namespace("wquant.page.common");
+wquant.namespace("wquant.page.plugin");
+
+wquant.common = {
+    // 加密参数
+    encodeParam: function (param) {
+        return encodeURIComponent(param);
+    },
+
+    // 检查参数是否为函数类型
+    isFunction: function (fn) {
+        return Object.prototype.toString.call(fn) == "[object Function]";
+    },
+
+    // "加密"邮箱
+    getMixUserName: function (name) {
+        name = name.replace(/\@/g, "$").replace(/\./g, "-");
+        return name;
+    },
+
+    //取返回项目中的文本
+    getText: function (item, attr) {
+        return $.trim($(item).find(attr).text());
+    },
+
+    //将数字保留两位小数
+    numToFixed: function (num) {
+        if (isNaN(num - 0)) {
+            return num;
+        }
+        return (num - 0).toFixed(2);
+    },
+
+    //防止按钮重复提交，隔5秒后才允许点击
+    preventRepeatSubmit: function (obj, time) {
+        $(obj).attr("clicked", "true");
+        setTimeout(function () {
+            $(obj).attr("clicked", "false");
+        }, time);
+    }
+};
+
+wquant.config = {
+    url: {
+        stockCodePath: "./../Handler/Common/CheckStockCode.ashx",
+        userNamePath: "../Handler/Common/CheckUserName.ashx",
+        cartCountPath: "./../Handler/Common/GetCartCount.ashx",
+        contractPath: "./Handler/Common/GetContract.ashx",
+        contractCodeOrNamePath: "./../Handler/Common/GetContractCodeOrName.ashx",
+        userStatusPath: "./Handler/Common/GetUserStatus.ashx",
+        loginPath: "./Handler/Common/Login.ashx",
+        matchVerifyCode: "../Handler/Common/MatchVerifyCode.ashx",
+        registerPath: "./Handler/Common/Register.ashx",
+        removePath: "./Handler/Common/RemoveWithUser.ashx",
+        verifyCodePath: "./../Handler/Common/VerifyCode.ashx",
+
+        // 模块部分的路径
+        modules: {
+
+            loginPageHtml: "./Common/LoginPage.aspx",
+            loginDialogScript: "./Scripts/Common/login.js?ver=20170606",
+
+            qqScript: "./Plugin/QQ/main.js?ver=20170606",
+
+            strategyCommonTemHtml: "../../../Modules/Strategy/StrategyCommonTemplate.htm?ver=20170606",
+
+            strategyCommonTemHtml1: "../../../Modules/Strategy/StrategyCommonTemplate1.htm?ver=20170606",
+            strategyCommonTemHtml2: "../../../Modules/Strategy/StrategyCommonTemplate2.htm?ver=20170606",
+            strategyCommonStockTemHtml: "../../../Modules/Strategy/StrategyCommonStockTemp.html?ver=20170606",
+            strategyWandaTemHtml: "../../../../Modules/Strategy/StrategyWandaTemplate.htm?ver=20170606",
+            earningReportHtml: "../Modules/EarningReport.htm?ver=20170606",             //业绩报表
+            //客户须知
+            customInformation: "../../../Modules/CustomerInform.html?ver=20170606",
+            /*钱大白dialog*/
+            qiandabaiHtml: "../../../Modules/QianDaBai.html?ver=20170606",
+
+            tradeAndPositionHtml: "../Modules/Strategy/tradeAndPosition.htm?ver=20170606",
+            tradeAndPositionScript: "../Scripts/Strategy/tradeAndPosition.js?ver=20170606",
+            xgqTradeTemplateHtml: "../Modules/Strategy/xgqTradeTemplate.htm?ver=20170606"
+        }
+    },
+
+    message: {
+        home: {}
+    },
+
+    login: {
+    },
+
+    account: {
+
+        current_startStrategyBtn: null,
+        btnInfos: [{
+            className: "start",
+            text: "启动",
+            preText: "启动中",
+            readonly: true
+        }, {
+            className: "stop",
+            text: "停止",
+            preText: "停止中",
+            readonly: false
+        }, {
+            className: "disabled",
+            text: "策略到期"
+        }],
+        btnSpreadInfos: [{
+            className: "spread",
+            text: "展开",
+            readonly: true
+        }, {
+            className: "retract",
+            text: "收起",
+            readonly: false
+        }]
+    }
+};
+
+wquant.cookie = {
+
+    // 读取cookies
+    getCookie: function (name) {
+        var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+        if (arr != null) return decodeURIComponent(arr[2]); return null;
+    },
+    
+    // 删除cookies
+    delCookie: function (name) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 1);
+        var cval = wquant.cookie.getCookie(name);
+        if (cval != null)
+            document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+    },
+
+    // 设置cookies
+    setCookie: function (name, value, time,domainvalue) {
+        
+        var strsec = getsec(time);
+        var exp = new Date();
+        exp.setTime(exp.getTime() + strsec * 1);
+        if (domainvalue == undefined) {
+            document.cookie = name + "=" + encodeURIComponent(value);
+            document.cookie = "path=/;"
+            document.cookie = "expires=" + exp.toGMTString();
+        }
+        else {
+            document.cookie = name + "=" + encodeURIComponent(value);
+            document.cookie = "domain=" + domainvalue;
+            document.cookie = "path=/;"
+            document.cookie = "expires=" + exp.toGMTString();
+        }
+
+        // 这是有设定过期时间的使用示例：
+        // s20是代表20秒
+        // h是指小时，如12小时则是：h12
+        // d是天数，30天则：d30
+        function getsec(str) {
+            var str1 = str.substring(1, str.length) * 1;
+            var str2 = str.substring(0, 1);
+            if (str2 == "s") {
+                return str1 * 1000;
+            }
+            else if (str2 == "h") {
+                return str1 * 60 * 60 * 1000;
+            }
+            else if (str2 == "d") {
+                return str1 * 24 * 60 * 60 * 1000;
+            }
+        }
+    }
+};
+
+// DOM操作
+wquant.dom = {
+
+    startMove: function (obj, json, options) {
+        options = options || {};
+        options.time = options.time || 3000;
+        options.type = options.type || "linear";
+
+        var count = parseInt(options.time / 30);
+        var n = 0;
+
+        var start = {};
+        var distance = {};
+        json = filterJson(json);
+
+        for (var name in json) {
+            if (name == "opacity") {
+                start[name] = parseInt(100 * Math.round(getStyle(obj, "opacity")));
+            } else {
+                start[name] = parseInt(getStyle(obj, name));
+            }
+            distance[name] = json[name] - start[name];
+        }
+
+        clearInterval(obj.timer);
+        obj.timer = setInterval(function () {
+            n++;
+            for (var name in json) {
+                switch (options.type) {
+                    case "linear":
+                        var cur = start[name] + n * distance[name] / count;
+                        break;
+                    case "buffer":
+                        var a = 1 - n / count;
+                        var cur = start[name] + distance[name] * (1 - a * a * a);
+                        break;
+                    case "speed":
+                        var a = n / count;
+                        var cur = start[name] + distance[name] * a * a * a;
+                        break;
+                }
+                if (name == "opacity") {
+                    obj.style.filter = "alpha(opacity:" + cur + ")";
+                    obj.style.opacity = cur / 100;
+                } else {
+                    obj.style[name] = cur + "px";
+                }
+            }
+            if (n == count) {
+                clearInterval(obj.timer);
+                options.end && options.end();
+            }
+        }, 30);
+
+        function filterJson(json) {
+            for (var name in json) {
+                var attr = transformStylenameFromCssToJs(name);
+                if (attr != name) {
+                    json[attr] = json[name];
+                    delete json[name];
+                }
+            }
+            return json;
+        }
+
+        function transformStylenameFromCssToJs(name) {
+            if (name == "float") {
+                return obj.currentStyle ? "styleFloat" : "cssFloat";
+            } else if (name.indexOf("-") > -1) {
+                name = name.replace(/-(\w)/, function () {
+                    return arguments[1].toUpperCase();
+                });
+            }
+            return name;
+        }
+
+        function getStyle(obj, name) {
+            name = transformStylenameFromCssToJs(name);
+            return typeof (obj.currentStyle) != "undefined" ? obj.currentStyle[name] : getComputedStyle(obj, false)[name];
+        }
+    }
+};
+
+wquant.bom = {
+
+    // 检查浏览器版本
+    detectBrowser: function (fn) {
+
+        var browser = {};
+        var ua = navigator.userAgent.toLowerCase();
+
+        if (ua.match(/msie/)) {  // IE11-
+            browser.ie = ua.match(/msie ([\d.]+)/)[1];
+        } else if (window.openDatabase && ua.indexOf('chrome') == -1) {
+            browser.safari = ua.match(/version\/([\d.]+)/)[1];
+        } else if (ua.match(/trident/)) { // IE11
+            browser.ie = ua.match(/rv:([\d.]+)/)[1];
+        } else if (ua.toLowerCase().indexOf("firefox") > -1) {
+            browser.firefox = ua.match(/firefox\/([\d.]+)/)[1];
+        } else if (window.MessageEvent && !document.getBoxObjectFor) {
+            browser.chrome = ua.match(/chrome\/([\d.]+)/)[1];
+        } else if (window.opera) {
+            browser.opera = ua.match(/opera.([\d.]+)/)[1];
+        }
+        if (parseInt(browser.ie) < 8) {
+            fn && fn();
+        }
+    }
+
+};
+
+wquant.request = {
+
+    // 加载HTML和Script文件，主要用于结构和行为都有的模块
+    loadHtmlAndScript: function (path, scriptPath, fn, fned) {
+        $.request(path, { dataType: "html" }).done(function (response, status, xhr) {
+            fn && fn(response);
+            scriptPath && $.request(scriptPath).done(function (response, status, xhr) {
+                fned && fned();
+            });
+        }).fail(function (xhr, status, error) {
+            console.log(xhr, status, error);
+        });
+    },
+
+    // 加载HTML文件
+    loadHtml: function (path, fn, fnfail) {
+        $.request(path, { dataType: "html" }).done(function (response, status, xhr) {
+            fn && fn(response);
+        }).fail(function () {
+            fnfail && fnfail();
+        });
+    },
+
+    // 加载Script文件
+    loadScript: function (scriptPath, fned, fnfail) {
+        scriptPath && $.request(scriptPath).done(function (response, status, xhr) {
+            fned && fned();
+        }).fail(function () {
+            fnfail && fnfail();
+        });
+    }
+};
+
+wquant.page.common = {
+
+    // 页面样式
+    initControlStyle: function () {
+        addBorder();
+        toYellow();
+        function addBorder() {
+            $("*[blue]").bind("focus", function () {
+                $(this).addClass("blue_border");
+            }).bind("blur", function () {
+                $(this).removeClass("blue_border");
+            })
+        }
+
+        function toYellow() {
+            $("*[yellow]").bind("mouseover", function () {
+                $(this).addClass("yellow");
+            }).bind("mouseout", function () {
+                $(this).removeClass("yellow");
+            });
+        }
+    },
+
+    getPath: function (url) {
+        return wquant.page.common.pageSetting.prefixPath + url;
+    },
+
+    //将url中?部分解析为json
+    urlParamFormat: function () {
+        var json = {};
+        //"http://www.wquant.com/usercenter/default?index=11&type=1"
+        var path = decodeURI(window.top.location.href);
+        if (path.indexOf("?") == -1) {
+            return json;
+        }
+        var param = path.split("?")[1]
+        var paramArr = param.split('&');
+        var len = paramArr.length;
+
+        for (var i = 0; i < len; i++) {
+            var tmp = paramArr[i].split('=');
+            json[tmp[0]] = tmp[1];
+        }
+        return json;
+    },
+
+    //判断url中有无type参数
+    getType: function () {
+        var url = window.location.href;
+        var len = url.toString().length;
+        if (url.toString().toLowerCase().indexOf("type") > -1) {
+            return url.toString().substring(len - 1, len);
+        }
+        return null;
+    },
+
+    //判断url中有无eid参数
+    getEid: function () {
+        var url = window.location.href;
+        var len = url.toString().length;
+        if (url.toString().toLowerCase().indexOf("eid") > -1) {
+            return url.toString().substring(len - 1, len);
+        }
+        return null;
+    },
+
+    // 页面配置
+    pageSetting: { isHome: true, prefixPath: "", isFresh: false, menuFixed: false },
+
+    // 设置全局变量记录将要发生的动作，用在未登录时，记录点击等的动作
+    loginCallBack: null,
+
+    linkPage: function (path, link, fn, retPage, loginTitle) {
+        var jqXHR = $.ajax({
+            type: "POST",
+            url: path,
+            data: { type: 1 },
+            dataType: "xml"
+        });
+        jqXHR.done(function (response, status, xhr) {
+
+            if (link) {
+                wquant.page.common.loginCallBack = wquant.page.common.getPath(link);
+            }
+            var flag = $(response).find("flag").text();
+            var msg = $(response).find("message").text();
+            var type = $(response).find("flag").attr("type");
+
+            if (flag == "true") {
+                if (link) {
+                    window.location.href = wquant.page.common.getPath(link);
+                }
+                fn && fn();
+            } else {
+                if (type == 1) {
+                    msg && wquant.page.master.showLoginDialog(retPage, "", loginTitle);
+                } else {
+                    msg && wquant.page.common.showFlashMessage(msg);
+                }
+            }
+        }).fail(function (response, status, xhr) {
+
+        });
+    },
+
+    //先登录，然后在新标签页中打开新页面
+    openLinkPage: function (path, link, fn, retPage) {
+        var jqXHR = $.ajax({
+            type: "POST",
+            url: path,
+            data: { type: 1 },
+            dataType: "xml"
+        });
+        jqXHR.done(function (response, status, xhr) {
+
+            if (link) {
+                wquant.page.common.loginCallBack = wquant.page.common.getPath(link);
+            }
+
+            var flag = $(response).find("flag").text();
+            var msg = $(response).find("message").text();
+            var type = $(response).find("flag").attr("type");
+
+            if (flag == "true") {
+                if (link) {
+                    var openTarget = wquant.page.common.getPath(link);
+                    window.open(openTarget);
+                }
+                fn && fn();
+            } else {
+                if (type == 1) {
+                    msg && wquant.page.master.showLoginDialog(retPage, 1);
+                } else {
+                    msg && wquant.page.common.showFlashMessage(msg);
+                }
+            }
+        }).fail(function (response, status, xhr) {
+
+        });
+    }
+};
+
+// 给page.common 添加一组方法
+wquant.method("wquant.page.common", function () {
+
+    var MessageDialog = null;
+    var confirmDialog = null;
+
+    function checkMsgDialog() {
+        if (!MessageDialog) {
+            MessageDialog = new wquant.page.plugin.MyDialog({ width: "320", height: "140",modal:true});
+            MessageDialog.setZ_index("200");
+        }
+    }
+
+    function checkConfirmDialog() {
+        if (!confirmDialog) {
+            confirmDialog = new wquant.page.plugin.MyDialog({
+                width: "320",
+                height: "120",
+                buttons: [{ visible: true }, { visible: false }],
+                modal: true
+            });
+        }
+    }
+
+    return {
+
+        // 确定框
+        showConfirmMessage: function (msg) {
+            try {
+                checkConfirmDialog();
+                confirmDialog.setContent("<p class='center'>" + msg + "</p>");
+                confirmDialog.show();
+            } catch (ex) {
+                alert(msg);
+            }
+        },
+
+        // 1s后消失
+        showFlashMessage: function (msg) {
+            try {
+                checkMsgDialog();
+                MessageDialog.setContent("<p class='center'>" + msg + "</p>");
+                MessageDialog.showFlash();
+            } catch (ex) {
+                alert(msg);
+            }
+        },
+
+        // 2s后消失
+        show2FlashMessage: function (msg) {
+            try {
+                checkMsgDialog();
+                MessageDialog.setContent("<p class='center'>" + msg + "</p>");
+                MessageDialog.show2Flash();
+            } catch (ex) {
+                alert(msg);
+            }
+        },
+        // 一直显示
+        showKeepMessage: function (msg) {
+            try {
+                checkMsgDialog();
+                MessageDialog.setContent("<p class='center'>" + msg + "</p>");
+                MessageDialog.setColseImg("",0,0);
+                MessageDialog.showKeep();
+            } catch (ex) {
+                alert(msg);
+            }
+        },
+
+        // 关闭提示信息
+        closeMessage: function () {
+            checkMsgDialog();
+            MessageDialog.close();
+        }
+    }
+}());
+
+wquant.page.plugin = {
+
+    // 弹出框
+    MyDialog: function (uoptions) {
+        var dialog = this;
+        this.options = {
+            width: "420",
+            height: "120",
+            modal: false,  // 是否为模式
+            top: "",
+            left: "",
+            title: "微量网提示",     //标题
+            buttons: [{
+                visible: false,
+                text: "确定",
+                event: function () {
+                    dialog.close.apply(dialog);
+                }
+            }, {
+                visible: false,
+                text: "取消",
+                event: function () {
+                    dialog.close.apply(dialog);
+                }
+            }],  // 按钮设置 确定/取消 
+            content: "尊敬的用户您好，这里是微量网", //内容
+            defaultEvent: function () {
+                dialog.close.apply(dialog);
+            },      // 默认事件
+            closeEvent: null,   // 关闭事件
+            container: "body",  // 默认加到 body 中
+            isAutoMove: false
+        };
+        this.controls = {};
+        this.id = "";
+        this.uoptions = uoptions;
+        this.initParam();
+        this.initControl();
+        this.bindEvent();
+        this.setStyle();
+        this.setEvents();
+    },
+
+    // 禁止滚动
+    unScroll: function () {
+        return false;
+    }
+
+};
+
+wquant.page.plugin.MyDialog.prototype = {
+
+    constructor: wquant.page.plugin.MyDialog,
+
+    // 显示窗口,参数：是否停顿消失
+    // flag=true时，1s停顿消失
+
+    show: function (flag) {
+
+        var index = 102;
+        $("#" + this.id + " .dialog_box").css("z-index", ++index);
+        $(this.controls.dialog_model).show();
+        $(this.controls.dialog_box).show();
+
+        if (this.uoptions.modal === true) {
+            $(this.controls.dialog_floor).show();
+            var btns = $(this.controls.dialog_footer).find(":visible");
+            var len = btns.length;
+            if (len == 1) {
+                $(btns).css("margin", "auto auto");
+            } else if (len == 2) {
+                $(btns).css("display", "inline-block");
+            }
+            $(document).bind("mousewheel", wquant.page.plugin.unScroll);
+        }
+        if (flag) {
+            var item = this;
+            setTimeout(function () {
+                $("body").removeClass("lockDialog");
+                $(item.controls.dialog_floor).hide();
+                $(item.controls.dialog_box).hide();
+            }, 1000);
+        }
+    },
+    show2: function (flag) {
+        var index = 102;
+        $("#" + this.id + " .dialog_box").css("z-index", ++index);
+        $(this.controls.dialog_model).show();
+        $(this.controls.dialog_box).show();
+        if (flag) {
+            var item = this;
+            setTimeout(function () {
+                $("body").removeClass("lockDialog");
+                $(item.controls.dialog_floor).hide();
+                $(item.controls.dialog_box).hide();
+            }, 2000);
+        }
+    },
+
+    // 1s后关闭
+    showFlash: function () {
+        this.show(true);
+    },
+    // 2s后关闭
+    show2Flash: function () {
+        this.show2(true);
+    },
+    // 一直显示
+    showKeep: function () {
+        this.show(false);
+    },
+
+    setTitle: function (title, bgColor, color, height, lineHeight, size, bold) {
+        if (bgColor) {                     //bgColor为true时，隐藏title
+            $(this.controls.dialog_header).css({ "background-color": bgColor, "border-bottom": "none" });
+        }
+        if (color) {
+            $(this.controls.dialog_title).css({ "color": color });
+        }
+        if (color) {
+            $(this.controls.dialog_title).css({ "font-size": size });
+        } if (color) {
+            $(this.controls.dialog_title).css({ "font-weight": bold });
+        }
+        if (height) {
+            $(this.controls.dialog_header).css({ "height": height });
+        }
+        if (lineHeight) {
+            $(this.controls.dialog_header).css({ "line-height": lineHeight });
+        }
+        $(this.controls.dialog_title).html(title);
+    },
+
+    //设置关闭按钮的样式
+    setColseImg: function (src, width, height,top,right) {
+        $(this.controls.header_close).css({ "background-image": "url(" + src + ")", "width": width, "height": height, "margin-top": top, "margin-right": right});
+    },
+
+    setContent: function (content) {
+        $(this.controls.dialog_content).html(content);
+    },
+
+    setBackground: function (bgColor) {
+        $(this.controls.dialog_main).css("background-color", bgColor);
+    },
+
+    setBgOpacity: function () {
+        $(this.controls.dialog_main).css({ "border": "none", "position": "relative", "min-height": "0px" });
+        $(this.controls.dialog_header).css({ "position": "absolute", "top": "0px", "left": "0px", "height": "0px" });
+        $(this.controls.dialog_content).css({ "position": "absolute", "top": "0px", "left": "0px" });
+    },
+
+    //设置边框样式
+    setBorder: function (width, color) {
+        $(this.controls.dialog_main).css("border", width + " solid " + color);
+    },
+
+    //设置按钮样式
+    setBtnWidth: function (val) {
+        var dialog_buttons = $(this.controls.dialog_footer).find(".dialog_button");
+        $(dialog_buttons).css("width", val);
+    },
+
+    // 给两个按钮设置事件
+    setEvents: function (okFn, cancelFn) {
+        var dialog_buttons = $(this.controls.dialog_footer).find(".dialog_button");
+        if (okFn && wquant.common.isFunction(okFn)) {
+            $(dialog_buttons).eq(0).unbind("click").bind("click", function () {
+                okFn();
+            });
+        }
+        if (cancelFn && wquant.common.isFunction(cancelFn)) {
+            $(dialog_buttons).eq(1).unbind("click").bind("click", function () {
+                cancelFn();
+            });
+        }
+    },
+
+    setPosition: function (left, top) {
+        if (left) {
+            $(this.controls.dialog_model).css({ "left": left + "px" });
+        }
+        if (top) {
+            $(this.controls.dialog_model).css({ "top": top + "px" });
+        }
+    },
+
+    //设置弹窗的z-index属性
+    setZ_index: function (index) {
+        $(this.controls.dialog_box).css({ "z-index": index });
+    },
+
+    // 私有函数-初始化ID
+    initControl: function () {
+
+        var dialogFormat =
+                '<div class="dialog_floor"></div>' +
+                '<div class="dialog_box">' +
+                '<div class="dialog_container">' +
+                '   <div class="dialog_model">' +
+                '       <div class="dialog_main">' +
+                '           <div class="dialog_header">' +
+                '               <span class="dialog_title">登录或注册</span>' +
+                '               <div class="header_close"></div>' +
+                '           </div>' +
+                '           <div class="dialog_content"></div>' +
+                '           <div class="dialog_footer">' +
+                '               <div class="dialog_button btn_ok button">确定</div>' +
+                '               <div class="dialog_button btn_cancel button_gray" style="margin-left:30px;">取消</div>' +
+                '           </div>' +
+                '       </div>' +
+                '       <div class="dialog_shadow"></div>' +
+                '   </div>' +
+                '</div>' +
+                '</div>';
+
+        var ids = ["dialog_floor", "dialog_model", "dialog_main", "dialog_header", "dialog_title",
+            "header_close", "dialog_content", "dialog_footer"];
+        var id = getRandomId();
+        var html = "<div id='" + id + "'>" + dialogFormat + "</div>";
+
+        $(this.uoptions.container).append(html);
+        this.id = id;
+
+        var main = $(this.uoptions.container).find("#" + id);
+        this.controls.dialog_floor = $(main).find(".dialog_floor");
+        this.controls.dialog_box = $(main).find(".dialog_box");
+        this.controls.dialog_container = $(main).find(".dialog_container");
+        this.controls.dialog_model = $(main).find(".dialog_model");
+
+        this.controls.dialog_main = $(main).find(".dialog_main");
+        this.controls.dialog_header = $(main).find(".dialog_header");
+        this.controls.dialog_title = $(main).find(".dialog_title");
+        this.controls.header_close = $(main).find(".header_close");
+        this.controls.dialog_content = $(main).find(".dialog_content");
+        this.controls.dialog_footer = $(main).find(".dialog_footer");
+
+        function getRandomId() {
+            var str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
+            var aids = ["dialog_"];
+            for (var i = 0; i < 6; i++) {
+                aids.push(str.charAt(parseInt((Math.random() * 53))));
+            }
+            return aids.join("");
+        }
+    },
+
+    // 私有函数-设置样式
+    setStyle: function () {
+
+        var viewWidth = document.documentElement.clientWidth;
+        var viewHeight = document.documentElement.clientHeight;
+        var parentWidth = $(this.controls.dialog_container).width() - 0;
+        var parentHeight = this.uoptions.height;
+
+        // 基本样式
+        $(this.controls.dialog_model).css({ "height": parentHeight, "width": this.uoptions.width });
+
+        $(this.controls.dialog_model).css({
+            "left": ((parentWidth - this.uoptions.width) / 2) + "px",
+            "top": ((viewHeight - this.uoptions.height) / 2 - 50) + "px"
+        });
+
+        if (this.uoptions.top) {
+            $(this.controls.dialog_model).css({ "top": this.uoptions.top + "px" });
+        }
+
+        if (this.uoptions.left) {
+            $(this.controls.dialog_model).css({ "left": this.uoptions.left + "px" });
+        }
+
+        var model = $(this.controls.dialog_model);
+        $(this.controls.dialog_main).css({ "width": model.width() - 4, "min-height": "135px" });
+
+        // 行为样式
+        $(this.controls.dialog_title).text(this.uoptions.title);
+        $(this.controls.dialog_content).html(this.uoptions.content);
+
+        if (this.uoptions.title == "核对订单信息") {
+            console.log($(this.controls.dialog_footer).find(".dialog_button").eq(0));
+            $(this.controls.dialog_footer).find(".dialog_button").eq(0).addClass("hedui_btn");
+            $(this.controls.dialog_footer).find(".dialog_button").eq(1).addClass("hedui_btn hedui_cancel");
+            $(this.controls.dialog_footer).find(".dialog_button").eq(0).css({ "width": "200px", "height": "40px", "background-color": "#BF2B2B", "line-height": "40px" });
+            $(this.controls.dialog_footer).find(".dialog_button").eq(1).css({ "width": "200px", "height": "40px", "background-color": "#E7E7E7", "line-height": "40px", "margin-left": "-8px" });
+        }
+    },
+
+    //    bindCloseEvent: function (fn) {
+    //        this.uoptions.closeEvent = fn;
+    //    },
+
+    bindCloseEvent: function (fn) {
+        var dialog = this;
+        $(this.controls.header_close).click(function () {
+            if (!fn) {
+                dialog.close();
+                return;
+            }
+            fn && fn();
+        });
+    },
+
+    // 绑定事件-私有函数
+    bindEvent: function () {
+
+        var dialog = this;
+        var btns = this.uoptions.buttons;
+        var dialog_buttons = $(this.controls.dialog_footer).find(".dialog_button");
+
+        $(this.controls.header_close).click(function () {
+            dialog.close();
+        });
+
+        // 按钮相关
+        for (var i = btns.length - 1; i >= 0; i--) {
+
+            if (!btns[i].visible) {
+                $(dialog_buttons).eq(i).hide();
+            } else {
+                $(this.controls.dialog_footer).show();
+                var event = this.options.buttons[i].event || this.options.defaultEvent;
+                $(dialog_buttons).eq(i).bind("click", function () { event(); });
+            }
+            $($(dialog_buttons)[i]).html(btns[i].text);
+        }
+    },
+
+    // 关闭弹出框
+    close: function (fn) {
+
+        $(document).unbind("mousewheel", wquant.page.plugin.unScroll);
+        $(this.controls.dialog_floor).hide();
+        $(this.controls.dialog_box).hide();
+        $("body").removeClass("lockDialog");
+        fn && fn() || this.uoptions.closeEvent && this.uoptions.closeEvent();
+
+        if (this.options.isAutoMove) {
+            this.remove();
+        }
+    },
+
+    // 清空对象，移除页面元素
+    remove: function () {
+        $("#" + this.id).remove();
+    },
+
+    // 初始化传入参数
+    initParam: function () {
+
+        if (this.uoptions == undefined) {
+            this.uoptions = this.options;
+            return;
+        }
+        for (var item in this.options) {
+            if (!this.uoptions.propertyIsEnumerable(item)) {
+                this.uoptions[item] = this.options[item];
+            } else {
+                if (this.options[item] instanceof Array) {
+                    var len = this.options[item].length - this.uoptions[item].length;
+                    if (len > 0) {
+                        for (var i = len; i < this.options[item].length; i++) {
+                            this.uoptions[item].push(this.options[item][i]);
+                        }
+                    } else if (len < 0) {
+                        this.uoptions[item].length = this.options[item].length;
+                    }
+                }
+            }
+        }
+    },
+
+    //可以拖动
+    moveFrame: function (title, dialog) {
+        var disX = 0;
+        var disY = 0;
+        var windowWidth = $(window.top).width();
+        var offsetWidth = -(windowWidth - 1200) / 2;
+
+        title.onmousedown = function (ev) {
+
+            var oEvent = ev || event;
+            disX = oEvent.clientX - dialog.offsetLeft;
+            disY = oEvent.clientY - dialog.offsetTop;
+            document.onmousemove = function (ev) {
+                var oEvent = ev || event;
+
+                var l = oEvent.clientX - disX;
+                var t = oEvent.clientY - disY;
+                if (l < 0) {
+                    l = offsetWidth;
+                }
+                else if (l > document.documentElement.clientWidth - dialog.offsetWidth + offsetWidth) {
+                    l = document.documentElement.clientWidth - dialog.offsetWidth + offsetWidth;
+                }
+                if (t < 0) {
+                    t = 0;
+                }
+                else if (t > document.documentElement.clientHeight - dialog.offsetHeight) {
+                    t = document.documentElement.clientHeight - dialog.offsetHeight;
+                }
+                dialog.style.left = l + 'px';
+                dialog.style.top = t + 'px';
+            };
+            document.onmouseup = function () {
+                document.onmousemove = null;
+                document.onmouseup = null;
+            };
+            return false;
+        };
+    }
+};
+
+// =====================  公共扩展方法 =======================
+String.prototype.format = function () {
+    var pattern = /\{(\d+)\}/gm;
+    var args = arguments;
+
+    var format = this.replace(pattern, function () {
+        return args[arguments[1]];
+    });
+    return format;
+}
+
+Array.prototype.indexOf = function (item) {
+    var index = -1;
+    for (var i = 0; i < this.length; i++) {
+        if (this[i] == item) {
+            index = i;
+            break;
+        }
+    }
+    return index;
+}
+
+Array.prototype.contains = function (item) {
+    return !(this.indexOf(item) == -1);
+}
+
+//日期显示方式 (new Date()).pattern("yyyy-MM-dd hh:mm:ss")--"2016-11-29 11:06:16"
+Date.prototype.pattern = function (fmt) {
+    var o = {
+        "M+": this.getMonth() + 1, //月份         
+        "d+": this.getDate(), //日         
+        "h+": this.getHours() % 12 == 0 ? 12 : this.getHours() % 12, //小时         
+        "H+": this.getHours(), //小时         
+        "m+": this.getMinutes(), //分         
+        "s+": this.getSeconds(), //秒         
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度         
+        "S": this.getMilliseconds() //毫秒         
+    };
+    var week = {
+        "0": "/u65e5",
+        "1": "/u4e00",
+        "2": "/u4e8c",
+        "3": "/u4e09",
+        "4": "/u56db",
+        "5": "/u4e94",
+        "6": "/u516d"
+    };
+    if (/(y+)/.test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    }
+    if (/(E+)/.test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, ((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? "/u661f/u671f" : "/u5468") : "") + week[this.getDay() + ""]);
+    }
+    for (var k in o) {
+        if (new RegExp("(" + k + ")").test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        }
+    }
+    return fmt;
+}
+
+// jquery方法扩展
+jQuery.request = function (url, options) {
+    options = $.extend({
+        dataType: "script",
+        cache: true,
+        url: url
+    }, options || {});
+    return jQuery.ajax(options);
+};
+
+// ====================== 验证 ==========================
+wquant.validate = {
+
+    // 手机号验证
+    phoneNumber: function (txt) {
+        if (txt == "")
+            return true;
+        var pattern = /^1[3|4|5|8|7][0-9]\d{8}$/;
+        var matches = pattern.exec(txt);
+        return !(matches == null || matches[0] != txt);
+    },
+
+    // 身份证号验证
+    identityNum: function (txt) {
+        if (txt == "")
+            return true;
+        var pattern = /^\d{17}[\dXx]$/;
+        var matches = pattern.exec(txt);
+        return !(matches == null || matches[0] != txt);
+    },
+
+    // 数字验证--包含小数
+    myNumber: function (txt, negative) {
+        if (txt == "")
+            return true;
+        var pattern = /^\d+[\.]*\d*$/;
+
+        if (negative === true) {
+            pattern = /^-*\d+[\.]*\d*$/;
+        }
+        var matches = pattern.exec(txt);
+        return !(matches == null || matches[0] != txt);
+    },
+
+    // 正整数验证
+    myDigits: function (txt) {
+        if (txt == "")
+            return true;
+        var pattern = /^\d+$/;
+        var matches = pattern.exec(txt);
+        return !(matches == null || matches[0] != txt);
+    },
+
+    // 邮箱验证
+    myEmail: function (txt) {
+        if (txt == "")
+            return true;
+        var pattern = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+        var matches = pattern.exec(txt);
+        return !(matches == null || matches[0] != txt);
+    },
+
+    // 长度范围验证
+    myRangelength: function (txt, num) {
+        if (txt == "")
+            return true;
+        var flag = true;
+        var nums = num.split(",");
+        if (txt.length < nums[0] || txt.length > nums[1]) {
+            flag = false;
+        }
+        return flag;
+    },
+
+    // 最小值验证
+    myMin: function (txt, min) {
+        if (txt == "")
+            return true;
+        var flag = true;
+        if (myDigits(txt)) {  // 是数字
+            if (txt < min) {
+                flag = false;
+            }
+        }
+        return flag;
+    }
+};

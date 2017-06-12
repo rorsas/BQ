@@ -1,0 +1,1007 @@
+﻿wquant.namespace("wquant.page.master");
+wquant.namespace("wquant.config.html");
+
+//cnzz
+wquant.config.html.cnzz = '<a href="http://www.cnzz.com/stat/website.php?web_id=5806202" target="_blank" title="站长统计">' +
+                    '<img src="http://icon.cnzz.com/img/pic.gif"></a>' +
+                    '<script src="http://s13.cnzz.com/stat.php?id=5806202&amp;show=pic" type="text/javascript"></' + 'script>' +
+                    '<script src="http://c.cnzz.com/core.php?web_id=5806202&t=z" ' +
+                    'charset="utf-8" type="text/javascript"></' + 'script>';
+
+var _hmt = _hmt || [];
+var MyDialog = wquant.page.plugin.MyDialog;
+(function () {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?c4063fbea825145269d3349717e06716";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+
+
+
+})();
+
+var _hmt = _hmt || [];
+(function () {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?bd398ec81c21b900ade6db09af9ca345";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);   
+})();
+var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://"); document.write(unescape("%3Cspan style='display:none' id='cnzz_stat_icon_1257875160'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1257875160%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+(function () {
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+
+
+
+var cnzz_protocol1 = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cspan style='display:none;' id='cnzz_stat_icon_1254116188'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol1 + "w.cnzz.com/q_stat.php%3Fid%3D1254116188%26l%3D3' type='text/javascript'%3E%3C/script%3E"));
+
+var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cspan style='display:none;' id='cnzz_stat_icon_1253975973'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/stat.php%3Fid%3D1253975973' type='text/javascript'%3E%3C/script%3E"));
+
+// 登录-判断登录模块是否已经加入到了页面中
+(function () {
+    var loginDialog = null;
+    var openLinkType = 0;        //0:在原标签页中打开链接  1：在新标签页
+    wquant.page.master.showLoginDialog = function (retPage, linkType, loginTitle) {              //linkType=1时，登录后在新标签页打开链接，否则登录后在本页面打开链接, loginTitle不为空时,重新设置登录框的名称
+
+        if (!loginDialog) {
+            loginDialog = new wquant.page.plugin.MyDialog({
+                width: "440",
+                height: "348",
+                modal: true,
+                content: getTemplate(),
+                title: "登录微量网"
+            });
+        }
+
+        loginDialogInit(loginTitle);
+        bindEvent(loginDialog, retPage, linkType);
+    };
+
+    function getTemplate() {
+        var template = $("#template_login").html();
+        $("#template_login").remove();
+        getTemplate = function () {
+            return template;
+        };
+        return getTemplate();
+    }
+
+    function loginDialogInit(loginTitle) {
+        $("input[type='text'],input[type='password']").val("");
+        $(".info").hide();
+
+        checkCookie();
+        if (typeof (loginTitle) != "undefined") {
+            loginDialog.setTitle(loginTitle);
+        }
+
+        loginDialog.show();
+        loginDialog.setZ_index("104");
+
+        //检查cookie
+        function checkCookie() {
+            var name = wquant.cookie.getCookie("squant_user");
+            if (name) {
+                $("#txt_username").val(name).prev().hide();
+                $("#check_auto").prop("checked", true);
+                $("#txt_pwd").focus();
+            }
+        }
+    }
+
+    function bindEvent(loginDialog, retPage, linkType) {
+
+        var container = $("#" + loginDialog.id);
+        var txt_pwd = $(container).find("#txt_pwd");
+
+        $("#txt_username, #txt_pwd, #txt_regist_userName, #txt_regist_pwd, #txt_regist_conf, .identifyCode").focus(function () {
+            $(this).prev().hide();
+        }).blur(function () {
+            if (!$(this).val()) {
+                $(this).prev().show();
+            }
+        });
+
+        //点击提示信息
+        $(".tb_Login .tipInfo").click(function () {
+            $(this).next().focus();
+        });
+
+        //忘记密码
+        $(".forgetPwd").click(function () {
+            window.open("../../Forget/RetrieveOne.aspx", "_blank");
+        });
+
+        $("#txt_username").blur(function () {
+
+            var name = $.trim($(this).val());
+            if (!name) {
+                $(".info span").html("请输入用户名");
+                return;
+            }
+            $(".info").hide();
+            var xhr = $.ajax({
+                url: wquant.config.url.userNamePath,
+                data: { name: name },
+                dataType: "XML",
+                type: "POST"
+            });
+            xhr.done(function (response, status, xhr) {
+                var flag = $(response).find("flag").text();
+                var msg = $(response).find("message").text();
+                if (msg) {
+                    $(".info").show();
+                    $(".info span").html(msg);
+                }
+            }).fail(function (status) {
+
+            });
+        });
+
+        if (linkType == 1) {
+            openLinkType = 1;
+        } else {
+            openLinkType = 0;
+        }
+
+        //点击登录按钮
+        $("#login_button").bind("click", function (ev, linkType) {
+
+            if ($(this).attr("clicked") == "1") {
+                return;
+            }
+            $(this).attr("clicked", "1");
+            var oEvent = ev || event;
+            var userName = $("#txt_username").val();
+            var pwd = $(txt_pwd).val();
+            var code = "****";
+            if (!$(".verifyContainer").is(":hidden")) {
+                code = $("#txt_registerVerify").val();
+            }
+            if (userName && pwd) {
+                loginCommon({ userName: userName, password: pwd, code: code });
+            }
+        });
+
+        //敲回车
+        $(txt_pwd).keydown(function (e) {
+            var ev = window.event || e;
+            if (ev.keyCode == 13) {
+                $("#login_button").click();
+            }
+        });
+
+        //登录 -- 包含切换验证码等操作
+        function loginCommon(postData) {
+            var loginCallBack = wquant.page.common.loginCallBack;
+            var jqXHR = $.ajax({
+                type: "POST",
+                url: "./../../Handler/Common/Login.ashx",
+                data: postData,
+                dataType: "xml",
+                beforeSend: function () {
+                    $(".tb_Login .login_button").css("border", "2px inset #000");
+                }
+            });
+            jqXHR.done(function (data, status) {
+
+                var flag = $(data).find("flag").text();
+                var name = $(data).find("flag").attr("username");
+                var msg = $(data).find("message").text();
+                var state = $(data).find("state").text();
+
+                if (flag == "true") {
+
+                    wantToSetCookie(postData.userName);
+                    window.location.reload();
+
+                    //登录后跳转到记录的链接中
+                    if (loginCallBack) {
+                        if (typeof loginCallBack == 'string') {
+                            if (openLinkType == 1) {
+                                window.open(loginCallBack, "fullscreen");
+                            } else {
+                                window.location.href = loginCallBack;
+                            }
+                        } else if (typeof loginCallBack == 'object') {
+                            loginCallBack.click();
+                        } else {
+                            loginCallBack();
+                        }
+                        loginCallBack = null;
+                    }
+                } else {
+                    $(".info").show();
+                    $(".info span").html(msg);
+                    $("#login_button").attr("clicked", "0");
+                    if (state == -2) {
+                        $(".verifyContainer").show();
+                    }
+                }
+            }).fail(function (data, status, msg) {
+                $("#login_button").attr("clicked", "0");
+            }).always(function () {
+                $("#login_button").css("border", "none");
+            });
+        }
+
+        //改变验证码
+        $(".img_verify").bind("click", function () {
+            $(this).attr("src", wquant.page.common.pageSetting.prefixPath + "./Handler/Common/VerifyCode.ashx" + "?id=" + Math.random());
+        });
+
+        //看不清楚
+        $(".linkBlur").click(function () {
+            $(".img_verify").click();
+        });
+
+        //是否要记住用户名
+        function wantToSetCookie(username) {
+            var isChecked = $("#check_auto").prop("checked");
+            if (isChecked) {
+                wquant.cookie.setCookie("squant_user", username, "d30");
+            } else {
+                wquant.cookie.delCookie(username);
+            }
+        }
+
+        //立即注册       
+        if (typeof (retPage) != "undefined") {
+            $(".registerLink").attr("href", "../Common/RegisterPage.aspx?type=1");
+        }
+    }
+})();
+
+// 母版页的初始化
+(function () {
+
+    var common = wquant.common;
+    var config = wquant.config;
+    var URL = config.url;
+    var bom = wquant.bom;
+    var request = wquant.request;
+    var master = wquant.page.master;
+    var pagecommon = wquant.page.common;
+
+    var pageSetting = "";
+    var loginPath = config.url.loginPath;
+    var userStatusPath = config.url.userStatusPath;
+
+    var loadHtmlAndScript = request.loadHtmlAndScript;
+
+    var showLoginDialog = master.showLoginDialog;
+
+    var showFlashMessage = pagecommon.showFlashMessage;
+    var closeMessage = pagecommon.closeMessage;
+    var encodeParam = common.encodeParam;
+    var getPath = pagecommon.getPath;
+    var linkPage = pagecommon.linkPage;
+    var cnzz = config.html.cnzz;
+
+    var startMove = wquant.dom.startMove;
+
+    // 页面入口
+    $(function () {
+
+        pagecommon.pageSetting = $.extend(pagecommon.pageSetting, getSetting());       // 取页面配置
+
+        // 检测浏览器
+        bom.detectBrowser(function () {
+            $("#browser_test").show();
+        });
+
+        //登录页面跳转
+        var path = getPath(URL.modules.loginPageHtml);
+        $("#nav_login").click(function () {
+            window.location = path + "?url=" + window.location.href;
+        });
+
+        pageInit();         // 页面初始化
+
+        bindEvent();        // 绑定页面事件
+
+        delayEvent();       // 延迟事件     
+    });
+
+    // 是否为首页
+    function getSetting() {
+
+        var page = {},
+            path = window.location.href,
+            arr = path.split(/\/\/|\/|\?|\/|\#/);
+
+        if (arr[2] && arr[2].toLowerCase() != "default.aspx") {
+            page.isHome = false;
+
+            if (arr[2].toLowerCase() == "usercenter" || arr[2] == "%E6%9C%9F%E8%B4%A7") {    //期货
+                page.prefixPath = "./../.";
+            } else {
+                page.prefixPath = "./.";
+            }
+        }
+        page.isFresh = $("#page_fresh").val() == "1";
+
+        return page;
+    }
+
+    // 页面信息初始化
+    function pageInit() {
+
+        // 选中顶部菜单
+        var idx = $("#page_index").val();
+        $(".ul_menu li[index=" + idx + "]").addClass("active");
+
+
+        // 是否已经登录，初始化顶部文字
+        var name = getTopUserName();  // name不为空，已经登录
+        if (name != "") {  // 已经登录
+            $(".logout_show").hide();
+            $(".login_show").show();
+            if ($.trim($("#ltlmessgeone").text()) == 0) {
+                $(".messageNum").hide();
+            } else {
+                $(".messageNum").show();
+            }
+        } else {
+            $(".logout_show").show();
+            $(".login_show").hide();
+            $(".messageNum").hide();
+        }
+
+        //vip
+        var vipLevel = $.trim($("#lab_vip").text());
+        if (vipLevel == 0) {
+            $(".masterVip").hide();
+        } else if (vipLevel == 1) {
+            $(".masterVip").css({"background-position":"1px 0px","display":"inline-block"});
+        } else if (vipLevel == 2) {
+            $(".masterVip").css({"background-position": "-21px 0px","display":"inline-block"});
+        }
+
+        //银建期货、京北金融的链接去掉rel=nofollow
+        $(".coorporateContainer ul li").eq(2).find(".mt20 a").removeAttr("rel");
+        $(".coorporateContainer ul li").eq(11).find(".mt20 a").removeAttr("rel");
+    }
+
+    function bindEvent() {
+        menuInit();
+        skipOther();
+        bindCoorporateEvent();
+        $("#img_verify").attr("src", pagecommon.pageSetting.prefixPath + "./Handler/Common/VerifyCode.ashx" + "?id=" + Math.random());
+
+        //领礼啦
+        var firstVisit = wquant.cookie.getCookie("firstVisit");        //首次登陆网站，二维码展开
+        if (firstVisit != "false") {
+            $(".imgAwardErwei").show();
+            wquant.cookie.setCookie("firstVisit", "false", "d30", "wquant.com");
+        }
+
+        
+        $("#award").hover(function () {
+            $(".imgAwardErwei").show();
+        }, function () {
+            $(".imgAwardErwei").hide();
+        });
+
+        $("#qiandabai").click(function () {
+            var userImg = "";
+            var xhr = $.ajax({
+                url: "../../Handler/UserCenter/GetUserData.ashx",
+                dataType: "json",
+                type: "post",
+                data: ""
+            }).done(function (json) {   
+                if (json.info == "成功") {
+                    userImg = json.data.LogoImg;
+                    //var scrll = $("#dabai_duihua_content").height();
+                    //$("#dabai_duihua_content").scrollTop(scrll);
+                    var path = getPath(wquant.config.url.modules.qiandabaiHtml);
+                    wquant.request.loadHtml(path, function (response, status, xhr) {
+                        showQiandabaiDialog();
+
+                        function showQiandabaiDialog() {
+                            qiandabaiDialog = new MyDialog({
+                                width: "700",
+                                height: "600",
+                                modal: true,
+                                title: "钱大白",
+                                content: response,
+                                closeEvent: closeFun
+                            });
+                            function closeFun() {
+                                $(container).remove();
+                            }
+                            var container = $("#" + qiandabaiDialog.id);
+                            var btnContinue = $(container).find(".btnContinue");
+                            var checkNoTip = $(container).find("#checkNoTip");
+
+                            //确认继续浏览
+                            $(btnContinue).click(function () {
+
+                                if ($(checkNoTip).is(":checked")) {
+                                    wquant.cookie.setCookie("noTip", "true", "d30", "wquant.com");
+                                } else {
+                                    wquant.cookie.delCookie("true");
+                                }
+
+                                qiandabaiDialog.close();
+                            });
+
+                            qiandabaiDialog.setTitle("钱大白", "#0BAFE6", "#fff", "60px", "60px", "18px", "bold");
+                            qiandabaiDialog.setColseImg("../../Images/newHome/dabaiClose.png", "20px", "20px", "20px", "20px");
+                            qiandabaiDialog.setBorder("1px", "#238acc");
+                            qiandabaiDialog.show();
+
+                            $(container).delegate("#dabai_send", "click", function () {
+                                var wenti = $("#dabai_shuru textarea").val().trim();
+
+                                if (!wenti) {
+                                    return;
+                                } else {
+                                    $("#dabai_shuru textarea").val("");
+                                    var data = { "wenti": wenti };
+                                    var ask = '<div class="user_say_wrapper clearfix"><img class="user_img" src=' + userImg + ' /><div class="user_say"><p>' + wenti + '</p></div></div>';
+                                    $("#dabai_duihua_content").append(ask);
+                                    var scrll = $("#dabai_duihua_content")[0].scrollHeight;
+                                    $("#dabai_duihua").scrollTop(scrll);
+                                    var xhr1 = $.ajax({
+                                        url: "../../Handler/UserCenter/QianDaBai.ashx",
+                                        dataType: "json",
+                                        type: "post",
+                                        data: data
+                                    }).done(function (res) {
+                                        if (res.info == "成功") {
+                                            var answer = '<div class="dabai_say_wrapper clearfix"><img class="dabai_img" src="../Images/newHome/dabai.png" /><div class="dabai_say"><p>' + res.data.msg + '</p></div></div>';
+                                            $("#dabai_duihua_content").append(answer);
+                                            var scrll = $("#dabai_duihua_content")[0].scrollHeight;
+                                            $("#dabai_duihua").css("display", "block").scrollTop(scrll);
+                                        }
+                                    }).fail(function (xhr, e) {
+                                        console.log(e);
+                                    });
+                                }
+
+                                return false;
+                            });
+                            $(container).delegate("#hot_questions li", "click", function () {
+                                $("#dabai_shuru textarea").val($(this).text());
+                                $("#dabai_send").click();
+                                return false;
+                            });
+                            $(container).delegate("#dabai_shuru > textarea", "keydown", function (e) {
+                                if (e.keyCode == 13) {
+                                    $("#dabai_send").click();
+                                    $("#dabai_shuru textarea").val($(this).text());
+                                }
+                            });
+
+                            //$(container).delegate("#usual_ask h5", "click", function () {
+                            //    $("#dabai_shuru textarea").val($(this).text());
+                            //    $("#dabai_send").click();
+                            //});
+                        }
+                    });
+
+                    
+                    
+                   
+                }
+
+            }).fail(function (xhr, e) {
+                console.log(e);
+            });
+        });
+    }
+
+    // 顶部菜单相关
+    function menuInit() {
+
+        // 顶部菜单--交易账户点击
+        $("#myAccount").click(function () {
+
+            //点击时判断是否登录
+            var path = getPath(userStatusPath),
+                link = "./UserCenter/Default.aspx?index=00";
+            wquant.page.common.linkPage(path, link);
+        });
+
+        // 顶部菜单悬浮效果
+        $(".ul_menu>li").hover(function () {
+            $(this).addClass("li_hover");
+            $(this).children("#sp_market").css("display", "inline-block");
+            $("#top").css({
+            "position": "relative",
+            "top": "0",
+            "z-index":" -1"
+            });
+        }, function () {
+            $(this).removeClass("li_hover");
+            $(this).children("#sp_market").css("display", "none");
+            $("#top").css({
+                "z-index": "0"
+            });
+        });
+
+        // 我的微量 子菜单 相关
+        $("#myAccount").hover(function () {
+
+            var item = this;
+            $(".myquant_submenu").show();
+            $("#myAccount").addClass("loginStatus");
+        }, function () {
+            $("#myAccount").removeClass("loginStatus");
+            $(".myquant_submenu").hide();
+        });
+
+
+
+        // 我的微量子菜单跳转
+        $(".myquant_submenu p").click(function (event) {
+
+            var link = pagecommon.pageSetting.prefixPath + "./UserCenter/Default.aspx?index=" + encodeParam($(this).attr("index"));
+            var path = getPath(userStatusPath);
+
+            master.loginCallBack = getPath(link);
+            linkPage(path, link);
+
+            event.stopPropagation();
+            return false;
+        });
+
+        $(window).scroll(function () {
+            var scrollTop = $(this).scrollTop();
+            if (scrollTop > 280) {
+                $("#logoOuter").addClass("logoOuterFixed");
+            } else {
+                $("#logoOuter").removeClass("logoOuterFixed");
+            }
+        });
+    }
+
+    // 其他跳转
+    function skipOther() {
+
+        // 退出系统
+        $("#nav_logout").click(function () {
+
+            var url = window.location.href.split("?")[0];
+
+            var path = getPath(wquant.config.url.userStatusPath);
+
+            var jqXHR = $.ajax({
+                type: "POST",
+                url: path,
+                data: { type: 0 },
+                dataType: "xml"
+            });
+
+            jqXHR.done(function (response, status, xhr) {
+
+                var flag = $(response).find("flag").text();
+                var msg = $(response).find("message").text();
+                msg && wquant.page.common.showFlashMessage(msg);
+                logout();
+
+                if (getSetting().isFresh) {
+                    window.location.reload();
+                }
+                if (url.indexOf("UserCenter") > -1) {                //交易大厅
+                    window.location = "./../Default.aspx";
+                } else if (url.indexOf("WquantBean") > -1) {          //分享光荣,邀请有礼
+                    window.location.reload();
+                }
+            }).fail(function (response, status, xhr) {
+
+            });
+        });
+
+        //微信
+        $("#weixin").hover(function () {
+            $(".imgQrCode").show();
+        }, function () {
+            $(".imgQrCode").hide();
+        });
+    }
+
+    //合作机构
+    function bindCoorporateEvent() {
+        var $container = $(".coorporateContainer ul");
+        var $items = $container.children();
+        var $left = $(".coorTurnPageL");
+        var $right = $(".coorTurnPageR");
+        var width = 200;
+
+        $container.prepend($items.last().clone());
+        $container.append($items.first().clone());
+
+        $items = $container.children();
+        var len = $items.length;
+
+        $items.css("width", width);
+        $container.css({ "width": len * width, "margin-left": -width });
+
+        var obj = $container.get(0);
+        var isMoving = false;  //左右点击的时候防止重复 
+        var now = 1;
+
+        // 左箭头 
+        $left.click(function () {
+            if (isMoving) {
+                return;
+            }
+            now--;
+            tab();
+        });
+
+        // 右箭头 
+        $right.click(function () {
+            if (isMoving) {
+                return;
+            }
+            now++;
+            tab();
+        });
+
+
+        //切换函数 
+        function tab() {
+
+            isMoving = true;
+            var distance = -now * width;
+            startMove(obj, { "margin-left": distance }, {
+                time: 100,
+                type: "buffer",
+                end: function () {
+                    if (now == 0) {
+                        now = len - 7;
+                        $container.css({ "margin-left": -width * now });
+                    } else if (now == len - 6) {
+                        now = 1;
+                        $container.css({ "margin-left": -width * now });
+                    }
+                    isMoving = false;
+                }
+            });
+        }
+    }
+
+    /* ================================== 公共方法 Begin ======================================== */
+
+    //给userName赋值
+    function setUserName(name) {
+        $('#hyper_userName').html(name).show();
+        $(".logout_show").hide();
+        $(".login_show").show();
+    }
+
+    //退出系统
+    function logout() {
+
+        $('#hyper_userName').hide();
+        $(".logout_show").show();
+        $(".login_show").hide();
+    }
+
+    //取网站顶部用户名
+    function getTopUserName() {
+        return $('#hyper_userName').html();
+    }
+    /* ================================== 公共方法 End ======================================== */
+    /* ================================== 延迟加载 Begin ======================================== */
+    // 延迟加载事件
+    function delayEvent() {
+        loadQQService(100);    // 加载QQ客服  
+        //loadCnzz(1800);         // 加载底部cnzz统计 
+    }
+
+    // 加载QQ客服
+    function loadQQService(time) {
+
+        setTimeout(function () {
+            var path = "./../Strategy/Diagnose.htm?ver=20170606";
+            var scriptPath = getPath(URL.modules.qqScript);
+            var content = "";
+            wquant.request.loadHtmlAndScript(path, scriptPath, function (response) {                
+                content = response;                
+            }, function () {                
+                var grayDialog = null;
+                $("#lrkfwarp").lrkf({
+                    kftop: '496',				//距离顶部距离
+                    btntext: '',			//默认为 客服在线 四个字，如果你了解css可以使用图片代替
+                    //btntext: '<img src=../../Images/Common/onlineService.png>',			//默认为 客服在线 四个字，如果你了解css可以使用图片代替
+                    defshow: false,			    //如果想默认折叠，将defshow:false,的注释打开，默认为展开
+                    position: 'absolute',		//如果为absolute所有浏览器在拖动滚动条时均有动画效果，如果为空则只有IE6有动画效果，其他浏览器
+                    title: 'QQ在线客服',
+                    //qqs: [
+                    //    { 'name': '量妹-牛牛', 'qq': '412611348' },			//注意逗号是英文的逗号
+                    //    { 'name': '量妹-小主', 'qq': '814016573' },
+                    //    { 'name': '量妹-小新', 'qq': '412611348' },
+                    //    { 'name': '量妹-六六', 'qq': '412611348' },
+                    //    { 'name': '量妹-婷婷', 'qq': '412611348' },
+                    //    { 'name': '量妹-猫猫', 'qq': '412611348' }//注意最后一个{}不要英文逗号
+                    //],
+                    qqs: [
+                        { 'name': '量妹小溪', 'qq': '746048549' },			//注意逗号是英文的逗号
+                        { 'name': '量妹六六', 'qq': '114015433' },
+                        { 'name': '量妹小主', 'qq': '295704750' },
+                        { 'name': '商务合作', 'qq': '315032969' }
+                    ],
+                    tel: [
+                        { 'name': '电话咨询', 'tel': '400-608-0101' }
+                    ]
+                });
+                $(".btnToolCaseDiagnose").click(function () {
+
+                    if (!grayDialog) {
+                        grayDialog = new wquant.page.plugin.MyDialog({
+                            width: "960",
+                            height: "526",
+                            modal: true
+                        });
+                    }
+                    grayDialog.setTitle("", "#E2E3E7");
+                    grayDialog.setBackground("#E2E3E7");
+                    grayDialog.setColseImg("./../Images/Common/redClose.png", "38px", "38px");
+                    grayDialog.setContent($(content).find("#DiagnoseContent").html());
+                    grayDialog.show();
+                    grayDialog.bindCloseEvent();
+                    bindDiagnoseEvent();
+
+                    function bindDiagnoseEvent() {
+
+                        var dialog = $("#" + grayDialog.id);
+                        $(dialog).find(".txt_search").focus(function () {
+                            $(this).next().hide();
+                        }).blur(function () {
+                            if ($(this).val() == "") {
+                                $(this).next().show();
+                            }
+                        });
+
+                        $(dialog).find(".tipCodeName").click(function () {
+                            $(this).prev().focus();
+                        });
+
+                        //点击诊断按钮
+                        $(dialog).find(".btn_Search").click(function () {                            
+                            var code = $.trim($(dialog).find(".txt_search").val());
+                            var xhr = $.ajax({
+                                url: "../Handler/Strategy/WquantTool.ashx",
+                                type: "POST",
+                                dataType: "XML",
+                                data: { type: "stockdiagnose", code: code },
+                                beforeSend: function () {
+                                    $(dialog).find(".conContent:eq(0)").hide();
+                                    $(dialog).find(".conContent:eq(1)").show();
+                                }
+                            });
+                            xhr.done(function (response, status, xhr) {
+
+                                var flag = $(response).find("flag").text();
+                                var msg = $(response).find("message").text();
+                                if (flag == "true") {
+                                    var data = $(response).find("data");
+                                    var secuCode = $(data).find("secucode");
+                                    var today = parseInt((secuCode).find("today").text());
+                                    var week = parseInt($(secuCode).find("week").text());
+                                    var month = parseInt($(secuCode).find("month").text());
+                                    var halfYear = parseInt($(secuCode).find("halfyear").text());
+                                    var needleNum = $(dialog).find("#needleNum");
+                                    var codeName = (secuCode).find("name").text();
+                                    $(needleNum).html(today);
+                                    $(dialog).find(".div_roundGreen").html(today);
+                                    $(dialog).find(".div_roundOrange").html(week);
+                                    $(dialog).find(".div_roundRed").html(month);
+                                    $(dialog).find(".div_roundCyan").html(halfYear);
+                                    $(dialog).find("#secuCode").html(codeName);
+                                    if (today >= 0 && today < 25) {
+                                        $(needleNum).css("background-color", "#33BB91");
+                                    } else if (today >= 25 && today < 50) {
+                                        $(needleNum).css("background-color", "#A8BB58");
+                                    } else if (today >= 50 && today < 75) {
+                                        $(needleNum).css("background-color", "#F0BC38");
+                                    } else if (today >= 75 && today < 100) {
+                                        $(needleNum).css("background-color", "#E43632");
+                                    }
+                                    $(dialog).find(".div_round").each(function (i, item) {
+                                        var val = $.trim($(item).html()) - 0;
+                                        if (val < 0) {
+                                            $(item).parent().hide();
+                                        }
+                                        if (val >= 0 && val < 25) {
+                                            $(item).css("background-color", "#33BB91");
+                                            $(item).prev().text("极度看跌");
+                                        } else if (val >= 25 && val < 50) {
+                                            $(item).css("background-color", "#A8BB58");
+                                            $(item).prev().text("看跌");
+                                        } else if (val >= 50 && val < 75) {
+                                            $(item).css("background-color", "#F0BC38");
+                                            $(item).prev().text("看涨");
+                                        } else if (val >= 75 && val < 100) {
+                                            $(item).css("background-color", "#E43632");
+                                            $(item).prev().text("极度看涨");
+                                        }
+                                    });
+
+                                    setTimeout(function () {
+                                        $(dialog).find(".conContent:eq(1)").hide();
+                                        $(dialog).find(".conContent:eq(2)").show();
+                                        needle_to(today * 180 / 100);
+                                    }, 2000);
+                                } else {
+                                    $(dialog).find(".conContent:eq(1)").hide();
+                                    $(dialog).find(".conContent:eq(3)").show();
+                                }
+
+                            }).fail(function (response, error) {
+
+                            });
+                        });
+
+                        function needle_to(deg, complete) {                            
+                            var ang = 180;
+                            var current_angle = 0;
+                            var target_angle = 0;
+                            var complete_function = null;
+
+                            target_angle = deg;
+                            tick();
+                            complete_function = complete;
+
+                            function tick() {
+                                var needle_container = $(dialog).find("#needle_container");
+                                var needleNum = $(dialog).find("#needleNum");
+                                var speed = Math.abs(Math.ceil((target_angle - current_angle) / 360 * 20)) + 1
+                                ang = (target_angle > current_angle ? (current_angle + speed) % 360 : (current_angle - speed) % 360);
+                                $(needle_container).css('-moz-transform', 'rotate(' + ang + 'deg)');
+                                $(needle_container).css('-webkit-transform', 'rotate(' + ang + 'deg)');
+                                $(needle_container).css('transform', 'rotate(' + ang + 'deg)');
+
+                                $(needleNum).css('-moz-transform', 'rotate(' + (-ang) + 'deg)');
+                                $(needleNum).css('-webkit-transform', 'rotate(' + (-ang) + 'deg)');
+                                $(needleNum).css('transform', 'rotate(' + (-ang) + 'deg)');
+
+
+                                current_angle = ang;
+                                if (Math.ceil(ang) != Math.ceil(target_angle)) {
+                                    setTimeout(tick, 25);
+                                } else {
+                                    if (complete_function) {
+                                        complete_function();
+                                    }
+                                }
+                            }
+                        }
+
+                        //敲回车
+                        $(dialog).find(".txt_search").keydown(function (e) {
+                            var ev = window.event || e;
+                            if (ev.keyCode == 13) {
+                                $(dialog).find(".btn_Search").click();
+                            }
+                        });
+
+                        //重新诊断
+                        $(dialog).find(".reDiagnose").click(function () {
+                            $(dialog).find(".conContent:eq(2)").hide();
+                            $(dialog).find(".txt_search").val("");
+                            $(dialog).find(".conContent:eq(0)").show();
+                        });
+                    }
+                });
+
+                $(".btnToolCaseGrail").click(function () {
+
+                    if (!grayDialog) {
+                        grayDialog = new wquant.page.plugin.MyDialog({
+                            width: "960",
+                            height: "560",
+                            modal: true
+                        });
+                    }
+                    grayDialog.setTitle("", "#E2E3E7");
+                    grayDialog.setBackground("#E2E3E7");
+                    grayDialog.setColseImg("./../Images/Common/redClose.png", "38px", "38px");
+                    grayDialog.setContent($(content).find("#GrailContent").html());
+                    grayDialog.show();
+                    grayDialog.bindCloseEvent();
+                    bindGrailEvent();
+
+                    function bindGrailEvent() {
+                        var dialog = $("#" + grayDialog.id);
+                        var xhr = $.ajax({
+                            url: "../Handler/Strategy/WquantTool.ashx",
+                            type: "POST",
+                            dataType: "XML",
+                            data: { type: "marketcode" }
+                        });
+                        xhr.done(function (response, status, xhr) {                            
+                            var flag = $(response).find("flag").text();
+                            var msg = $(response).find("message").text();
+
+                            if (flag == "true") {
+                                var data = $(response).find("data");
+                                var sum = $(data).attr("sum");
+                                var grailValue = $(data).text();
+                                if (grailValue > 0 && grailValue <= 10) {
+                                    needle_to(grailValue * 14 / 10);
+                                    $(dialog).find(".div_grailInfo:eq(0)").show().siblings().hide();
+                                } else if (grailValue > 10 && grailValue <= 30) {
+                                    needle_to(grailValue * 1.4 + 14);
+                                    $(dialog).find(".div_grailInfo:eq(1)").show().siblings().hide();
+                                } else if (grailValue > 30 && grailValue <= 70) {
+                                    needle_to(grailValue * 0.9 + 45);
+                                    $(dialog).find(".div_grailInfo:eq(2)").show().siblings().hide();
+                                } else if (grailValue > 70 && grailValue <= 90) {
+                                    needle_to(grailValue * 19 / 26 + 80);
+                                    $(dialog).find(".div_grailInfo:eq(3)").show().siblings().hide();
+                                } else if (grailValue > 90 && grailValue <= 100) {
+                                    needle_to(grailValue * 40 / 25 + 22);
+                                    $(dialog).find(".div_grailInfo:eq(4)").show().siblings().hide();
+                                }
+                            } else {
+                                msg && wquant.page.common.showFlashMessage(msg);
+                            }
+
+                        }).fail(function (response, error) {
+
+                        });
+
+                        function needle_to(deg, complete) {
+                            var ang = 180;
+                            var current_angle = 0;
+                            var target_angle = 0;
+                            var complete_function = null;
+
+                            target_angle = deg;
+                            tick();
+                            complete_function = complete;
+
+                            function tick() {
+                                var grailNeedleContainer = $(dialog).find('#grailNeedleContainer');
+                                var speed = Math.abs(Math.ceil((target_angle - current_angle) / 360 * 20)) + 1
+                                ang = (target_angle > current_angle ? (current_angle + speed) % 360 : (current_angle - speed) % 360);
+                                $(grailNeedleContainer).css('-moz-transform', 'rotate(' + ang + 'deg)');
+                                $(grailNeedleContainer).css('-webkit-transform', 'rotate(' + ang + 'deg)');
+                                $(grailNeedleContainer).css('transform', 'rotate(' + ang + 'deg)');
+                                current_angle = ang;
+                                if (Math.ceil(ang) != Math.ceil(target_angle)) {
+                                    setTimeout(tick, 25);
+                                } else {
+                                    if (complete_function) {
+                                        complete_function();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+
+        }, time);
+    }
+
+    function loadQQKefu() {
+
+    }
+
+    /* CNZZ 延迟加载，同步加载会阻塞页面其他操作；
+    * 1、可能会存在的问题：此处html代码是统计代码翻译出的代码，有可能会改变；
+    * 2、因为统计代码中有 document.write，所以不适合直接延迟加载；
+    *    document.write()中有<span>标签和<script>标签，可以考虑直接把改代码动态加到页面中，经测试，有问题；
+    *    可以把span标签放在页面中，只动态添加载script标签，经测试，同样有问题；
+    */
+    function loadCnzz(time) {
+
+        setTimeout(function () {
+            $(".site_tools").append(cnzz);
+        }, time);
+    }
+    /* ================================== 延迟加载 End ======================================== */
+})();

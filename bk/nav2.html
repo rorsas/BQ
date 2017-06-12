@@ -1,0 +1,69 @@
+﻿<nav class="navbar navbar-static-top" id="title-cnt">
+<div id="title-nav-bar" class="navbar-collapse">
+        <div id="title-logo" class="left-side"></div>
+        <div class="dropdown research left-side"><p class="dropdown-toggle strategy"><a target="_blank"
+                                                                                        href="/stock?category=stock">创建策略</a>
+        </p>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation" class="dropdown-header stock title-li">股票策略</li>
+                <li role="presentation" class="dropdown-header fund title-li">基金策略</li>
+                <li role="presentation" class="dropdown-header asset title-li">策略组合</li>
+                <li role="presentation" class="dropdown-header history title-li">趋势分析</li>
+            </ul>
+        </div>
+        <div class="ver-separator left-side"></div>
+        <div class="dropdown strategies left-side"><p class="dropdown-toggle"><a target="_blank"
+                                                                                 href="/index/">使用策略</a>
+        </p>
+        </div>
+        <div class="ver-separator left-side"></div>
+        <div class="dropdown trader left-side"><p class="dropdown-toggle"><a target="_blank"
+                                                                             href="/user/home?page=trader">交易</a></p>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation" class="dropdown-header trader title-li">实盘管家</li>
+                <li role="presentation" class="dropdown-header talk title-li">实盘心得</li>
+                <li role="presentation" class="dropdown-header autoTrader title-li">交易助手</li>
+            </ul>
+        </div>
+        <div class="ver-separator left-side"></div>
+        <div class="dropdown community left-side"><p class="dropdown-toggle" data-toggle="dropdown"
+                                                     aria-expanded="true"><a>帮助中心</a></p>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation" class="dropdown-header forum title-li">果仁论坛</li>
+                <li role="presentation" class="dropdown-header school title-li">量化课堂</li>
+                <li role="presentation" class="dropdown-header video title-li">视频课程</li>
+                <li role="presentation" class="dropdown-header help title-li">帮助文档</li>
+                <li role="presentation" class="dropdown-header vip title-li">VIP特权</li>
+            </ul>
+        </div>
+        <div class="ver-separator left-side"></div>
+        <div class="title-search left-side"><input type="text" autocomplete="off" autocorrect="off" spellcheck="false"
+                                                   value="搜索 策略/用户/帖子"><span class="glyphicon glyphicon-search"></span>
+        </div>
+        <div class="dropdown signup right-side hide"><p class="dropdown-toggle"><a href="#">注册</a></p></div>
+        <div class="dropdown login right-side hide"><p class="dropdown-toggle"><a href="#">登录</a></p></div>
+        <div class="dropdown user right-side">
+            <div class="user-title" data-toggle="dropdown" aria-expanded="true">
+                <div class="avatar" style="background-image: url(&quot;/static/images/user_default_grey.png&quot;);">
+                    <img class="vip-icon" src="/static/images/badge.png"></div>
+                <span class="name">twofox</span></div>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation" class="dropdown-header profile title-li">我的主页</li>
+                <li role="presentation" class="dropdown-header signin title-li">每日签到</li>
+                <li role="presentation" class="dropdown-header record title-li">登陆记录</li>
+                <li role="presentation" class="dropdown-header wallet title-li">我的钱包</li>
+                <li role="presentation" class="dropdown-header admin title-li" style="display: none;">管理页面</li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation">
+                    <form class="userLogout" name="input" action="/user/logout" method="post"><input class="logoutBtn"
+                                                                                                     type="submit"
+                                                                                                     value="登出"></form>
+                </li>
+            </ul>
+        </div>
+        <div class="ring-bell">
+            <div class="mail"></div>
+            <div class="tip" style="display: none;"><span class="num">0</span></div>
+        </div>
+    </div>
+</nav>
