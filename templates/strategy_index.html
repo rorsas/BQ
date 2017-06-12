@@ -1,0 +1,46 @@
+{% if latest_strategy_list %}
+    <ul>
+        <div id="strategy-cnt" style="min-height: 679px;">
+            <div class="chart">
+                {% for strategy in latest_strategy_list %}
+                    <div class="chart-cnt">
+                        <div class="top">
+                            <a class="strategy name" target="_blank"
+                               href="/strategy/{{ strategy.id }}/">{{ strategy.name }}</a><span
+                                class="strategy status">可订阅</span>
+                            <a class="author name right" target="_blank"
+                               href="/user/{{ strategy.author.id }}/">{{ strategy.author.first_name }}</a>
+                            <div class="mytag txt"><span>次新</span></div>
+                        </div>
+                        <div class="clear"></div>
+                        {% include 'strategy_chart.html' %}
+                        <div class="middle">
+                            <div class="small-title quarter">一季收益率</div>
+                            <div class="small-title">年化收益率</div>
+                            <div class="small-title next_trade_date right">下个调仓日</div>
+                            <div class="small-title max_withdraw right hide">最大回撤</div>
+                            <div class="small-title real_return right hide">实盘收益</div>
+                            <div class="small-title last_day_return right hide">近一日收益</div>
+                            <div class="small-title mall_date right hide">上架日期</div>
+                            <div class="small-title month_return right hide">近一月收益</div>
+                            <span class="quarter">{% widthratio strategy.annualizedReturn 4 1 %}%</span><span
+                                class="annual">{{ strategy.annualizedReturn }}%</span><span
+                                class="next_trade_date right">2017/06/12</span><span
+                                class="max_withdraw right hide">17.11%</span><span
+                                class="real_return right hide">32.25%</span><span
+                                class="last_day_return right hide">0.29%</span><span
+                                class="mall_date right hide">2017/03/05</span><span
+                                class="month_return right hide">-1.42%</span></div>
+                        <div class="bottom">
+                            <div class="price"><span><span class="num">{{ strategy.price }}</span>元/月</span></div>
+                            <div class="capacity">投资额{{ strategy.investLine }}万元</div>
+                            <a class="button right" href="/strategy/{{ strategy.id }}/">详情</a>
+                            <p class="activity"><span class="num">1000</span>元/月&nbsp;&nbsp;(周年庆限时特价)</p></div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </ul>
+{% else %}
+    <p>No strategy are available.</p>
+{% endif %}

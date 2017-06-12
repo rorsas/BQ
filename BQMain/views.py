@@ -21,7 +21,7 @@ def to_home(request):
 
 
 class IndexView(generic.ListView):
-    template_name = 'stragety_index.html'
+    template_name = 'strategy_index.html'
     context_object_name = 'latest_strategy_list'
 
     def get_queryset(self):
