@@ -7,7 +7,7 @@
                         <div class="chart-cnt">
                             <div class="top">
                                 <a class="strategy name" target="_blank"
-                                   href="/strategy/{{ strategy.id }}/">{{ strategy.name }}</a><span
+                                   href="strategy/{{ strategy.id }}/">{{ strategy.name }}</a><span
                                     class="strategy status">可订阅</span>
                                 <a class="author name right" target="_blank"
                                    href="/user/{{ strategy.author.id }}/">{{ strategy.author.first_name }}</a>
@@ -35,7 +35,7 @@
                             <div class="bottom">
                                 <div class="price"><span><span class="num">{{ strategy.price }}</span>元/月</span></div>
                                 <div class="capacity">投资额{{ strategy.investLine }}万元</div>
-                                <a class="button right" href="/strategy/{{ strategy.id }}/">详情</a>
+                                <a class="button right" href="strategy/{{ strategy.id }}/">详情</a>
                                 <p class="activity"><span class="num">1000</span>元/月&nbsp;&nbsp;(周年庆限时特价)</p></div>
                         </div>
                     {% endfor %}

@@ -31,7 +31,7 @@ urlpatterns = [
                   url(r'^index/', main_view.IndexView.as_view(), name='index'),
                   url(r'^market/', main_view.marketView.as_view(), name='market'),
                   url(r'^dealer/', main_view.DealerIndexView.as_view(), name='dealer'),
-                  url(r'^strategy/(?P<pk>[0-9]+)/$', main_view.DetailView.as_view(), name='detail'),
+                  url(r'^market/strategy/(?P<pk>[0-9]+)/$', main_view.DetailView.as_view(), name='detail'),
 
                   url(r'^(?P<path>.*)$', static_view.serve),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

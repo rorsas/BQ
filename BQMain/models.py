@@ -1,8 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User, UserManager
 
-
 # Create your models here.
+from django.utils.timezone import now
+
+
 class Strategy(models.Model):
     name = models.CharField('策略名', max_length=256)
     description = models.TextField('简介')
@@ -12,9 +14,23 @@ class Strategy(models.Model):
 
     price = models.DecimalField('月租', max_digits=10, decimal_places=0, default=0)
 
+    # 收益统计
+    totalReturn = models.DecimalField('总收益率', max_digits=10, decimal_places=2, null=True, default=0)
     annualizedReturn = models.DecimalField('年化收益率', max_digits=10, decimal_places=2, null=True, default=0)
-    investLine = models.DecimalField('投资额度', max_digits=10, decimal_places=2, null=True, default=10)
+    initialReturn = models.DecimalField('自创建日收益', max_digits=10, decimal_places=2, null=True, default=0)
+    initialTime = models.DateTimeField('创建时间', auto_now_add=True, editable=True)
+    sharp = models.DecimalField('夏普比率', max_digits=10, decimal_places=2, null=True, default=0)
+    retracementMax = models.DecimalField('最大回撤率', max_digits=10, decimal_places=2, null=True, default=0)
+    volatility = models.DecimalField('收益波动率', max_digits=10, decimal_places=2, null=True, default=0)
+    informationRatio = models.DecimalField('信息比率', max_digits=10, decimal_places=2, null=True, default=0)
+    alpha = models.DecimalField('Beta', max_digits=10, decimal_places=2, null=True, default=0)
+    beta = models.DecimalField('Alpha', max_digits=10, decimal_places=2, null=True, default=0)
 
+    investLine = models.DecimalField('投资额度', max_digits=10, decimal_places=2, null=True, default=10)
+    portfoliosAdjustment = models.IntegerField('调仓周期', null=True, default=1)
+    portfoliosAdjustmentNext = models.DateTimeField('下个调仓', auto_now_add=True, editable=True)
+    regressionBegin = models.DateTimeField('回测开始', auto_now_add=True, editable=True)
+    regressionEnd = models.DateTimeField('回测结束', auto_now_add=True, editable=True)
     pub_date = models.DateTimeField('发表时间', auto_now_add=True, editable=True)
     update_time = models.DateTimeField('更新时间', auto_now=True, null=True)
 
