@@ -6,7 +6,8 @@
         <div>
             <ul class="nav navbar-nav navbar-left">
                 <li {% if request.path|slice:"7" == "/market" %}class="active"{% endif %}><a href="/market/">市场</a></li>
-                <li><a href="/dealer/">交易员</a></li>
+                <li {% if request.path|slice:"7" == "/dealer" %}class="active"{% endif %}><a href="/dealer/">交易员</a>
+                </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         行情 <b class="caret"></b>

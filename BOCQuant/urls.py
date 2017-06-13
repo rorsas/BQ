@@ -26,11 +26,11 @@ urlpatterns = [
                   url(r'^admin/', admin.site.urls),
 
                   url(r'^$', main_view.to_home),
-                  url(r'^home/', main_view.home, name='home'),
+                  url(r'^home/$', main_view.home, name='home'),
                   url(r'^test/', main_view.test),
                   url(r'^index/', main_view.IndexView.as_view(), name='index'),
-                  url(r'^market/', main_view.marketView.as_view(), name='market'),
-                  url(r'^dealer/', main_view.DealerIndexView.as_view(), name='dealer'),
+                  url(r'^market/$', main_view.marketView.as_view(), name='market'),
+                  url(r'^dealer/$', main_view.DealerIndexView.as_view(), name='dealer'),
                   url(r'^market/strategy/(?P<pk>[0-9]+)/$', main_view.DetailView.as_view(), name='detail'),
 
                   url(r'^(?P<path>.*)$', static_view.serve),
