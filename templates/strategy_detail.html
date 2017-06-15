@@ -2,24 +2,237 @@
 
 {% block title %}中银策略市场-策略详情{% endblock %}
 
-{% block content %}
-{% comment %}
-    <h1>{{ strategy.name }}</h1>
-    <h2>{{ strategy.description }}</h2>
-    <div>
-        {{ strategy.content }}
-    </div>{% endcomment %}
+{% load static %}
+{% block head_extra %}
+    <!--market head-->
+    {% load static %}
+    <link type="text/css" rel="stylesheet" href="{% static 'css/bqcommons.css' %}">
+{% endblock %}
 
-<div class="panel panel-default">
-    <div class="panel-heading">{{ strategy.name }}</div>
-    <div class="panel-body">
-        {{ strategy.description }}
+
+{% block content %}
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">{{ strategy.name }}</div>
+        <div class="panel-body">
+            {{ strategy.description }}
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item">{{ strategy.content }}</li>
+            <li class="list-group-item">{{ strategy.content }}</li>
+        </ul>
     </div>
-    <ul class="list-group">
-        <li class="list-group-item">{{ strategy.content }}</li>
-        <li class="list-group-item">{{ strategy.content }}</li>
-    </ul>
-</div>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="page-header">
+                    <h1>
+                        {{ strategy.name }}
+                        {#	<small>Subtext for header</small>#}
+                    </h1>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-md-4 column">
+                        <dl>
+                            <dd><span class="sub-title">作者：</span>{{ strategy.author.first_name }}</dd>
+                        </dl>
+                        <dl>
+                            <dd><span class="sub-title">创建时间：</span>{{ strategy.pub_date.date }}</dd>
+                        </dl>
+                        <dl>
+                            <dd><span class="sub-title">下个调仓：</span>{{ strategy.portfoliosAdjustmentNext.date }}</dd>
+                        </dl>
+                        <dl>
+                            <dd><span
+                                    class="sub-title">回测日期：</span>{{ strategy.initialTime.date }}-{{ strategy.update_time.date }}
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-4 column">
+                        <dl>
+                            <dt>
+                                Description lists
+                            </dt>
+                            <dd>
+                                A description list is perfect for defining terms.
+                            </dd>
+                            <dt>
+                                Euismod
+                            </dt>
+                            <dd>
+                                Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
+                            </dd>
+                            <dd>
+                                Donec id elit non mi porta gravida at eget metus.
+                            </dd>
+                            <dt>
+                                Malesuada porta
+                            </dt>
+                            <dd>
+                                Etiam porta sem malesuada magna mollis euismod.
+                            </dd>
+                            <dt>
+                                Felis euismod semper eget lacinia
+                            </dt>
+                            <dd>
+                                Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
+                                massa justo sit amet risus.
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-4 column">
+                        <dl>
+                            <dt>
+                                Description lists
+                            </dt>
+                            <dd>
+                                A description list is perfect for defining terms.
+                            </dd>
+                            <dt>
+                                Euismod
+                            </dt>
+                            <dd>
+                                Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
+                            </dd>
+                            <dd>
+                                Donec id elit non mi porta gravida at eget metus.
+                            </dd>
+                            <dt>
+                                Malesuada porta
+                            </dt>
+                            <dd>
+                                Etiam porta sem malesuada magna mollis euismod.
+                            </dd>
+                            <dt>
+                                Felis euismod semper eget lacinia
+                            </dt>
+                            <dd>
+                                Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
+                                massa justo sit amet risus.
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="tabbable" id="tabs-59603">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#panel-245207" data-toggle="tab">Section 1</a>
+                        </li>
+                        <li>
+                            <a href="#panel-510187" data-toggle="tab">Section 2</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="panel-245207">
+                            <p>
+                                I'm in Section 1.
+                            </p>
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        编号
+                                    </th>
+                                    <th>
+                                        产品
+                                    </th>
+                                    <th>
+                                        交付时间
+                                    </th>
+                                    <th>
+                                        状态
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        1
+                                    </td>
+                                    <td>
+                                        TB - Monthly
+                                    </td>
+                                    <td>
+                                        01/04/2012
+                                    </td>
+                                    <td>
+                                        Default
+                                    </td>
+                                </tr>
+                                <tr class="success">
+                                    <td>
+                                        1
+                                    </td>
+                                    <td>
+                                        TB - Monthly
+                                    </td>
+                                    <td>
+                                        01/04/2012
+                                    </td>
+                                    <td>
+                                        Approved
+                                    </td>
+                                </tr>
+                                <tr class="error">
+                                    <td>
+                                        2
+                                    </td>
+                                    <td>
+                                        TB - Monthly
+                                    </td>
+                                    <td>
+                                        02/04/2012
+                                    </td>
+                                    <td>
+                                        Declined
+                                    </td>
+                                </tr>
+                                <tr class="warning">
+                                    <td>
+                                        3
+                                    </td>
+                                    <td>
+                                        TB - Monthly
+                                    </td>
+                                    <td>
+                                        03/04/2012
+                                    </td>
+                                    <td>
+                                        Pending
+                                    </td>
+                                </tr>
+                                <tr class="info">
+                                    <td>
+                                        4
+                                    </td>
+                                    <td>
+                                        TB - Monthly
+                                    </td>
+                                    <td>
+                                        04/04/2012
+                                    </td>
+                                    <td>
+                                        Call in to confirm
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane" id="panel-510187">
+                            <p>
+                                Howdy, I'm in Section 2.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 
