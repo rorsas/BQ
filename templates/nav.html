@@ -5,7 +5,8 @@
         </div>
         <div>
             <ul class="nav navbar-nav navbar-left">
-                <li {% if request.path|slice:"7" == "/market" %}class="active"{% endif %}><a href="{% url 'market' %}">市场</a></li>
+                <li {% if request.path|slice:"7" == "/market" %}class="active"{% endif %}><a href="{% url 'market' %}">市场</a>
+                </li>
                 <li {% if request.path|slice:"7" == "/dealer" %}class="active"{% endif %}><a href="{% url 'dealer' %}">交易员</a>
                 </li>
                 <li class="dropdown">
@@ -26,10 +27,10 @@
                     </ul>
                 </li>
             </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
-        </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+            </ul>
         </div>
     </div>
 </nav>
