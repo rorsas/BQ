@@ -64,6 +64,7 @@ class Customer(User):
     description = models.TextField(max_length=1000, default="暂无", blank=True)
     # headImage = models.ImageField(upload_to='/media/img/users/', null=True, blank=True)
     strategyList = models.ManyToManyField(Strategy);
+    dealerList = models.ManyToManyField(Dealer);
 
     objects = UserManager()
 
