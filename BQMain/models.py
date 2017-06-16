@@ -36,6 +36,9 @@ class Strategy(models.Model):
 
     published = models.BooleanField('正式发布', default=True)
 
+    def getDays(self):
+        return abs(now() - self.initialTime).days
+
     def __str__(self):
         return self.name
 
@@ -46,6 +49,29 @@ class Dealer(User):
     pop = models.IntegerField(default=0)
 
     objects = UserManager()
+
+    def _get_full_name(self):
+        # Returns the person's full name."
+        return self.first_name
+
+    full_name = property(_get_full_name)
+
+    def __str__(self):
+        return '%s %s' % (self.first_name, self.last_name)
+
+
+class Customer(User):
+    description = models.TextField(max_length=1000, default="暂无", blank=True)
+    # headImage = models.ImageField(upload_to='/media/img/users/', null=True, blank=True)
+    strategyList = models.ManyToManyField(Strategy);
+
+    objects = UserManager()
+
+    def _get_full_name(self):
+        # Returns the person's full name."
+        return self.first_name
+
+    full_name = property(_get_full_name)
 
     def __str__(self):
         return '%s %s' % (self.first_name, self.last_name)
