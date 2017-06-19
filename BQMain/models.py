@@ -63,7 +63,8 @@ class Dealer(User):
 class Customer(User):
     description = models.TextField(max_length=1000, default="暂无", blank=True)
     # headImage = models.ImageField(upload_to='/media/img/users/', null=True, blank=True)
-    strategyList = models.ManyToManyField(Strategy);
+    strategyList_subscribe = models.ManyToManyField(Strategy, "订阅列表");
+    strategyList_watch = models.ManyToManyField(Strategy, "关注列表");
     dealerList = models.ManyToManyField(Dealer);
 
     objects = UserManager()

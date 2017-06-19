@@ -138,3 +138,5 @@ LOGGING = {
 }
 # JET_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
 CUSTOM_USER_MODEL = 'UserProfile.Dealer'
+LOGIN_REDIRECT_URL = '/home'
+LOGOUT_REDIRECT_URL = '/home'

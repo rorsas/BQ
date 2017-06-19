@@ -19,19 +19,22 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from BQMain import views as main_view
 from django.contrib.staticfiles import views as static_view
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
                   url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
                   url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
                   url(r'^admin/', admin.site.urls),
 
+                  url(r'^', include('django.contrib.auth.urls')),
                   url(r'^$', main_view.to_home),
                   url(r'^home/$', main_view.home, name='home'),
+                  # url(r'^login/$', auth_views.login, {'template_name': 'templates/login.html'}),
                   url(r'^test/', main_view.test),
                   url(r'^index/', main_view.IndexView.as_view(), name='index'),
                   url(r'^market/$', main_view.marketView.as_view(), name='market'),
                   url(r'^dealer/$', main_view.DealerIndexView.as_view(), name='dealer'),
                   url(r'^market/strategy/(?P<pk>[0-9]+)/$', main_view.DetailView.as_view(), name='detail'),
 
-                  url(r'^(?P<path>.*)$', static_view.serve),
+                  # url(r'^(?P<path>.*)$', static_view.serve),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

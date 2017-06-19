@@ -28,8 +28,14 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> 退出</a></li>
+                {% else %}
+                    <p>
+                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+                    <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+                    </p>
+                {% endif %}
             </ul>
         </div>
     </div>
