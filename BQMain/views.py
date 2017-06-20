@@ -1,6 +1,6 @@
 from django.forms import forms
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.views import generic
 from .models import Strategy, Dealer
@@ -19,6 +19,15 @@ def to_home(request):
     return HttpResponseRedirect(
         reverse('home')
     )
+
+
+def sub_strategy(request, sid):
+    if request.user.is_authenticated():  # 判断用户是否已登录
+        user = request.user;  # 获取已登录的用户
+    else:
+        return JsonResponse(False, safe=False)
+
+    return JsonResponse(True, safe=False)
 
 
 class IndexView(generic.ListView):

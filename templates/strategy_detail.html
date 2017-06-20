@@ -17,6 +17,7 @@
             <div class="col-md-12 column">
                 <div class="page-header">
                     <h1>{{ strategy.name }}&nbsp;<small>{{ strategy.description }}</small>
+                        <button type="button" id="sub_strategy" class="btn btn-danger">订阅</button>
                     </h1>
                 </div>
                 <div class="row clearfix">
@@ -123,6 +124,22 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            // 订阅策略
+            $("#sub_strategy").click(function () {
+                var sid = {{ strategy.id }};
+
+                $.getJSON("/sub_strategy/" + sid + "/", function (ret) {
+                    alert("已订阅");
+                    $("#sub_strategy").attr("class", "btn btn-primary disabled");
+                    $("#sub_strategy").attr("disabled", true);
+                    $("#sub_strategy").text("已订阅");
+                    {#                    $("#sub_strategy").class("btn btn-primary disabled")#}
+                })
+            });
+        });
+    </script>
 {% endblock %}
 
 
