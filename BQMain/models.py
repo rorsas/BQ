@@ -36,7 +36,7 @@ class Strategy(models.Model):
 
     published = models.BooleanField('正式发布', default=True)
 
-    def getDays(self):
+    def getdays(self):
         return abs(now() - self.initialTime).days
 
     def __str__(self):
@@ -44,6 +44,11 @@ class Strategy(models.Model):
 
 
 class Dealer(User):
+    UserType = [
+        (1, '交易员'),
+        (2, '客户'),
+    ]
+
     description = models.TextField(max_length=1000, default="暂无", blank=True)
     # headImage = models.ImageField(upload_to='/media/img/users/', null=True, blank=True)
     pop = models.IntegerField(default=0)
