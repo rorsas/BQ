@@ -18,9 +18,9 @@
                 <tr>
                     <td><a href="/market/strategy/{{ strategy.id }}/">{{ strategy.name }}</a></td>
                     <td>{{ strategy.author.first_name }}</td>
-                    <td>超人气无花果</td>
-                    <td>18.00￥</td>
-                    <td>18.00￥</td>
+                    <td>{{ strategy.pub_date.date|date:"Y-m-d" }}</td>
+                    <td>{{ strategy.portfoliosAdjustmentNext.date|date:"Y-m-d" }}</td>
+                    <td>{{ strategy.portfoliosAdjustment }}个交易日</td>
                     <td>上架</td>
                     <td>
                         <a href="" class="btn btn-danger">删除</a>

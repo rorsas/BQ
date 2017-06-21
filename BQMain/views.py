@@ -25,13 +25,13 @@ def sub_strategy(request, sid):
     if request.user.is_authenticated():  # 判断用户是否已登录
         user = request.user;  # 获取已登录的用户
     else:
-        return JsonResponse(False, safe=False)
+        return JsonResponse({'result': 1})
 
     strategy = Strategy.objects.get(id=sid)
 
     Customer.objects.get(id=user.id).strategyList_subscribe.add(strategy)
 
-    return JsonResponse(True, safe=False)
+    return JsonResponse({'result': 0})
 
 
 class IndexView(generic.ListView):
