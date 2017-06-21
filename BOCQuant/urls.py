@@ -29,13 +29,15 @@ urlpatterns = [
                   url(r'^', include('django.contrib.auth.urls')),
                   url(r'^$', main_view.to_home),
                   url(r'^home/$', main_view.home, name='home'),
-                  # url(r'^login/$', auth_views.login, {'template_name': 'templates/login.html'}),
+                  url(r'^login/$', auth_views.login, {'template_name': 'templates/login.html'}),
                   url(r'^test/', main_view.test),
                   url(r'^index/', main_view.IndexView.as_view(), name='index'),
                   url(r'^market/$', main_view.marketView.as_view(), name='market'),
                   url(r'^dealer/$', main_view.DealerIndexView.as_view(), name='dealer'),
-                  url(r'^market/strategy/(?P<pk>[0-9]+)/$', main_view.DetailView.as_view(), name='detail'),
+                  url(r'^market/strategy/(?P<pk>[0-9]+)/$', main_view.StrategyDetailView.as_view(), name='detail'),
                   url(r'^sub_strategy/(?P<sid>[0-9]+)/$', main_view.sub_strategy, name='sub_strategy'),
+                  url(r'^my/strategy/subscribe$', main_view.SubscribeIndexView.as_view(), name='my_sub_strategy'),
+                  url(r'^my/strategy/watch$', main_view.SubscribeIndexView.as_view(), name='my_watch_strategy'),
 
-                  # url(r'^(?P<path>.*)$', static_view.serve),
+                  url(r'^(?P<path>.*)$', static_view.serve),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

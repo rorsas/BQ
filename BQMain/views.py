@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.views import generic
-from .models import Strategy, Dealer
+from .models import Strategy, Dealer, Customer
 
 
 # Create your views here.
@@ -27,6 +27,10 @@ def sub_strategy(request, sid):
     else:
         return JsonResponse(False, safe=False)
 
+    strategy = Strategy.objects.get(id=sid)
+
+    Customer.objects.get(id=user.id).strategyList_subscribe.add(strategy)
+
     return JsonResponse(True, safe=False)
 
 
@@ -48,7 +52,7 @@ class marketView(generic.ListView):
         return Strategy.objects.select_related('author').order_by('-pub_date')[:5]
 
 
-class DetailView(generic.DetailView):
+class StrategyDetailView(generic.DetailView):
     model = Strategy
     template_name = 'strategy_detail.html'
 
@@ -60,3 +64,18 @@ class DealerIndexView(generic.ListView):
     def get_queryset(self):
         """Return the hottest five dealers."""
         return Dealer.objects.order_by('-pop')[:5]
+
+
+class SubscribeIndexView(generic.ListView):
+    template_name = 'my_strategy_sub.html'
+    context_object_name = 'strategy_list'
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated():  # 判断用户是否已登录
+            user = self.request.user;  # 获取已登录的用户
+        else:
+            return HttpResponseRedirect(
+                reverse('home')
+            )
+
+        return Customer.objects.get(id=user.id).strategyList_subscribe.order_by('-pub_date')[:5]

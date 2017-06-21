@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block title %}中银策略市场-策略订阅{% endblock %}
+
+{% load static %}
+{% block head_extra %}
+    <!--market head-->
+    {% load static %}
+    <link type="text/css" rel="stylesheet" href="{% static 'css/bqcommons.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="page-header">
+                    <h1>策略订阅</small>
+                        <button type="button" id="sub_strategy" class="btn btn-danger">订阅</button>
+                    </h1>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-md-2 column">
+                        <dl>
+                            <dd><span class="sub-title">作者：</span>{{ strategy.author.first_name }}</dd>
+                        </dl>
+                        <dl>
+                            <dd><span class="sub-title">创建时间：</span>{{ strategy.pub_date.date|date:"Y-m-d" }}</dd>
+                        </dl>
+                        <dl>
+                            <dd><span
+                                    class="sub-title">下个调仓：</span>{{ strategy.portfoliosAdjustmentNext.date|date:"Y-m-d" }}
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dd><span class="sub-title">回测日期：</span>{{ strategy.initialTime.date|date:"Y-m-d" }}
+                                &nbsp;-&nbsp;{{ strategy.update_time.date|date:"Y-m-d" }}</dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-2 column">
+                        <dl>
+                            <dd><span class="sub-title">调仓周期：</span>{{ strategy.portfoliosAdjustment }}个交易日</dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-4 column">
+                        <dl>
+                            <dt>策略描述：</dt>
+                            <dd>{{ strategy.content }}</dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-4 column">
+                        <dl>
+                            <dt>评分：</dt>
+                            <dd>{% include "strategy_score.html" %}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="tabbable" id="tabs-59603">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#panel-245207" data-toggle="tab">收益统计</a></li>
+                        <li><a href="#panel-510187" data-toggle="tab">交易统计</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="panel-245207">
+                            <p></p>
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>策略</th>
+                                    <th>总收益率</th>
+                                    <th>年化收益</th>
+                                    <th>夏普比率</th>
+                                    <th>最大回撤率</th>
+                                    <th>收益波动率</th>
+                                    <th>信息比率</th>
+                                    <th>Beta</th>
+                                    <th>Alpha</th>
+                                    <th>创建天数</th>
+                                    <th>自创建日收益</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>本策略</td>
+                                    <td>{{ strategy.totalReturn }}%</td>
+                                    <td>{{ strategy.annualizedReturn }}%</td>
+                                    <td>{{ strategy.sharp }}</td>
+                                    <td>{{ strategy.retracementMax }}%</td>
+                                    <td>{{ strategy.volatility }}%</td>
+                                    <td>{{ strategy.informationRatio }}</td>
+                                    <td>{{ strategy.beta }}</td>
+                                    <td>{{ strategy.alpha }}%</td>
+                                    <td>{{ strategy.getdays }}天</td>
+                                    <td>{{ strategy.initialReturn }}%</td>
+                                </tr>
+                                <tr>
+                                    <td>基准</td>
+                                    <td>10.84%</td>
+                                    <td>1.61%</td>
+                                    <td>-0.10</td>
+                                    <td>46.70%</td>
+                                    <td>24.16%</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>10.86%</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane" id="panel-510187">
+                            <p>
+                                暂无
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            // 订阅策略
+            $("#sub_strategy").click(function () {
+                var sid = {{ strategy.id }};
+
+                $.getJSON("/sub_strategy/" + sid + "/", function (ret) {
+                    alert("已订阅");
+                    $("#sub_strategy").attr("class", "btn btn-primary disabled");
+                    $("#sub_strategy").attr("disabled", true);
+                    $("#sub_strategy").text("已订阅");
+                    {#                    $("#sub_strategy").class("btn btn-primary disabled")#}
+                })
+            });
+        });
+    </script>
+{% endblock %}
+
+
+

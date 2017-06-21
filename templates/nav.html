@@ -29,11 +29,13 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
-                    <li><a href="/logout/"><span class="glyphicon glyphicon-log-in"></span> 退出</a></li>
+                    <li><a href="{% url 'my_sub_strategy' %}"><span
+                            class="glyphicon glyphicon-user"></span>{{ user.first_name }}</a></li>
+                    <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> 退出</a></li>
                 {% else %}
                     <p>
                     <li><a href="#"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
-                    <li><a href="/login/"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+                    <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
                     </p>
                 {% endif %}
             </ul>
