@@ -13,6 +13,9 @@ class Strategy(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
     price = models.DecimalField('月租', max_digits=10, decimal_places=0, default=0)
+    viewCount = models.IntegerField('热度', null=True, default=0)
+    subCount = models.IntegerField('订阅数', null=True, default=0)
+    watchCount = models.IntegerField('关注数', null=True, default=0)
 
     # 收益统计
     totalReturn = models.DecimalField('总收益率', max_digits=10, decimal_places=2, null=True, default=0)

@@ -36,8 +36,9 @@ urlpatterns = [
                   url(r'^dealer/$', main_view.DealerIndexView.as_view(), name='dealer'),
                   url(r'^market/strategy/(?P<pk>[0-9]+)/$', main_view.StrategyDetailView.as_view(), name='detail'),
                   url(r'^sub_strategy/(?P<sid>[0-9]+)/$', main_view.sub_strategy, name='sub_strategy'),
+                  url(r'^watch_strategy/(?P<sid>[0-9]+)/$', main_view.watch_strategy, name='watch_strategy'),
                   url(r'^my/strategy/subscribe$', main_view.SubscribeIndexView.as_view(), name='my_sub_strategy'),
-                  url(r'^my/strategy/watch$', main_view.SubscribeIndexView.as_view(), name='my_watch_strategy'),
+                  url(r'^my/strategy/watch$', main_view.WatchIndexView.as_view(), name='my_watch_strategy'),
 
                   url(r'^(?P<path>.*)$', static_view.serve),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
