@@ -5,12 +5,20 @@ from django.contrib.auth.models import User, UserManager
 from django.utils.timezone import now
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
 class Strategy(models.Model):
     name = models.CharField('策略名', max_length=256)
     description = models.TextField('简介')
     content = models.TextField('详情')
 
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    score = models.IntegerField('打分', default=3)
+    tags = models.ManyToManyField(Tag, 'Tag')
 
     price = models.DecimalField('月租', max_digits=10, decimal_places=0, default=0)
     viewCount = models.IntegerField('热度', null=True, default=0)
