@@ -39,6 +39,7 @@ urlpatterns = [
                   url(r'^watch_strategy/(?P<sid>[0-9]+)/$', main_view.watch_strategy, name='watch_strategy'),
                   url(r'^my/strategy/subscribe$', main_view.SubscribeIndexView.as_view(), name='my_sub_strategy'),
                   url(r'^my/strategy/watch$', main_view.WatchIndexView.as_view(), name='my_watch_strategy'),
+                  url(r'^my/notice$', main_view.NoticeIndexView.as_view(), name='my_notice'),
 
                   url(r'^(?P<path>.*)$', static_view.serve),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

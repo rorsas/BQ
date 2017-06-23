@@ -11,6 +11,24 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+
+class Notice(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.CharField(max_length=1000)
+
+    crt_date = models.DateTimeField('创建时间', auto_now_add=True, editable=True)
+    pub_date = models.DateTimeField('发表时间', auto_now_add=True, editable=True)
+    update_time = models.DateTimeField('更新时间', auto_now=True, null=True)
+
+    author = models.ForeignKey('Dealer', on_delete=models.PROTECT)
+    strategy = models.ForeignKey('Strategy', on_delete=models.PROTECT)
+
+    published = models.BooleanField('正式发布', default=True)
+
+    def __str__(self):
+        return self.title
+
+
 class Strategy(models.Model):
     name = models.CharField('策略名', max_length=256)
     description = models.TextField('简介')
@@ -18,7 +36,8 @@ class Strategy(models.Model):
 
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     score = models.IntegerField('打分', default=3)
-    tags = models.ManyToManyField(Tag, 'Tag')
+    tags = models.ManyToManyField('Tag', '标签')
+    tagMain = models.ForeignKey('Tag', on_delete=models.CASCADE)
 
     price = models.DecimalField('月租', max_digits=10, decimal_places=0, default=0)
     viewCount = models.IntegerField('热度', null=True, default=0)
@@ -81,6 +100,7 @@ class Customer(User):
     # headImage = models.ImageField(upload_to='/media/img/users/', null=True, blank=True)
     strategyList_subscribe = models.ManyToManyField(Strategy, "订阅列表");
     strategyList_watch = models.ManyToManyField(Strategy, "关注列表");
+    noticeList = models.ManyToManyField(Notice, "通知列表");
     dealerList = models.ManyToManyField(Dealer);
 
     objects = UserManager()

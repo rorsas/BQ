@@ -131,3 +131,18 @@ class WatchIndexView(generic.ListView):
             )
 
         return Customer.objects.get(id=user.id).strategyList_watch.order_by('-pub_date')[:5]
+
+
+class NoticeIndexView(generic.ListView):
+    template_name = 'my_notice.html'
+    context_object_name = 'notice_list'
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated():  # 判断用户是否已登录
+            user = self.request.user;  # 获取已登录的用户
+        else:
+            return HttpResponseRedirect(
+                reverse('home')
+            )
+
+        return Customer.objects.get(id=user.id).noticeList.order_by('-pub_date')[:5]
