@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}中银策略市场-通知{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="page-header">
+                    <h1>{{ notice.title }}</h1>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-md-4 column">
+                        <dl>
+                            <dd><span class="sub-title">作者：</span>{{ notice.author.full_name }}</dd>
+                        </dl>
+                        <dl>
+                            <dd><span class="sub-title">时间：</span>{{ notice.pub_date.date|date:"Y-m-d" }}</dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-8 column">
+                        <dl>
+                            <dt>内容：</dt>
+                            <dd>{{ notice.content }}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

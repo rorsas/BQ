@@ -32,7 +32,7 @@ urlpatterns = [
                   url(r'^login/$', auth_views.login, {'template_name': 'templates/login.html'}),
                   url(r'^test/', main_view.test),
                   url(r'^index/', main_view.IndexView.as_view(), name='index'),
-                  url(r'^market/$', main_view.marketView.as_view(), name='market'),
+                  url(r'^market/$', main_view.MarketView.as_view(), name='market'),
                   url(r'^dealer/$', main_view.DealerIndexView.as_view(), name='dealer'),
                   url(r'^market/strategy/(?P<pk>[0-9]+)/$', main_view.StrategyDetailView.as_view(), name='detail'),
                   url(r'^sub_strategy/(?P<sid>[0-9]+)/$', main_view.sub_strategy, name='sub_strategy'),
@@ -40,6 +40,7 @@ urlpatterns = [
                   url(r'^my/strategy/subscribe$', main_view.SubscribeIndexView.as_view(), name='my_sub_strategy'),
                   url(r'^my/strategy/watch$', main_view.WatchIndexView.as_view(), name='my_watch_strategy'),
                   url(r'^my/notice$', main_view.NoticeIndexView.as_view(), name='my_notice'),
+                  url(r'^notice/(?P<pk>[0-9]+)/$', main_view.NoticeDetailView.as_view(), name='notice'),
 
                   url(r'^(?P<path>.*)$', static_view.serve),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.views import generic
-from .models import Strategy, Dealer, Customer
+from .models import Strategy, Dealer, Customer, Notice
 
 
 # Create your views here.
@@ -58,13 +58,18 @@ class IndexView(generic.ListView):
         return Strategy.objects.select_related('author').order_by('-pub_date')[:5]
 
 
-class marketView(generic.ListView):
+class MarketView(generic.ListView):
     template_name = 'market.html'
     context_object_name = 'latest_strategy_list'
 
     def get_queryset(self):
         """Return the last five strategy."""
         return Strategy.objects.select_related('author').order_by('-pub_date')[:5]
+
+
+class NoticeDetailView(generic.DetailView):
+    model = Notice
+    template_name = 'notice.html'
 
 
 class StrategyDetailView(generic.DetailView):
