@@ -79,15 +79,15 @@ class StrategyDetailView(generic.DetailView):
     # 在 get_context_data() 函数中可以用于传递一些额外的内容到网页
     def get_context_data(self, **kwargs):
         context = super(StrategyDetailView, self).get_context_data(**kwargs)
-        context['is_sub'] = False
-        context['is_watch'] = False
+        context['is_follow'] = False
+        context['is_deal'] = False
         if self.request.user.is_authenticated():  # 判断用户是否已登录
             user = self.request.user  # 获取已登录的用户
             sid = self.object.id
-            if Customer.objects.get(id=user.id).strategyList_subscribe.filter(id=sid).count() == 1:
-                context['is_sub'] = True
-            if Customer.objects.get(id=user.id).strategyList_watch.filter(id=sid).count() == 1:
-                context['is_watch'] = True
+            if Customer.objects.get(id=user.id).strategyList_follow.filter(id=sid).count() == 1:
+                context['is_follow'] = True
+            if Customer.objects.get(id=user.id).strategyList_deal.filter(id=sid).count() == 1:
+                context['is_deal'] = True
         return context
 
     def get_object(self):

@@ -41,8 +41,9 @@ class Strategy(models.Model):
 
     price = models.DecimalField('月租', max_digits=10, decimal_places=0, default=0)
     viewCount = models.IntegerField('热度', null=True, default=0)
-    subCount = models.IntegerField('订阅数', null=True, default=0)
-    watchCount = models.IntegerField('关注数', null=True, default=0)
+    likeCount = models.IntegerField('点赞数', null=True, default=0)
+    followCount = models.IntegerField('关注数', null=True, default=0)
+    dealCount = models.IntegerField('交易数', null=True, default=0)
 
     # 收益统计
     totalReturn = models.DecimalField('总收益率', max_digits=10, decimal_places=2, null=True, default=0)
@@ -98,10 +99,11 @@ class Dealer(User):
 class Customer(User):
     description = models.TextField(max_length=1000, default="暂无", blank=True)
     # headImage = models.ImageField(upload_to='/media/img/users/', null=True, blank=True)
-    strategyList_subscribe = models.ManyToManyField(Strategy, "订阅列表");
-    strategyList_watch = models.ManyToManyField(Strategy, "关注列表");
+    strategyList_follow = models.ManyToManyField(Strategy, "关注列表");
+    strategyList_deal = models.ManyToManyField(Strategy, "交易列表");
+    strategyList_like = models.ManyToManyField(Strategy, "点赞列表");
     noticeList = models.ManyToManyField(Notice, "通知列表");
-    dealerList = models.ManyToManyField(Dealer);
+    dealerList = models.ManyToManyField(Dealer, "交易员列表");
 
     objects = UserManager()
 

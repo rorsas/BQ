@@ -17,51 +17,41 @@
             <div class="col-md-12 column">
                 <div class="page-header">
                     <h1>{{ strategy.name }}&nbsp;<small>{{ strategy.description }}</small>
-                        {% if is_sub %}
-                            <button type="button" id="sub_strategy" class="btn btn-danger disabled" disabled=true>已订阅
-                            </button>
-                        {% else %}
-                            <button type="button" id="sub_strategy" class="btn btn-danger">订阅</button>
-                        {% endif %}
-                        {% if is_watch %}
-                            <button type="button" id="watch_strategy" class="btn btn-primary disabled" disabled=true>
+                        {% if is_follow %}
+                            <button type="button" id="follow_strategy" class="btn btn-primary disabled" disabled=true>
                                 已关注
                             </button>
                         {% else %}
-                            <button type="button" id="watch_strategy" class="btn btn-primary">关注</button>
+                            <button type="button" id="follow_strategy" class="btn btn-primary">关注</button>
+                        {% endif %}
+                        {% if is_deal %}
+                            <button type="button" id="deal_strategy" class="btn btn-danger disabled" disabled=true>
+                                已交易
+                            </button>
+                        {% else %}
+                            <button type="button" id="deal_strategy" class="btn btn-danger disabled">未交易</button>
+                        {% endif %}
+                        {% if is_like %}
+                            <button id="like_strategy" type="button" class="btn btn-default pull-right">
+                                <span class="glyphicon glyphicon-heart"></span> 点赞
+                            </button>
+                        {% else %}
+                            <button id="like_strategy" type="button" class="btn btn-default pull-right">
+                                <span class="glyphicon glyphicon-heart-empty"></span> 点赞
+                            </button>
                         {% endif %}
                     </h1>
                 </div>
                 <div class="row clearfix">
-                    <div class="col-md-2 column">
+                    <div class="col-md-4 column">
                         <dl>
-                            <dd><span class="sub-title">作者：</span>{{ strategy.author.first_name }}</dd>
+                            <dd><span class="sub-title">交易员：</span>{{ strategy.author.first_name }}</dd>
                         </dl>
                         <dl>
                             <dd><span class="sub-title">创建时间：</span>{{ strategy.pub_date.date|date:"Y-m-d" }}</dd>
                         </dl>
                         <dl>
-                            <dd><span
-                                    class="sub-title">下个调仓：</span>{{ strategy.portfoliosAdjustmentNext.date|date:"Y-m-d" }}
-                            </dd>
-                        </dl>
-                        <dl>
-                            <dd><span class="sub-title">回测日期：</span>{{ strategy.initialTime.date|date:"Y-m-d" }}
-                                &nbsp;-&nbsp;{{ strategy.update_time.date|date:"Y-m-d" }}</dd>
-                        </dl>
-                    </div>
-                    <div class="col-md-2 column">
-                        <dl>
-                            <dd><span class="sub-title">调仓周期：</span>{{ strategy.portfoliosAdjustment }}个交易日</dd>
-                        </dl>
-                        <dl>
-                            <dd><span class="sub-title">热度：</span>{{ strategy.viewCount }}</dd>
-                        </dl>
-                        <dl>
-                            <dd><span class="sub-title">订阅：</span>{{ strategy.subCount }}</dd>
-                        </dl>
-                        <dl>
-                            <dd><span class="sub-title">关注：</span>{{ strategy.watchCount }}</dd>
+                            <dd><span class="sub-title">关注：</span>{{ strategy.followCount }}</dd>
                         </dl>
                     </div>
                     <div class="col-md-4 column">
