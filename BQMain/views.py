@@ -21,29 +21,29 @@ def to_home(request):
     )
 
 
-def sub_strategy(request, sid):
+def follow_strategy(request, sid):
     if request.user.is_authenticated():  # 判断用户是否已登录
         user = request.user;  # 获取已登录的用户
     else:
         return JsonResponse({'result': False})
 
     strategy = Strategy.objects.get(id=sid)
-    Customer.objects.get(id=user.id).strategyList_subscribe.add(strategy)
-    strategy.subCount += 1
+    Customer.objects.get(id=user.id).strategyList_follow.add(strategy)
+    strategy.followCount += 1
     strategy.save()
 
     return JsonResponse({'result': True})
 
 
-def watch_strategy(request, sid):
+def like_strategy(request, sid):
     if request.user.is_authenticated():  # 判断用户是否已登录
         user = request.user;  # 获取已登录的用户
     else:
         return JsonResponse({'result': False})
 
     strategy = Strategy.objects.get(id=sid)
-    Customer.objects.get(id=user.id).strategyList_watch.add(strategy)
-    strategy.watchCount += 1
+    Customer.objects.get(id=user.id).strategyList_like.add(strategy)
+    strategy.likeCount += 1
     strategy.save()
 
     return JsonResponse({'result': True})
@@ -108,7 +108,7 @@ class DealerIndexView(generic.ListView):
         return Dealer.objects.order_by('-pop')[:5]
 
 
-class SubscribeIndexView(generic.ListView):
+class FollowIndexView(generic.ListView):
     template_name = 'my_strategy_sub.html'
     context_object_name = 'strategy_list'
 

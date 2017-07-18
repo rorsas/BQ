@@ -72,30 +72,30 @@
     </div>
     <script>
         $(document).ready(function () {
-            // 订阅策略
-            $("#sub_strategy").click(function () {
+            // 关注策略
+            $("#follow_strategy").click(function () {
                 var sid = {{ strategy.id }};
 
-                $.getJSON("/sub_strategy/" + sid + "/", function (ret) {
+                $.getJSON("/follow_strategy/" + sid + "/", function (ret) {
                     if (ret.result) {
-                        $("#sub_strategy").attr("class", "btn btn-danger disabled");
-                        $("#sub_strategy").attr("disabled", true);
-                        $("#sub_strategy").text("已订阅");
+                        $("#follow_strategy").attr("class", "btn btn-danger disabled");
+                        $("#follow_strategy").attr("disabled", true);
+                        $("#follow_strategy").text("已订阅");
                     }
                     else {
                         alert("请登录");
                     }
                 })
             });
-            // 关注策略
-            $("#watch_strategy").click(function () {
+            // 喜欢策略
+            $("#like_strategy").click(function () {
                 var sid = {{ strategy.id }};
 
-                $.getJSON("/watch_strategy/" + sid + "/", function (ret) {
+                $.getJSON("/like_strategy/" + sid + "/", function (ret) {
                     if (ret.result) {
-                        $("#watch_strategy").attr("class", "btn btn-primary disabled");
-                        $("#watch_strategy").attr("disabled", true);
-                        $("#watch_strategy").text("已关注");
+                        $("#like_strategy").attr("class", "btn btn-primary disabled");
+                        $("#like_strategy").attr("disabled", true);
+                        $("#like_strategy").text("已关注");
                     }
                     else {
                         alert("请登录");
