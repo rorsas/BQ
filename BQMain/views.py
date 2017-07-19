@@ -67,6 +67,15 @@ class MarketView(generic.ListView):
         return Strategy.objects.select_related('author').order_by('-pub_date')[:5]
 
 
+class CategoryView(generic.ListView):
+    template_name = 'strategy_category.html'
+    context_object_name = 'latest_strategy_list'
+
+    def get_queryset(self):
+        """Return the last five strategy."""
+        return Strategy.objects.select_related('author').order_by('-pub_date')[:5]
+
+
 class NoticeDetailView(generic.DetailView):
     model = Notice
     template_name = 'notice.html'

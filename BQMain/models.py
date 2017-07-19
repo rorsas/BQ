@@ -31,6 +31,7 @@ class Notice(models.Model):
 
 class Strategy(models.Model):
     name = models.CharField('策略名', max_length=256)
+    code = models.CharField('策略编码', null=False, default='1', max_length=20)
     description = models.TextField('简介')
     content = models.TextField('详情')
 

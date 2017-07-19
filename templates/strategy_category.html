@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+
+{% block title %}中银策略市场-策略详情{% endblock %}
+
+{% load static %}
+{% block head_extra %}
+    <!--market head-->
+    {% load static %}
+    <link type="text/css" rel="stylesheet" href="{% static 'css/bqcommons.css' %}">
+
+{#    <style>#}
+{#    .navbar-collapse.collapse {#}
+{#display: block!important;#}
+{#}#}
+{##}
+{#.navbar-nav>li, .navbar-nav {#}
+{#float: left !important;#}
+{#}#}
+{##}
+{##}
+{#.navbar-nav.navbar-right:last-child {#}
+{#margin-right: -15px !important;#}
+{#}#}
+{##}
+{#.navbar-right {#}
+{#float: right!important;#}
+{#}#}
+{#    </style>#}
+
+
+     <style>
+
+{#.nav-pills {#}
+{#    width: 100%;#}
+{#    height: 30px;#}
+{#    margin: 0 auto;#}
+{#    position: fixed;#}
+{#    bottom: 0;#}
+{#    text-align: center;#}
+{##}
+{##}
+{#@media (min-width: 0px) {#}
+{##}
+{#    .nav-justified > li {#}
+{#        display: table-cell;#}
+{#        width: 1%;#}
+{#    }#}
+{##}
+    </style>
+
+
+{% endblock %}
+
+{% block content %}
+
+{#    <div class="container">#}
+{#    <div class="row clearfix">#}
+{#        <div class="col-xs-2">#}
+{#            <ul class="nav nav-tabs vertical-tab" role="tablist" id="vtab">#}
+{#                <li role="presentation" class="active">#}
+{#                    <a href="#tab1" aria-controls="home" role="tab"#}
+{#                       data-toggle="tab">本地</a>#}
+{#                </li>#}
+{#                <li role="presentation">#}
+{#                    <a href="#tab2" aria-controls="inbox" role="tab"#}
+{#                       data-toggle="tab">系统</a>#}
+{#                </li>#}
+{#                <li role="presentation">#}
+{#                    <a href="#tab3" aria-controls="outbox" role="tab"#}
+{#                       data-toggle="tab">网络</a>#}
+{#                </li>#}
+{#                <li role="presentation">#}
+{#                    <a href="#tab4" aria-controls="inbox1" role="tab"#}
+{#                       data-toggle="tab">视音频</a>#}
+{#                </li>#}
+{#                <li role="presentation">#}
+{#                    <a href="#tab5" aria-controls="outbox1" role="tab"#}
+{#                       data-toggle="tab">图像</a>#}
+{#                </li>#}
+{#                <li role="presentation">#}
+{#                    <a href="#tab6" aria-controls="outbox1" role="tab"#}
+{#                       data-toggle="tab">事件</a>#}
+{#                </li>#}
+{#                <li role="presentation">#}
+{#                    <a href="#tab7" aria-controls="outbox1" role="tab"#}
+{#                       data-toggle="tab">存储</a>#}
+{#                </li>#}
+{#            </ul>#}
+{#        </div>#}
+{##}
+{#        <div class="tab-content vertical-tab-content col-xs-10">#}
+{#            <div role="tabpanel" class="tab-pane active" id="tab1">.本地..</div>#}
+{#            <div role="tabpanel" class="tab-pane" id="tab2">.系统..</div>#}
+{#            <div role="tabpanel" class="tab-pane" id="tab3">..网络.</div>#}
+{#            <div role="tabpanel" class="tab-pane" id="tab4">.视音频..</div>#}
+{#            <div role="tabpanel" class="tab-pane" id="tab5">..图像.</div>#}
+{#            <div role="tabpanel" class="tab-pane" id="tab6">..事件.</div>#}
+{#            <div role="tabpanel" class="tab-pane" id="tab7">..存储.</div>#}
+{#        </div>#}
+{#    </div>#}
+{#    </div>#}
+
+        <div class="container">
+            {% if latest_strategy_list %}
+                <div class="row clearfix">
+                    <div class="col-md-4 column">
+                        <div class="list-group">
+                            <a href="#" class="list-group-item active">Home</a>
+                            <div class="list-group-item">
+                                List header
+                            </div>
+                            <div class="list-group-item">
+                                <h4 class="list-group-item-heading">
+                                    List group item heading
+                                </h4>
+                                <p class="list-group-item-text">
+                                    ...
+                                </p>
+                            </div>
+                            <div class="list-group-item">
+                                <span class="badge">14</span> Help
+                            </div>
+                            <a class="list-group-item active"> <span class="badge">14</span> Help</a>
+                        </div>
+                    </div>
+                    <div class="col-md-8 column">
+                        <div class="tabbable" id="tabs-807449">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#panel-995623" data-toggle="tab">Section 1</a>
+                                </li>
+                                <li>
+                                    <a href="#panel-934332" data-toggle="tab">Section 2</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="panel-995623">
+                                    <p>
+                                        I'm in Section 1.
+                                    </p>
+                                </div>
+                                <div class="tab-pane" id="panel-934332">
+                                    <p>
+                                        Howdy, I'm in Section 2.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-group" id="panel-974975">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <a class="panel-title" data-toggle="collapse" data-parent="#panel-974975"
+                                       href="#panel-element-178505">Collapsible Group Item #1</a>
+                                </div>
+                                <div id="panel-element-178505" class="panel-collapse in">
+                                    <div class="panel-body">
+                                        Anim pariatur cliche...
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-974975"
+                                       href="#panel-element-257496">Collapsible Group Item #2</a>
+                                </div>
+                                <div id="panel-element-257496" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                        Anim pariatur cliche...
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p>No strategy are available.</p>
+            {% endif %}
+        </div>
+
+
+{% endblock %}

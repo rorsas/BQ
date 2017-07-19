@@ -33,6 +33,7 @@ urlpatterns = [
                   url(r'^test/', main_view.test),
                   url(r'^index/', main_view.IndexView.as_view(), name='index'),
                   url(r'^market/$', main_view.MarketView.as_view(), name='market'),
+                  url(r'^category/$', main_view.CategoryView.as_view(), name='category'),
                   url(r'^dealer/$', main_view.DealerIndexView.as_view(), name='dealer'),
                   url(r'^market/strategy/(?P<pk>[0-9]+)/$', main_view.StrategyDetailView.as_view(), name='detail'),
                   url(r'^follow_strategy/(?P<sid>[0-9]+)/$', main_view.follow_strategy, name='follow_strategy'),
