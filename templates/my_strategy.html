@@ -16,7 +16,7 @@
             <tbody>
             {% for strategy in strategy_list %}
                 <tr>
-                    <td><a href="/market/strategy/{{ strategy.id }}/">{{ strategy.name }}</a></td>
+                    <td><a href="/strategy/{{ strategy.id }}/">{{ strategy.name }}</a></td>
                     <td>{{ strategy.author.first_name }}</td>
                     <td>{{ strategy.pub_date.date|date:"Y-m-d" }}</td>
                     <td>{{ strategy.portfoliosAdjustmentNext.date|date:"Y-m-d" }}</td>

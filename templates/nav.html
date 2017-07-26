@@ -86,7 +86,7 @@
 {#    </div>#}
 {#</footer>#}
 
-    <!-- Nav tabs -->
+<!-- Nav tabs -->
 {#<ul class="nav nav-pills nav-justified">#}
 {#  <div class="col-xs-6">#}
 {#      <li class="active"><a href="#ratings">Ratings</a></li>#}
@@ -97,13 +97,13 @@
 {#</ul>#}
 
 <fotter class="nav nav-pills nav-justified">
-        <li class="{% if request.path|slice:"5" == "/home" %} active{% endif %}"><a
-                href="{% url 'home' %}">首页</a>
-        </li>
-        <li class="{% if request.path|slice:"9" == "/category" %} active{% endif %}"><a
-                href="{% url 'category' %}">分类</a>
-        </li>
-  <li><a href="#">VB.Net</a></li>
-  <li><a href="#">Java</a></li>
-  <li><a href="#">PHP</a></li>
+    <li class="{% if request.path|slice:"5" == "/home" %} active{% endif %}"><a
+            href="{% url 'home' %}"><span class="glyphicon glyphicon-home">首页</a>
+    </li>
+    <li class="{% if request.path|slice:"9" == "/category" %} active{% endif %}"><a
+            href="{% url 'category' %}"><span class="glyphicon glyphicon-list">分类</a>
+    </li>
+    <li class="{% if request.path|slice:"3" == "/my" %} active{% endif %}"><a
+            href="{% url 'my_strategy' %}"><span class="glyphicon glyphicon-user"></span>我的</a>
+    </li>
 </fotter>

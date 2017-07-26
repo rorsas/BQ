@@ -118,27 +118,27 @@ class DealerIndexView(generic.ListView):
 
 
 class FollowIndexView(generic.ListView):
-    template_name = 'my_strategy_sub.html'
+    template_name = 'my_strategy.html'
     context_object_name = 'strategy_list'
 
     def get_queryset(self):
         if self.request.user.is_authenticated():  # 判断用户是否已登录
-            user = self.request.user;  # 获取已登录的用户
+            user = self.request.user  # 获取已登录的用户
         else:
             return HttpResponseRedirect(
                 reverse('home')
             )
 
-        return Customer.objects.get(id=user.id).strategyList_subscribe.order_by('-pub_date')[:5]
+        return Customer.objects.get(id=user.id).strategyList_follow.order_by('-pub_date')[:5]
 
 
 class WatchIndexView(generic.ListView):
-    template_name = 'my_strategy_sub.html'
+    template_name = 'my_strategy.html'
     context_object_name = 'strategy_list'
 
     def get_queryset(self):
         if self.request.user.is_authenticated():  # 判断用户是否已登录
-            user = self.request.user;  # 获取已登录的用户
+            user = self.request.user  # 获取已登录的用户
         else:
             return HttpResponseRedirect(
                 reverse('home')
@@ -153,7 +153,7 @@ class NoticeIndexView(generic.ListView):
 
     def get_queryset(self):
         if self.request.user.is_authenticated():  # 判断用户是否已登录
-            user = self.request.user;  # 获取已登录的用户
+            user = self.request.user  # 获取已登录的用户
         else:
             return HttpResponseRedirect(
                 reverse('home')
